@@ -70,6 +70,7 @@ void PlacementPhase(){
         collectFish();
         canPlayerPlacePenguin();
         allPenguinsPlaced();
+        changeCurrentPlayer();
     }
 
 }
