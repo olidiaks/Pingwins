@@ -75,12 +75,56 @@ void PlacementPhase(){
 
 }
 
+int canAnyPenguinBeMoved(){
+    srand(time(NULL));
+    int chance = rand() % 50;
+    return chance >= 1;
+}
+
+int canCurrentPlayerMove(){
+    srand(time(NULL));
+    int chance = rand() % 2;
+    return chance == 1;
+}
+
+void inputMovementCoordinates(){
+
+}
+
+int ValidMovementCoordinates(){
+
+}
+
+void movePenguin(){
+    printf("Player %d 's penguin has been moved.\n",CurrentPlayer+1);
+}
+
+void MovementPhase(){
+    while(canAnyPenguinBeMoved()){
+        ShowBoard();
+        while(canCurrentPlayerMove()){
+            do {
+                inputMovementCoordinates();
+            } while (!ValidMovementCoordinates());
+            movePenguin();
+            collectFish();
+            changeCurrentPlayer();
+
+        }
+    }
+}
+
 
 
 int main(){
     PlacementPhase();
     if(allPenguinsPlaced()){
-        printf("Penguins were placed successfully.\n");
+        printf("Penguins were placed successfully. Moving onto the Movement Phase.\n");
+        MovementPhase();
+        if(!canAnyPenguinBeMoved()){
+            printf("The game has ended.\n");
+        }
+
     }
     else printf("Error.\n");
     return 0;
