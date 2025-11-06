@@ -17,7 +17,6 @@ void GenerateRandomBoard(){
 }
 
 int canPlayerPlacePenguin(){
-    srand(time(NULL));
     int chance = rand() % 20;
     return chance >= 1;
 }
@@ -117,6 +116,7 @@ void MovementPhase(){
 
 
 int main(){
+    srand(time(NULL));
     PlacementPhase();
     if(allPenguinsPlaced()){
         printf("Penguins were placed successfully. Moving onto the Movement Phase.\n");
