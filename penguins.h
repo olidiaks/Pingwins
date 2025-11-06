@@ -2,6 +2,8 @@
 // Created by olidiaks on 6.11.2025.
 //
 
+//TODO: Use doxygen for documentation.
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
