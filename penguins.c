@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -30,7 +31,6 @@ void askCoordinates(){
 }
 
 int ValidCoordinates(){
-    srand(time(NULL));
     int chance = rand() % 5;
     return chance >= 1;
 }
@@ -50,7 +50,6 @@ void changeCurrentPlayer(){
 }
 
 int allPenguinsPlaced(){
-    srand(time(NULL));
     int chance = rand() % 2;
     return chance == 1;
 }
@@ -75,13 +74,11 @@ void PlacementPhase(){
 }
 
 int canAnyPenguinBeMoved(){
-    srand(time(NULL));
     int chance = rand() % 50;
     return chance >= 1;
 }
 
 int canCurrentPlayerMove(){
-    srand(time(NULL));
     int chance = rand() % 2;
     return chance == 1;
 }
@@ -100,15 +97,19 @@ void movePenguin(){
 
 void MovementPhase(){
     while(canAnyPenguinBeMoved()){
-        ShowBoard();
+        bool wasCurrentPlayerMoved = false;
         while(canCurrentPlayerMove()){
+            ShowBoard();
             do {
                 inputMovementCoordinates();
             } while (!ValidMovementCoordinates());
             movePenguin();
             collectFish();
             changeCurrentPlayer();
-
+            wasCurrentPlayerMoved = true;
+        }
+        if (!wasCurrentPlayerMoved) {
+            changeCurrentPlayer();
         }
     }
 }
