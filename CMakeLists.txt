@@ -4,4 +4,5 @@ project(project C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(project
-        penguins.c)
+        penguins.c
+        penguins.h)

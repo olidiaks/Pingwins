@@ -1,9 +1,20 @@
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+#include "penguins.h"
 
-int CurrentPlayer;
+
+int main(){
+    srand(time(NULL));
+    PlacementPhase();
+    if(allPenguinsPlaced()){
+        printf("Penguins were placed successfully. Moving onto the Movement Phase.\n");
+        MovementPhase();
+        if(!canAnyPenguinBeMoved()){
+            printf("The game has ended.\n");
+        }
+
+    }
+    else printf("Error.\n");
+    return 0;
+}
 
 void ReadBoardDimensions(){
     printf("Reading board dimensions...\n");
@@ -49,9 +60,9 @@ void changeCurrentPlayer(){
     printf("Changing players...\n");
 }
 
-int allPenguinsPlaced(){
+bool allPenguinsPlaced(){
     int chance = rand() % 2;
-    return chance == 1;
+    return chance;
 }
 
 void PlacementPhase(){
@@ -73,7 +84,7 @@ void PlacementPhase(){
 
 }
 
-int canAnyPenguinBeMoved(){
+bool canAnyPenguinBeMoved(){
     int chance = rand() % 50;
     return chance >= 1;
 }
@@ -116,17 +127,3 @@ void MovementPhase(){
 
 
 
-int main(){
-    srand(time(NULL));
-    PlacementPhase();
-    if(allPenguinsPlaced()){
-        printf("Penguins were placed successfully. Moving onto the Movement Phase.\n");
-        MovementPhase();
-        if(!canAnyPenguinBeMoved()){
-            printf("The game has ended.\n");
-        }
-
-    }
-    else printf("Error.\n");
-    return 0;
-}
