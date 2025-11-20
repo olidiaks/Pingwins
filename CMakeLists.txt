@@ -4,5 +4,15 @@ project(project C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(project
-        penguins.c
-        penguins.h)
+        BoardGeneration.c
+        BoardGeneration.h
+        ConsoleVisualization.c
+        ConsoleVisualization.h
+        main.c
+        main.h
+        Movement.c
+        Movement.h
+        Placement.c
+        Placement.h
+        PlayerActions.c
+        PlayerActions.h)
