@@ -20,8 +20,8 @@ void PlacementPhase() {
         ShowBoard();
         do{
             askCoordinates();
-            ValidCoordinates();
-        } while (!ValidCoordinates());
+            areValidCoordinates();
+        } while (!areValidCoordinates());
         placePenguin();
         collectFish();
         canPlayerPlacePenguin();

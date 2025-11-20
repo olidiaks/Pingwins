@@ -13,6 +13,6 @@ void changeCurrentPlayer(void);
 
 void askCoordinates(void);
 
-int ValidCoordinates(void);
+int areValidCoordinates(void);
 
 #endif //PROJECT_PLAYERACTIONS_H

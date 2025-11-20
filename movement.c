@@ -11,15 +11,11 @@ void MovementPhase() {
             ShowBoard();
             do {
                 askCoordinates();
-            } while (!ValidCoordinates());
+            } while (!areValidCoordinates());
             movePenguin();
             collectFish();
-            changeCurrentPlayer();
-            hasCurrentPlayerMoved = true;
         }
-        if (!hasCurrentPlayerMoved) {
-            changeCurrentPlayer();
-        }
+        changeCurrentPlayer();
     }
 }
 

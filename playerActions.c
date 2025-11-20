@@ -25,7 +25,7 @@ void askCoordinates() {
 
 }
 
-int ValidCoordinates() {
+int areValidCoordinates() {
     int chance = rand() % 5;
     return chance >= 1;
 }
