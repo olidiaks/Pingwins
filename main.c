@@ -11,9 +11,11 @@ int main(){
     PlacementPhase();
     if (isEveryPenguinsPlaced()) {
         MovementPhase();
+        printf("The game was ended!\n");
     }
     else {
         printf("Not all penguins were placed.\n");
+        return 1;
     }
     return 0;
 }
