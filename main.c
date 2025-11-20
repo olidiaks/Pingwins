@@ -6,8 +6,8 @@
 
 int CurrentPlayer = 0;
 
-int main() {
-    srand(1);
+int main(){
+    srand(10);
     PlacementPhase();
     if (isEveryPenguinsPlaced()) {
         MovementPhase();
