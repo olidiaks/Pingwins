@@ -25,7 +25,6 @@ void PlacementPhase() {
         placePenguin();
         collectFish();
         canPlayerPlacePenguin();
-        allPenguinsPlaced();
         changeCurrentPlayer();
     }
 
@@ -40,7 +39,7 @@ void placePenguin() {
     printf("Player %d 's penguin has been placed.\n",CurrentPlayer+1);
 }
 
-bool allPenguinsPlaced() {
+bool isEveryPenguinsPlaced() {
     int chance = rand() % 2;
     return chance;
 }

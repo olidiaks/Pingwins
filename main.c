@@ -3,26 +3,17 @@
 //
 
 #include "main.h"
-#include "movement.h"
-#include "placement.h"
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
 
 int CurrentPlayer = 0;
 
 int main() {
     srand(1);
     PlacementPhase();
-    if(allPenguinsPlaced()){
-        printf("Penguins were placed successfully. Moving onto the Movement Phase.\n");
+    if (isEveryPenguinsPlaced()) {
         MovementPhase();
-        if(!canAnyPenguinBeMoved()){
-            printf("The game has ended.\n");
-        }
     }
-    else
-        printf("Error.\n");
+    else {
+        printf("Not all penguins were placed.\n");
+    }
     return 0;
 }

@@ -13,6 +13,6 @@ int canPlayerPlacePenguin(void);
 
 void placePenguin(void);
 
-bool allPenguinsPlaced(void);
+bool isEveryPenguinsPlaced(void);
 
 #endif //PROJECT_PLACEMENT_H
