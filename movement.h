@@ -16,10 +16,21 @@
 
 void movementPhase(void);
 
-bool canAnyPenguinBeMoved(void);
+/**
+ * This function check if any player can make move.
+ * @return Return true if penguin can be placed and false if not.
+ */
+bool isThereAnyPenguinMoveAvailable(void);
 
-int canCurrentPlayerMove(void);
+/**
+ * This function check if player can make move.
+ * @return Return true if player can move and false if can't.
+ */
+bool isPlayerMoveAvailable(void);
 
+/**
+ *
+ */
 void movePenguin(void);
 
 #endif //PROJECT_MOVEMENT_H

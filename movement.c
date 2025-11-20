@@ -5,9 +5,9 @@
 #include "movement.h"
 
 void movementPhase() {
-    while(canAnyPenguinBeMoved()){
+    while(isThereAnyPenguinMoveAvailable()){
         bool hasCurrentPlayerMoved = false;
-        while(canCurrentPlayerMove()){
+        while(isPlayerMoveAvailable()){
             showBoard();
             do {
                 askCoordinates();
@@ -19,12 +19,12 @@ void movementPhase() {
     }
 }
 
-bool canAnyPenguinBeMoved() {
+bool isThereAnyPenguinMoveAvailable() {
     int chance = rand() % 50;
     return chance >= 1;
 }
 
-int canCurrentPlayerMove() {
+bool isPlayerMoveAvailable() {
     int chance = rand() % 2;
     return chance == 1;
 }
