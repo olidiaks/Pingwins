@@ -12,12 +12,12 @@
 
 void collectFish(void);
 
-void SetCurrentPlayer(void);
+void setCurrentPlayer(void);
 
 void changeCurrentPlayer(void);
 
 void askCoordinates(void);
 
-int areValidCoordinates(void);
+int isMoveValid(void);
 
 #endif //PROJECT_PLAYERACTIONS_H

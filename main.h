@@ -10,6 +10,6 @@
 
 #include <stdlib.h>
 
-extern int CurrentPlayer;
+extern int current_player;
 
 #endif //PROJECT_MAIN_H

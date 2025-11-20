@@ -8,10 +8,10 @@ void movementPhase() {
     while(canAnyPenguinBeMoved()){
         bool hasCurrentPlayerMoved = false;
         while(canCurrentPlayerMove()){
-            ShowBoard();
+            showBoard();
             do {
                 askCoordinates();
-            } while (!areValidCoordinates());
+            } while (!isMoveValid());
             movePenguin();
             collectFish();
         }
@@ -30,5 +30,5 @@ int canCurrentPlayerMove() {
 }
 
 void movePenguin() {
-    printf("Player %d 's penguin has been moved.\n",CurrentPlayer+1);
+    printf("Player %d 's penguin has been moved.\n",current_player+1);
 }

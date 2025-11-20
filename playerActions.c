@@ -6,15 +6,15 @@
 
 
 void collectFish() {
-    printf("Player %d has collected fish.\n",CurrentPlayer+1);
+    printf("Player %d has collected fish.\n",current_player+1);
 }
 
-void SetCurrentPlayer() {
-    CurrentPlayer = 0;
+void setCurrentPlayer() {
+    current_player = 0;
 }
 
 void changeCurrentPlayer() {
-    CurrentPlayer = !CurrentPlayer;
+    current_player = !current_player;
     printf("Changing players...\n");
 }
 
@@ -22,7 +22,7 @@ void askCoordinates() {
 
 }
 
-int areValidCoordinates() {
+int isMoveValid() {
     int chance = rand() % 5;
     return chance >= 1;
 }

@@ -4,6 +4,6 @@
 
 #include "consoleVisualization.h"
 
-void ShowBoard() {
+void showBoard() {
     printf("Displaying the board.\n");
 }

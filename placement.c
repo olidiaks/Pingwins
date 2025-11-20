@@ -4,16 +4,15 @@
 
 #include "placement.h"
 
-void PlacementPhase() {
-    ReadBoardDimensions();
-    SetCurrentPlayer();
-    GenerateRandomBoard();
+void placementPhase() {
+    readBoardDimensions();
+    setCurrentPlayer();
+    generateRandomBoard();
     while (canPlayerPlacePenguin()){
-        ShowBoard();
+        showBoard();
         do{
             askCoordinates();
-            areValidCoordinates();
-        } while (!areValidCoordinates());
+        } while (!isMoveValid());
         placePenguin();
         collectFish();
         canPlayerPlacePenguin();
@@ -28,7 +27,7 @@ int canPlayerPlacePenguin() {
 }
 
 void placePenguin() {
-    printf("Player %d 's penguin has been placed.\n",CurrentPlayer+1);
+    printf("Player %d 's penguin has been placed.\n",current_player+1);
 }
 
 bool isEveryPenguinsPlaced() {

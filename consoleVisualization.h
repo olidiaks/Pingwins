@@ -7,6 +7,6 @@
 
 #include <stdio.h>
 
-void ShowBoard(void);
+void showBoard(void);
 
 #endif //PROJECT_CONSOLEVISUALIZATION_H

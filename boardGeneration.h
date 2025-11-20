@@ -7,8 +7,8 @@
 
 #include <stdio.h>
 
-void ReadBoardDimensions(void);
+void readBoardDimensions(void);
 
-void GenerateRandomBoard(void);
+void generateRandomBoard(void);
 
 #endif //PROJECT_BOARDGENERATION_H

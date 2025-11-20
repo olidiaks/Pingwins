@@ -4,11 +4,11 @@
 
 #include "main.h"
 
-int CurrentPlayer = 0;
+int current_player = 0;
 
 int main(){
     srand(10);
-    PlacementPhase();
+    placementPhase();
     if (isEveryPenguinsPlaced()) {
         movementPhase();
         printf("The game was ended!\n");

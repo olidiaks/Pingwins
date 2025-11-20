@@ -4,10 +4,10 @@
 
 #include "boardGeneration.h"
 
-void ReadBoardDimensions() {
+void readBoardDimensions() {
     printf("Reading board dimensions...\n");
 }
 
-void GenerateRandomBoard() {
+void generateRandomBoard() {
     printf("Generating random board...\n");
 }
