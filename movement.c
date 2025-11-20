@@ -4,7 +4,7 @@
 
 #include "movement.h"
 
-void MovementPhase() {
+void movementPhase() {
     while(canAnyPenguinBeMoved()){
         bool hasCurrentPlayerMoved = false;
         while(canCurrentPlayerMove()){

@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void MovementPhase(void);
+void movementPhase(void);
 
 bool canAnyPenguinBeMoved(void);
 
