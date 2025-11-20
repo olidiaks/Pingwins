@@ -13,7 +13,7 @@
 int CurrentPlayer = 0;
 
 int main() {
-    srand(time(NULL));
+    srand(1);
     PlacementPhase();
     if(allPenguinsPlaced()){
         printf("Penguins were placed successfully. Moving onto the Movement Phase.\n");
