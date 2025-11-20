@@ -3,7 +3,6 @@
 //
 
 #include "boardGeneration.h"
-#include <stdio.h>
 
 void ReadBoardDimensions() {
     printf("Reading board dimensions...\n");

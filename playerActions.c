@@ -2,11 +2,8 @@
 // Created by theVo on 19/11/2025.
 //
 
-#include "main.h"
 #include "playerActions.h"
 
-#include "stdio.h"
-#include "stdlib.h"
 
 void collectFish() {
     printf("Player %d has collected fish.\n",CurrentPlayer+1);

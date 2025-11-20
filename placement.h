@@ -6,6 +6,13 @@
 #define PROJECT_PLACEMENT_H
 
 #include <stdbool.h>
+#include "main.h"
+#include "playerActions.h"
+#include "boardGeneration.h"
+#include "consoleVisualization.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 void PlacementPhase(void);
 

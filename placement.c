@@ -2,15 +2,7 @@
 // Created by theVo on 19/11/2025.
 //
 
-#include "main.h"
 #include "placement.h"
-#include "playerActions.h"
-#include "boardGeneration.h"
-#include "consoleVisualization.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
 
 void PlacementPhase() {
     ReadBoardDimensions();

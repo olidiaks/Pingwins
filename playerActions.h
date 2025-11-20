@@ -5,6 +5,11 @@
 #ifndef PROJECT_PLAYERACTIONS_H
 #define PROJECT_PLAYERACTIONS_H
 
+
+#include "main.h"
+#include "stdio.h"
+#include "stdlib.h"
+
 void collectFish(void);
 
 void SetCurrentPlayer(void);
