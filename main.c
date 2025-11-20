@@ -10,7 +10,7 @@ int main(){
     srand(10);
     PlacementPhase();
     if (isEveryPenguinsPlaced()) {
-        MovementPhase();
+        movementPhase();
         printf("The game was ended!\n");
     }
     else {
