@@ -2,14 +2,7 @@
 // Created by theVo on 19/11/2025.
 //
 
-#include "main.h"
 #include "movement.h"
-#include "playerActions.h"
-#include "consoleVisualization.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
 
 void MovementPhase() {
     while(canAnyPenguinBeMoved()){
