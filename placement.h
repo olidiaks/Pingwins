@@ -14,21 +14,47 @@
 #include <stdlib.h>
 
 /**
- * @brief Manages the placement phase of the game where players place penguins on the board.
+ * @brief Handles the game's placement phase where players alternately place penguins on the board.
  *
- * This function orchestrates all steps necessary for the placement phase of the game. It begins by reading
- * board dimensions and setting the current player. A random board is generated for the players to start with.
- * The placement continues in a loop as long as the player can place penguins. Within the loop, the board is
- * displayed, players are prompted for coordinates, and the validity of chosen moves is verified. If the move
- * is valid, a penguin is placed, and fishes are collected. After processing the player's action, the player
- * is switched for the next turn.
+ * This function starts the game by reading the board dimensions, initializing the current player,
+ * and generating a random board. It then enters a loop where it repeatedly:
+ * - Displays the current board state.
+ * - Asks the current player for coordinates until a valid move is provided.
+ * - Places the penguin according to the player's input.
+ * - Collects fish from the placed penguin.
+ * - Checks if the current player can place another penguin.
+ * - Switches to the next player.
+ *
+ * The loop continues until no valid moves are left or all penguins are placed.
  */
 void placementPhase(void);
 
-int canPlayerPlacePenguin(void);
+/**
+ * @brief Indicates whether the current player can place a penguin.
+ *
+ * This function returns true if the current player can place a penguin, and false otherwise.
+ * The decision is based on a random chance (approximately 9/20 chance to return true).
+ *
+ * @return Returns true if the current player can place a penguin, false otherwise.
+ */
+bool canPlayerPlacePenguin(void);
 
+/**
+ * @brief Places a penguin on the board for the current player.
+ *
+ * This function updates the board state by placing the current player's penguin at the specified coordinates.
+ * It then triggers the collection of fish from the placed penguin's position.
+ * The function is called after a valid move is confirmed and is part of the game's placement phase loop.
+ */
 void placePenguin(void);
 
+/**
+ * @brief Checks if all penguins have been placed during the placement phase.
+ *
+ * This function returns 1 if every penguin has been placed, and 0 otherwise.
+ *
+ * @return 1 if all penguins are placed, 0 otherwise.
+ */
 bool isEveryPenguinsPlaced(void);
 
 #endif //PROJECT_PLACEMENT_H

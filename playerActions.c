@@ -22,7 +22,8 @@ void askCoordinates() {
 
 }
 
-int isMoveValid() {
+bool isMoveValid()
+{
     int chance = rand() % 5;
     return chance >= 1;
 }

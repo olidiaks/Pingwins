@@ -21,7 +21,8 @@ void placementPhase() {
 
 }
 
-int canPlayerPlacePenguin() {
+bool canPlayerPlacePenguin()
+{
     int chance = rand() % 20;
     return chance >= 1;
 }

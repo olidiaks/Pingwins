@@ -14,6 +14,14 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+/**
+ * This function handles the game's movement phase where players take turns moving penguins.
+ * It continues looping until no more valid moves are available for any player.
+ * For the current player, it processes moves until they have successfully moved or no more moves are available.
+ * Each move involves displaying the board, prompting the player for coordinates, validating the move,
+ * executing the move, and collecting any fish.
+ * After the current player completes their moves, the turn passes to the next player.
+ */
 void movementPhase(void);
 
 /**
@@ -29,7 +37,9 @@ bool isThereAnyPenguinMoveAvailable(void);
 bool isPlayerMoveAvailable(void);
 
 /**
- *
+ * This function moves the current player's penguin on the board.
+ * It updates the game state by moving the penguin and prints a message.
+ * The actual movement logic is handled by the caller.
  */
 void movePenguin(void);
 
