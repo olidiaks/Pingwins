@@ -7,16 +7,33 @@
 
 #include <stdio.h>
 #include "GameState.h"
+#include <stdbool.h>
+#include <stdlib.h>
 
 extern struct GameState gameState;
 
 /**
- * @brief Reads the board dimensions.
+ * @brief Reads and validates the dimensions of the game board.
  *
- * This function reads the dimensions of the game board, likely from standard input or a configuration source.
- * It initializes the board size variables used throughout the game.
+ * This function prompts the user to input the dimensions of the game board
+ * and ensures the input consists of two valid integers. It repeatedly asks
+ * for valid input until correct values are provided. The validity of the
+ * dimensions is determined by the isBoardDimensionsValid function.
+ *
+ * The dimensions are stored in the global GameState structure.
  */
 void readBoardDimensions(void);
+
+/**
+ * @brief Validates the board dimensions.
+ *
+ * This function checks whether the dimensions of the game board are valid.
+ * It ensures the width and height of the board are both positive integers.
+ * It prints an error message when coordinates are invalid.
+ *
+ * @return true if the board dimensions are valid, false otherwise.
+ */
+bool isBoardDimensionsValid(void);
 
 /**
  * @brief Generates a random board configuration.

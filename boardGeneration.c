@@ -4,10 +4,21 @@
 
 #include "boardGeneration.h"
 
-#include <stdlib.h>
 
 void readBoardDimensions() {
-    printf("Reading board dimensions...\n");
+    printf("Give a size of filed on which you want to play: \n");
+    while (scanf("%d %d", &gameState.x_Board_size, &gameState.y_Board_size) != 2 || !isBoardDimensionsValid()) {
+        printf("You need to give real numbers!\n");
+        while (getchar() != '\n');
+    };
+}
+
+bool isBoardDimensionsValid() {
+    if (gameState.x_Board_size <= 0 || gameState.y_Board_size <= 0) {
+        printf("Board dimensions are invalid!\n"
+            "Width and size need to be positive!\n");
+    }
+    return gameState.x_Board_size > 0 && gameState.y_Board_size > 0;
 }
 
 void generateRandomBoard() {
