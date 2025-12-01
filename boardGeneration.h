@@ -6,6 +6,9 @@
 #define PROJECT_BOARDGENERATION_H
 
 #include <stdio.h>
+#include "GameState.h"
+
+extern struct GameState gameState;
 
 /**
  * @brief Reads the board dimensions.
