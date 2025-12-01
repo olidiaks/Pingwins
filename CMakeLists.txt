@@ -15,4 +15,6 @@ add_executable(project
         placement.c
         placement.h
         playerActions.c
-        playerActions.h)
+        playerActions.h
+        GameState.c
+        GameState.h)
