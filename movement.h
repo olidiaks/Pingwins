@@ -41,8 +41,10 @@ bool isPlayerMoveAvailable(void);
 /**
  * This function moves the current player's penguin on the board.
  * It updates the game state by moving the penguin and prints a message.
- * The actual movement logic is handled by the caller.
+ * The caller handles the actual movement logic.
+ *
+ * @param gameState A pointer to the GameState structure containing the board dimensions.
  */
-void movePenguin(void);
+void movePenguin(struct GameState *gameState);
 
 #endif //PROJECT_MOVEMENT_H

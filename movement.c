@@ -12,10 +12,10 @@ void movementPhase(struct GameState *gameState) {
             do {
                 askCoordinates();
             } while (!isMoveValid());
-            movePenguin();
-            collectFish();
+            movePenguin(gameState);
+            collectFish(gameState);
         }
-        changeCurrentPlayer();
+        changeCurrentPlayer(gameState);
     }
 }
 
@@ -29,6 +29,6 @@ bool isPlayerMoveAvailable() {
     return chance == 1;
 }
 
-void movePenguin() {
-    printf("Player %d 's penguin has been moved.\n",current_player+1);
+void movePenguin(struct GameState *gameState) {
+    printf("Player %d 's penguin has been moved.\n", gameState->current_player + 1);
 }

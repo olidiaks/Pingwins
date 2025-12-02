@@ -46,8 +46,10 @@ bool canPlayerPlacePenguin(void);
  * This function updates the board state by placing the current player's penguin at the specified coordinates.
  * It then triggers the collection of fish from the placed penguin's position.
  * The function is called after a valid move is confirmed and is part of the game's placement phase loop.
+ *
+ * @param gameState A pointer to the GameState structure containing the board dimensions.
  */
-void placePenguin(void);
+void placePenguin(struct GameState *gameState);
 
 /**
  * @brief Checks if all penguins have been placed during the placement phase.

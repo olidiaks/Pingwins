@@ -4,8 +4,6 @@
 
 #include "main.h"
 
-int current_player = 0;
-
 
 int main(){
     srand(10);

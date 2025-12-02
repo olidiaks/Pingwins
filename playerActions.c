@@ -5,17 +5,13 @@
 #include "playerActions.h"
 
 
-void collectFish() {
-    printf("Player %d has collected fish.\n",current_player+1);
+void collectFish(struct GameState *gameState) {
+    printf("Player %d has collected fish.\n", gameState->current_player + 1);
 }
 
-void setCurrentPlayer() {
-    current_player = 0;
-}
-
-void changeCurrentPlayer() {
-    current_player = !current_player;
-    printf("Changing players...\n");
+void changeCurrentPlayer(struct GameState *gameState) {
+    gameState->current_player = gameState->current_player + 1 % gameState->num_of_players;
+    printf("Current player is player %d.\n", gameState->current_player);
 }
 
 void askCoordinates() {

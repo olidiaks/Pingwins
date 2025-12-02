@@ -6,17 +6,16 @@
 
 void placementPhase(struct GameState *gameState) {
     readBoardDimensions(gameState);
-    setCurrentPlayer();
     generateRandomBoard(gameState);
     while (canPlayerPlacePenguin()){
         showBoard(gameState);
         do{
             askCoordinates();
         } while (!isMoveValid());
-        placePenguin();
-        collectFish();
+        placePenguin(gameState);
+        collectFish(gameState);
         canPlayerPlacePenguin();
-        changeCurrentPlayer();
+        changeCurrentPlayer(gameState);
     }
 
 }
@@ -27,8 +26,8 @@ bool canPlayerPlacePenguin()
     return chance >= 1;
 }
 
-void placePenguin() {
-    printf("Player %d 's penguin has been placed.\n",current_player+1);
+void placePenguin(struct GameState *gameState) {
+    printf("Player %d 's penguin has been placed.\n", gameState->current_player + 1);
 }
 
 bool isEveryPenguinsPlaced() {

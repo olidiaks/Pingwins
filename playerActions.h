@@ -9,19 +9,17 @@
 #include "main.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "GameState.h"
 
 /**
  * @brief Collects fish for the current player.
  *
  * This function updates the game state by collecting fish for the current player.
  * It also outputs a message indicating that the current player has collected fish.
+ *
+* @param gameState A pointer to the GameState structure containing the board dimensions.
  */
-void collectFish(void);
-
-/**
- * @brief Sets the current player to player 0.
- */
-void setCurrentPlayer(void);
+void collectFish(struct GameState *gameState);
 
 /**
  * @brief Changes the current player in the game.
@@ -29,11 +27,13 @@ void setCurrentPlayer(void);
  * This function toggles the current player between two players.
  * It updates the game state by switching to the next player.
  * A message is printed indicating the player change.
+ *
+ * @param gameState A pointer to the GameState structure containing the board dimensions.
  */
-void changeCurrentPlayer(void);
+void changeCurrentPlayer(struct GameState *gameState);
 
 /**
- * @brief Asks the current player for coordinates input.
+ * @brief Asks the current player for coordinates.
  *
  * This function prompts the current player to enter coordinates for placing a penguin or moving a penguin.
  * It is called during the placement phase and movement phase of the game.

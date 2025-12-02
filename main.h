@@ -11,7 +11,6 @@
 
 #include <stdlib.h>
 
-extern int current_player;
 extern struct GameState gameState;
 
 /**
