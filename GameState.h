@@ -41,6 +41,19 @@ struct Player {
 };
 
 /**
+ * Represents the penguins of a player
+ *
+ * This structure stores the essential information related to a player's penguins
+ * and ongoing progress within the game.
+ *
+ * Members:
+ * - x,y:
+ */
+struct Penguins {
+    int x,y;
+};
+
+/**
  * Represents the state of the game, including the board, players, and current progress.
  *
  * This structure contains information about the current player, the game board,
