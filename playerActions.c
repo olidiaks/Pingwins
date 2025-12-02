@@ -11,13 +11,16 @@ void collectFish(struct GameState *gameState) {
 
 void changeCurrentPlayer(struct GameState *gameState) {
     gameState->current_player = (gameState->current_player + 1) % gameState->num_of_players;
-    printf("Current player is player %d.\n", gameState->current_player);
+    printf("Current player is player %d.\n", 1+gameState->current_player);
 }
 
 void askCoordinates(struct GameState *gameState) {
-    printf("Please input coordinates (row, column): \n");
-    // while (scanf("%s %s", &gameState->y_Board_size, &gameState->x_Board_size) != 2 || !
-    //        isBoardDimensionsValid(gameState));
+    printf("Player %d, please input coordinates (row, column): \n",1+gameState->current_player);
+    while (scanf("%s %s", &gameState->Players->x, &gameState->Players->y) != 2 || !isMoveValid()) {
+        printf("Please provide correct values!\n");
+        while (getchar() != '\n');
+
+    }
 }
 
 bool isMoveValid()

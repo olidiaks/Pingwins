@@ -36,7 +36,6 @@ struct Field {
 struct Player {
     int id;
     int current_score;
-    char x[2],y[2];
     struct Penguin *penguins;
 };
 
