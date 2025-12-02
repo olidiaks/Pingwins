@@ -28,8 +28,24 @@ void generateRandomBoard(struct GameState *gameState) {
     for (int x = 0; x < gameState->x_Board_size; x++) {
         gameState->Board[x] = malloc(gameState->y_Board_size * sizeof(struct Field));
         for (int y = 0; y < gameState->y_Board_size; y++) {
-            gameState->Board[x][y].amount_of_fish = rand() % 10;
-            gameState->Board[x][y].id_player = -1;
+            //gameState->Board[x][y].amount_of_fish = (rand() % 3)+1;
+            //gameState->Board[x][y].id_player = -1;
+
+            const int ceil = 100;
+            int randNum = rand() % ceil;
+            const int step3 = 10;
+            const int step2 = 30;
+            const int step1 = ceil;
+
+            if (randNum < step3) {
+                gameState->Board[x][y].amount_of_fish = 3;
+            }
+            else if (randNum < step2) {
+                gameState->Board[x][y].amount_of_fish = 2;
+            }
+            else if (randNum < step1) {
+                gameState->Board[x][y].amount_of_fish = 1;
+            }
         }
     }
 }
