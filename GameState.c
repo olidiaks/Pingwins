@@ -15,5 +15,6 @@ void init() {
     for (int i = 0; i < gameState.num_of_players; i++) {
         gameState.Players[i].current_score = 0;
         gameState.Players[i].id = i;
+
     }
 }

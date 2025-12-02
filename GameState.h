@@ -30,10 +30,14 @@ struct Field {
  * Members:
  * - id: An integer uniquely identifying the player within the game.
  * - current_score: An integer tracking the player's score accumulated during gameplay.
+ * - x,y: Two integers representing the values provided by the player to either place a penguin or move a penguin.
+ * - Penguins:  A pointer to an array of 'Penguin' structures containing penguin-related data for the specific player.
  */
 struct Player {
     int id;
     int current_score;
+    char x[2],y[2];
+    struct Penguins *Penguins;
 };
 
 /**
@@ -49,8 +53,8 @@ struct Player {
  * - Board: A two-dimensional array of `Field` structures representing the game board.
  * - Players: A pointer to an array of `Player` structures containing player-specific data.
  * - num_of_players: An integer indicating the number of players currently in the game.
- * - x_Board_size: The width of the game board (number of columns).
- * - y_Board_size: The height of the game board (number of rows).
+ * - x_Board_size: The width of the game board (number of rows).
+ * - y_Board_size: The height of the game board (number of columns).
  */
 struct GameState {
     int current_player;
