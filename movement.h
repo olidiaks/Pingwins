@@ -9,6 +9,7 @@
 #include "playerActions.h"
 #include "consoleVisualization.h"
 #include "main.h"
+#include "GameState.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,8 +22,9 @@
  * Each move involves displaying the board, prompting the player for coordinates, validating the move,
  * executing the move, and collecting any fish.
  * After the current player completes their moves, the turn passes to the next player.
+ * @param gameState A pointer to the GameState structure containing the board dimensions.
  */
-void movementPhase(void);
+void movementPhase(struct GameState *gameState);
 
 /**
  * This function check if any player can make move.

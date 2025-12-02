@@ -4,11 +4,11 @@
 
 #include "movement.h"
 
-void movementPhase() {
+void movementPhase(struct GameState *gameState) {
     while(isThereAnyPenguinMoveAvailable()){
         bool hasCurrentPlayerMoved = false;
         while(isPlayerMoveAvailable()){
-            showBoard();
+            showBoard(gameState);
             do {
                 askCoordinates();
             } while (!isMoveValid());

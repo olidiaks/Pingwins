@@ -10,7 +10,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-extern struct GameState gameState;
 
 /**
  * @brief Reads and validates the dimensions of the game board.
@@ -21,29 +20,34 @@ extern struct GameState gameState;
  * dimensions is determined by the isBoardDimensionsValid function.
  *
  * The dimensions are stored in the global GameState structure.
+ * @param gameState A pointer to the GameState structure containing the board dimensions.
  */
-void readBoardDimensions(void);
+void readBoardDimensions(struct GameState *gameState);
 
 /**
- * @brief Validates the board dimensions.
+ * @brief Validates the dimensions of the game board stored in the GameState structure.
  *
- * This function checks whether the dimensions of the game board are valid.
- * It ensures the width and height of the board are both positive integers.
- * It prints an error message when coordinates are invalid.
+ * This function checks if the board dimensions specified in the GameState structure
+ * are positive integers. It prints an error message if the dimensions are invalid.
  *
- * @return true if the board dimensions are valid, false otherwise.
+ * @param gameState A pointer to the GameState structure containing the board dimensions.
+ * @return Returns true if both dimensions are greater than 0; otherwise, returns false.
  */
-bool isBoardDimensionsValid(void);
+bool isBoardDimensionsValid(struct GameState *gameState);
 
 /**
- * @brief Generates a random board configuration.
+ * @brief Generates a random game board and initializes each field.
  *
- * This function creates a board with randomly placed elements (e.g., fish, penguins)
- * based on the board dimensions specified by the caller. The exact nature of the
- * randomization depends on the implementation details of the board generation logic.
+ * This function dynamically allocates memory for the game board
+ * based on the dimensions specified in the GameState structure
+ * (x_Board_size and y_Board_size). It then initializes each field
+ * on the board with a random number of fish and sets the player ID to -1
+ * (indicating no player is present in that field).
  *
- * The function does not return any value and does not take any parameters.
+ * @param gameState Pointer to the GameState structure that holds the
+ *        board dimensions and other game-related information. The function
+ *        modifies the GameState to include the newly generated board.
  */
-void generateRandomBoard(void);
+void generateRandomBoard(struct GameState *gameState);
 
 #endif //PROJECT_BOARDGENERATION_H

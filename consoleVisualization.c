@@ -4,6 +4,6 @@
 #include "consoleVisualization.h"
 
 
-void showBoard() {
+void showBoard(struct GameState *gameState) {
     printf("Displaying the board.\n");
 }

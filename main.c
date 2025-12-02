@@ -9,9 +9,9 @@ int current_player = 0;
 
 int main(){
     srand(10);
-    placementPhase();
+    placementPhase(&gameState);
     if (isEveryPenguinsPlaced()) {
-        movementPhase();
+        movementPhase(&gameState);
         printf("The game was ended!\n");
     }
     else {

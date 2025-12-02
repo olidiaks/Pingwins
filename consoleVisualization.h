@@ -6,6 +6,7 @@
 #define PROJECT_CONSOLEVISUALIZATION_H
 
 #include <stdio.h>
+#include "GameState.h"
 
 /**
  * @brief Displays the current state of the game board.
@@ -15,8 +16,10 @@
  * phases to provide the player with a visual overview of penguins,
  * fish, and empty tiles.
  *
+ * @param gameState A pointer to the GameState structure containing the board dimensions.
+ *
  * @return void
  */
-void showBoard(void);
+void showBoard(struct GameState *gameState);
 
 #endif //PROJECT_CONSOLEVISUALIZATION_H

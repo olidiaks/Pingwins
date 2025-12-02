@@ -7,10 +7,12 @@
 
 #include "movement.h"
 #include "placement.h"
+#include "GameState.h"
 
 #include <stdlib.h>
 
 extern int current_player;
+extern struct GameState gameState;
 
 /**
  * @brief The entry point for the game application.

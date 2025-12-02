@@ -4,12 +4,12 @@
 
 #include "placement.h"
 
-void placementPhase() {
-    readBoardDimensions();
+void placementPhase(struct GameState *gameState) {
+    readBoardDimensions(gameState);
     setCurrentPlayer();
-    generateRandomBoard();
+    generateRandomBoard(gameState);
     while (canPlayerPlacePenguin()){
-        showBoard();
+        showBoard(gameState);
         do{
             askCoordinates();
         } while (!isMoveValid());
