@@ -30,5 +30,5 @@ bool isPlayerMoveAvailable() {
 }
 
 void movePenguin(struct GameState *gameState) {
-    printf("Player %d 's penguin has been moved.\n", gameState->current_player + 1);
+    printf("Player %d's penguin has been moved.\n", gameState->current_player + 1);
 }
