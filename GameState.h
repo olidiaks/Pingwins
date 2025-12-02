@@ -37,7 +37,7 @@ struct Player {
     int id;
     int current_score;
     char x[2],y[2];
-    struct Penguins *Penguins;
+    struct Penguin *penguins;
 };
 
 /**
@@ -49,7 +49,7 @@ struct Player {
  * Members:
  * - x,y:
  */
-struct Penguins {
+struct Penguin {
     int x,y;
 };
 
@@ -76,6 +76,7 @@ struct GameState {
     int num_of_players;
     int x_Board_size;
     int y_Board_size;
+    int num_of_penguins_per_player;
 };
 
 /**
