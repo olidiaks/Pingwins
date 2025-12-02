@@ -23,7 +23,9 @@ bool isBoardDimensionsValid() {
 
 void generateRandomBoard() {
     printf("Generating random board...\n");
+    gameState.Board = malloc(gameState.x_Board_size * sizeof(struct Field*));
     for (int x = 0; x < gameState.x_Board_size; x++) {
+        gameState.Board[x] = malloc(gameState.y_Board_size * sizeof(struct Field));
         for (int y = 0; y < gameState.y_Board_size; y++) {
             gameState.Board[x][y].amount_of_fish = rand() % 10;
             gameState.Board[x][y].id_player = -1;
