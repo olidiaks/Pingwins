@@ -10,7 +10,7 @@ void placementPhase(struct GameState *gameState) {
     while (canPlayerPlacePenguin()){
         showBoard(gameState);
         do{
-            askCoordinates();
+            askCoordinates(gameState);
         } while (!isMoveValid());
         placePenguin(gameState);
         collectFish(gameState);

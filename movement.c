@@ -10,7 +10,7 @@ void movementPhase(struct GameState *gameState) {
         while(isPlayerMoveAvailable()){
             showBoard(gameState);
             do {
-                askCoordinates();
+                askCoordinates(gameState);
             } while (!isMoveValid());
             movePenguin(gameState);
             collectFish(gameState);
