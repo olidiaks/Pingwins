@@ -7,6 +7,7 @@
 
 int main(){
     srand(10);
+    init();
     placementPhase(&gameState);
     if (isEveryPenguinsPlaced()) {
         movementPhase(&gameState);
