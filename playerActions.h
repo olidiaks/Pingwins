@@ -5,10 +5,12 @@
 #ifndef PROJECT_PLAYERACTIONS_H
 #define PROJECT_PLAYERACTIONS_H
 
+#include <ctype.h>
 
 #include "main.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include <stdbool.h>
 #include "GameState.h"
 
 /**
@@ -47,6 +49,6 @@ void askCoordinates(struct GameState *gameState);
  * This function checks if the current move is valid.
  * It returns true if the move is valid, false otherwise.
  */
-bool isMoveValid(void);
+bool isMoveValid(char x[2], char y[2]);
 
 #endif //PROJECT_PLAYERACTIONS_H

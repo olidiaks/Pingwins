@@ -9,6 +9,9 @@ void placementPhase(struct GameState *gameState) {
     generateRandomBoard(gameState);
     while (canPlayerPlacePenguin()){
         showBoard(gameState);
+
+        char x[2], y[2];
+
         do{
             askCoordinates(gameState);
         } while (!isMoveValid());
