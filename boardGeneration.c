@@ -6,8 +6,8 @@
 
 
 void readBoardDimensions(struct GameState *gameState) {
-    printf("Give a size of filed on which you want to play: \n");
-    while (scanf("%d %d", &gameState->x_Board_size, &gameState->y_Board_size) != 2 || !
+    printf("Input dimensions of the board of which you want to play (number of rows then number of columns): \n");
+    while (scanf("%d %d", &gameState->y_Board_size, &gameState->x_Board_size) != 2 || !
            isBoardDimensionsValid(gameState)) {
         printf("You need to give real numbers!\n");
         while (getchar() != '\n');
