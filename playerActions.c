@@ -10,7 +10,7 @@ void collectFish(struct GameState *gameState) {
 }
 
 void changeCurrentPlayer(struct GameState *gameState) {
-    gameState->current_player = gameState->current_player + 1 % gameState->num_of_players;
+    gameState->current_player = (gameState->current_player + 1) % gameState->num_of_players;
     printf("Current player is player %d.\n", gameState->current_player);
 }
 
