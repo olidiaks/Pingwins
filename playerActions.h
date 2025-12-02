@@ -37,8 +37,9 @@ void changeCurrentPlayer(struct GameState *gameState);
  *
  * This function prompts the current player to enter coordinates for placing a penguin or moving a penguin.
  * It is called during the placement phase and movement phase of the game.
+ * @param gameState A pointer to the GameState structure containing the board dimensions.
  */
-void askCoordinates(void);
+void askCoordinates(struct GameState *gameState);
 
 /**
  * @brief Checks if the current move is valid.

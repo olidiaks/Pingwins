@@ -14,8 +14,10 @@ void changeCurrentPlayer(struct GameState *gameState) {
     printf("Current player is player %d.\n", gameState->current_player);
 }
 
-void askCoordinates() {
-
+void askCoordinates(struct GameState *gameState) {
+    printf("Please input coordinates (row, column): \n");
+    // while (scanf("%s %s", &gameState->y_Board_size, &gameState->x_Board_size) != 2 || !
+    //        isBoardDimensionsValid(gameState));
 }
 
 bool isMoveValid()
