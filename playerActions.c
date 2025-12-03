@@ -36,7 +36,10 @@ void askCoordinates(struct GameState *gameState) {
     gameState->Players[gameState->current_player].penguins->y = yo+1;
 }
 
-bool isMoveValid(char x, char y, struct GameState *gameState) {
+bool isMoveValid(struct GameState* gameState)
+{
     // make the function read xo and yo from the askCoordinates function
-    return (0 > x) && (x > gameState->x_Board_size) && (0 > y) && (y > gameState->y_Board_size);
+    int x = gameState->Players[gameState->current_player].penguins->x;
+    int y = gameState->Players[gameState->current_player].penguins->y;
+    return (0 > x) && (x < gameState->x_Board_size) && (0 > y) && (y < gameState->y_Board_size);
 }
