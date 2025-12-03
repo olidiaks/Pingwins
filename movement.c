@@ -34,6 +34,7 @@ bool isThereAnyPenguinMoveAvailable(struct GameState *gameState) {
 bool isPlayerMoveAvailable() {
     // if the current player's penguin is surrounded from every direction by 0 (where 0 can also mean that 
     //there's another player's penguin standing on that spot) that player cannot move
+    return 1;
 }
 
 void movePenguin(struct GameState *gameState) {
