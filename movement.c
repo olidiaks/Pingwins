@@ -7,11 +7,12 @@
 void movementPhase(struct GameState *gameState) {
     while(isThereAnyPenguinMoveAvailable(gameState)){
         bool hasCurrentPlayerMoved = false;
-        while(isPlayerMoveAvailable()){
+        while(isPlayerMoveAvailable() && !(hasCurrentPlayerMoved)){
             showBoard(gameState);
             askCoordinates(gameState);
             movePenguin(gameState);
             collectFish(gameState);
+            hasCurrentPlayerMoved = true;
         }
         changeCurrentPlayer(gameState);
     }

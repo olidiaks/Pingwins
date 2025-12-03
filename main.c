@@ -10,7 +10,7 @@ int main(){
     init();
     placementPhase(&gameState);
     if (isEveryPenguinsPlaced(&gameState)) {
-        printf("- - - - - - - - - - \nCommencing movement phase. \n- - - - - - - - - - -\n");
+        printf("- - - - - - - - - - \nCommencing movement phase. \n- - - - - - - - - -\n");
         movementPhase(&gameState);
         printf("No players can make any further moves.\n");
         if(gameState.Players[0].current_score > gameState.Players[1].current_score){
