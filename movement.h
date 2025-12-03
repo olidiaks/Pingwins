@@ -10,6 +10,7 @@
 #include "consoleVisualization.h"
 #include "main.h"
 #include "GameState.h"
+#include "placement.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,7 +31,7 @@ void movementPhase(struct GameState *gameState);
  * This function check if any player can make move.
  * @return Return true if penguin can be placed and false if not.
  */
-bool isThereAnyPenguinMoveAvailable(void);
+bool isThereAnyPenguinMoveAvailable(struct GameState *gameState);
 
 /**
  * This function check if player can make move.

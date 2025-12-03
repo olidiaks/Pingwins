@@ -30,7 +30,7 @@ bool canPlayerPlacePenguin(struct GameState *gameState)
         }
     // printf("spots with 0 %d \n",counter);
     // printf("%d %d \n",gameState->x_Board_size,gameState->y_Board_size);
-    if(counter == gameState->x_Board_size*gameState->y_Board_size){
+    if(counter == gameState->x_Board_size*gameState->y_Board_size || counter == gameState->num_of_players*gameState->num_of_penguins_per_player){
         return 0;}
     else{
         return 1;}

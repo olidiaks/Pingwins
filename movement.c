@@ -5,7 +5,7 @@
 #include "movement.h"
 
 void movementPhase(struct GameState *gameState) {
-    while(isThereAnyPenguinMoveAvailable()){
+    while(isThereAnyPenguinMoveAvailable(gameState)){
         bool hasCurrentPlayerMoved = false;
         while(isPlayerMoveAvailable()){
             showBoard(gameState);
@@ -17,14 +17,23 @@ void movementPhase(struct GameState *gameState) {
     }
 }
 
-bool isThereAnyPenguinMoveAvailable() {
-    int chance = rand() % 50;
-    return chance >= 1;
+bool isThereAnyPenguinMoveAvailable(struct GameState *gameState) {
+    int counter = 0;
+    for(int i = 0; i<gameState->x_Board_size;i++){
+        for (int j = 0; j <gameState->y_Board_size;j++){
+            if(gameState->Board[i][j].amount_of_fish == 0){
+                counter ++;}
+            }
+        }
+    if(counter == gameState->x_Board_size*gameState->y_Board_size){
+        return 0;}
+    else{
+        return 1;}
 }
 
 bool isPlayerMoveAvailable() {
-    int chance = rand() % 2;
-    return chance == 1;
+    // if the current player's penguin is surrounded from every direction by 0 (where 0 can also mean that 
+    //there's another player's penguin standing on that spot) that player cannot move
 }
 
 void movePenguin(struct GameState *gameState) {
