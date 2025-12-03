@@ -14,7 +14,7 @@ void movementPhase(struct GameState *gameState) {
 
             do {
                 askCoordinates(gameState);
-            } while (!isMoveValid(x, y));
+            } while (!isMoveValid(x, y, gameState));
             movePenguin(gameState);
             collectFish(gameState);
         }

@@ -14,7 +14,7 @@ void placementPhase(struct GameState *gameState) {
 
         do{
             askCoordinates(gameState);
-        } while (!isMoveValid());
+        } while (!isMoveValid(x, y, gameState));
         placePenguin(gameState);
         collectFish(gameState);
         canPlayerPlacePenguin();
