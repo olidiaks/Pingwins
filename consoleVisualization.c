@@ -30,8 +30,15 @@ void showBoard(struct GameState *gameState) {
                 printf("%c%d\t", vertChr, vertMul);
             }
             else if (x != 0 && y != 0) {
-                //if (y > 1) {
+                if((gameState->Players[0].penguins->x == x) && (gameState->Players[0].penguins->y == y)){
+                    printf("X   |\t");
+                }
+                else if((gameState->Players[1].penguins->x == x) && (gameState->Players[1].penguins->y == y)){
+                    printf("Y   |\t");
+                }
+                else{
                     printf("%d   |\t", gameState->Board[x-1][y-1].amount_of_fish);
+                }
                 //}
                 //else {
                 //    printf("%d\t", gameState->Board[x-1][y-1].amount_of_fish);

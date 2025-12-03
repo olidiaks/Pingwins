@@ -28,8 +28,8 @@ void askCoordinates(struct GameState *gameState) {
     int xo = (int) (x_FirstChar - 65) + (atoi(&x_SecondChar) - 1) * 26;
     int yo = (int) (y_FirstChar - 65) + (atoi(&y_SecondChar) - 1) * 26 - 260;
 
-    gameState->Players[gameState->current_player].penguins->x = xo;
-    gameState->Players[gameState->current_player].penguins->y = yo;
+    gameState->Players[gameState->current_player].penguins->x = xo+1;
+    gameState->Players[gameState->current_player].penguins->y = yo+1;
 }
 
 bool isMoveValid(char x, char y, struct GameState *gameState) {
