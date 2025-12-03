@@ -24,20 +24,20 @@ void showBoard(struct GameState *gameState) {
             }
 
             if (x == 0 && y != 0)  {
-                printf("%c%d\t", horChr, horMul);
+                printf("%c%d\t|\t", horChr, horMul);
             }
             else if (y == 0 && x != 0) {
-                printf("%c%d\t", vertChr, vertMul);
+                printf("%c%d\t|\t", vertChr, vertMul);
             }
             else if (x != 0 && y != 0) {
                 if((gameState->Players[0].penguins->x == x) && (gameState->Players[0].penguins->y == y)){
-                    printf("X   |\t");
+                    printf("X\t|\t");
                 }
                 else if((gameState->Players[1].penguins->x == x) && (gameState->Players[1].penguins->y == y)){
-                    printf("Y   |\t");
+                    printf("Y\t|\t");
                 }
                 else{
-                    printf("%d   |\t", gameState->Board[x-1][y-1].amount_of_fish);
+                    printf("%d\t|\t", gameState->Board[x-1][y-1].amount_of_fish);
                 }
                 //}
                 //else {
@@ -50,7 +50,7 @@ void showBoard(struct GameState *gameState) {
         for (int x = 0; x < gameState->y_Board_size; x++) {
             printf("========");
         }
-        printf("\n");
+        printf("=\n");
     }
     printf("The current scores are: Player 1 - %d point(s), Player 2 - %d point(s)\n\n",gameState->Players[0].current_score,gameState->Players[1].current_score);
 }
