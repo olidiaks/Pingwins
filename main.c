@@ -9,7 +9,8 @@ int main(){
     srand(10);
     init();
     placementPhase(&gameState);
-    if (isEveryPenguinsPlaced()) {
+    if (isEveryPenguinsPlaced(&gameState)) {
+        printf("- - - - - - - - - - \nCommencing movement phase. \n- - - - - - - - - - -");
         movementPhase(&gameState);
         printf("The game was ended!\n");
     }

@@ -38,7 +38,7 @@ void placementPhase(struct GameState *gameState);
  *
  * @return Returns true if the current player can place a penguin, false otherwise.
  */
-bool canPlayerPlacePenguin(void);
+bool canPlayerPlacePenguin(struct GameState *gameState);
 
 /**
  * @brief Places a penguin on the board for the current player.
@@ -58,6 +58,6 @@ void placePenguin(struct GameState *gameState);
  *
  * @return 1 if all penguins are placed, 0 otherwise.
  */
-bool isEveryPenguinsPlaced(void);
+bool isEveryPenguinsPlaced(struct GameState *gameState);
 
 #endif //PROJECT_PLACEMENT_H

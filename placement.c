@@ -7,28 +7,54 @@
 void placementPhase(struct GameState *gameState) {
     readBoardDimensions(gameState);
     generateRandomBoard(gameState);
-    while (canPlayerPlacePenguin()){
+    while (canPlayerPlacePenguin(gameState)){
         showBoard(gameState);
         askCoordinates(gameState);
         placePenguin(gameState);
         collectFish(gameState);
-        canPlayerPlacePenguin();
+        canPlayerPlacePenguin(gameState);
         changeCurrentPlayer(gameState);
     }
 
 }
 
-bool canPlayerPlacePenguin()
+bool canPlayerPlacePenguin(struct GameState *gameState)
 {
-    int chance = rand() % 20;
-    return chance >= 1;
+    int counter = 0;
+    for(int i = 0; i<gameState->x_Board_size;i++){
+        for (int j = 0; j <gameState->y_Board_size;j++){
+            // printf("%d\n",gameState->Board[i][j].amount_of_fish);
+            if(gameState->Board[i][j].amount_of_fish == 0){
+                counter ++;}
+            }
+        }
+    // printf("spots with 0 %d \n",counter);
+    // printf("%d %d \n",gameState->x_Board_size,gameState->y_Board_size);
+    if(counter == gameState->x_Board_size*gameState->y_Board_size){
+        return 0;}
+    else{
+        return 1;}
 }
 
 void placePenguin(struct GameState *gameState) {
     printf("Player %d 's penguin has been placed.\n", gameState->current_player + 1);
 }
 
-bool isEveryPenguinsPlaced() {
-    int chance = rand() % 2;
-    return chance;
+bool isEveryPenguinsPlaced(struct GameState *gameState) {
+    int counter = 0;
+    for(int i = 0; i<gameState->x_Board_size;i++){
+        for (int j = 0 ; j <gameState->y_Board_size;j++){
+            if(gameState->Board[i][j].amount_of_fish == 0){
+                counter ++;}
+            }
+        }
+    
+    // printf("spots with 0 %d \n",counter);
+
+    if(counter == 2){
+        return 1;
+    }
+    else if (!(canPlayerPlacePenguin(gameState))){
+        return 0;
+    }
 }
