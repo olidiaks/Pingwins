@@ -5,6 +5,10 @@
 #include "playerActions.h"
 
 void collectFish(struct GameState *gameState) {
+    int x = gameState->Players[gameState->current_player].penguins->x;
+    int y = gameState->Players[gameState->current_player].penguins->y;
+    gameState->Players[gameState->current_player].current_score += gameState->Board[x-1][y-1].amount_of_fish;
+    gameState->Board[x-1][y-1].amount_of_fish = 0;
     printf("Player %d has collected fish.\n", gameState->current_player + 1);
 }
 

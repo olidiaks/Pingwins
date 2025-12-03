@@ -5,7 +5,7 @@
 
 
 void showBoard(struct GameState *gameState) {
-    printf("Displaying the board.\n");
+    printf("Displaying the board.\n\n");
 
     char horChr, vertChr;
     unsigned short int horMul, vertMul;
@@ -52,6 +52,7 @@ void showBoard(struct GameState *gameState) {
         }
         printf("\n");
     }
+    printf("The current scores are: Player 1 - %d point(s), Player 2 - %d point(s)\n\n",gameState->Players[0].current_score,gameState->Players[1].current_score);
 }
 
 
