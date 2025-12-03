@@ -37,7 +37,7 @@ void showBoard(struct GameState *gameState) {
                     printf("Y\t|\t");
                 }
                 else{
-                    printf("%d\t|\t", gameState->Board[x-1][y-1].amount_of_fish);
+                    printf("%d\t|\t", gameState->Board[x - 1][y - 1].amount_of_fish);
                 }
                 //}
                 //else {
