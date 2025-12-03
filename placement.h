@@ -31,12 +31,16 @@
 void placementPhase(struct GameState *gameState);
 
 /**
- * @brief Indicates whether the current player can place a penguin.
+ * @brief Checks if the current player is able to place any penguins on the board.
  *
- * This function returns true if the current player can place a penguin, and false otherwise.
- * The decision is based on a random chance (approximately 9/20 chance to return true).
+ * This function evaluates whether there are valid board positions available for the
+ * current player to place penguins. It iterates through the board, counting fields
+ * that do not contain any fish. The function returns false if all fields are empty
+ * or if the required penguins for all players are already placed.
  *
- * @return Returns true if the current player can place a penguin, false otherwise.
+ * @param gameState A pointer to the GameState structure containing the board and game details.
+ * @return An integer value indicating whether the player can place penguins:
+ *         1 if the player can place a penguin, 0 otherwise.
  */
 bool canPlayerPlacePenguin(struct GameState *gameState);
 

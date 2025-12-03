@@ -6,7 +6,7 @@
 
 void placementPhase(struct GameState *gameState) {
     readBoardDimensions(gameState);
-    generateRandomBoard(gameState);
+    generateBoard(gameState);
     while (canPlayerPlacePenguin(gameState)){
         showBoard(gameState);
         askCoordinates(gameState);

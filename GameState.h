@@ -79,12 +79,19 @@ struct GameState {
 };
 
 /**
- * Initializes the game state structure with default values.
+ * Initializes the game state by setting up player information and initial game configuration.
  *
- * This function initializes the number of players, sets their initial scores to zero,
- * and assigns unique IDs to each player within the game state. It does not perform
- * other game setup operations such as initializing the board or configuring additional
- * game parameters.
+ * This function allocates memory for players and their respective penguins,
+ * and initializes relevant data such as number of players, current player,
+ * and the number of penguins per player. It establishes the foundation required
+ * for conducting further game phases.
+ *
+ * Postconditions:
+ * - `gameState.num_of_players`: Set to 2 by default.
+ * - `gameState.current_player`: Set to 0 as the starting player.
+ * - `gameState.num_of_penguins_per_player`: Set to 1.
+ * - Memory is allocated for `gameState.Players` and their penguins, and
+ *   relevant fields like `current_score` and `id` are initialized.
  */
 void init();
 

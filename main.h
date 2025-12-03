@@ -14,13 +14,13 @@
 extern struct GameState gameState;
 
 /**
- * @brief The entry point for the game application.
+ * The entry point of the program. Initiates and runs the game by performing
+ * the placement and movement phases. Determines the winner based on scores
+ * or identifies whether a tie occurred. Handles early termination if all
+ * penguins are not properly placed during the placement phase.
  *
- * This function initializes the game's execution by setting a fixed seed for randomness,
- * invoking the penguin placement phase, verifying whether all penguins have been placed,
- * and proceeding to the movement phase if the placement conditions are met.
- *
- * @return Returns 0 if the game ends successfully, or 1 if not all penguins were placed.
+ * @return 0 if the game executes successfully and proceeds through all phases,
+ *         1 if not all penguins are placed.
  */
 int main();
 

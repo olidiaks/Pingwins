@@ -28,8 +28,13 @@
 void movementPhase(struct GameState *gameState);
 
 /**
- * This function check if any player can make move.
- * @return Return true if penguin can be placed and false if not.
+ * Checks if there are any valid moves available for penguins on the game board.
+ * This is determined by verifying whether any board cell has fish available.
+ * If all cells have zero fish, it indicates no moves are possible for any player.
+ *
+ * @param gameState A pointer to the GameState structure containing the board state
+ *                  and game parameters, including board size and its fields.
+ * @return Returns 1 if there are valid moves available; otherwise, returns 0.
  */
 bool isThereAnyPenguinMoveAvailable(struct GameState *gameState);
 

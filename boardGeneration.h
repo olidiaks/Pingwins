@@ -48,6 +48,6 @@ bool isBoardDimensionsValid(struct GameState *gameState);
  *        board dimensions and other game-related information. The function
  *        modifies the GameState to include the newly generated board.
  */
-void generateRandomBoard(struct GameState *gameState);
+void generateBoard(struct GameState* gameState);
 
 #endif //PROJECT_BOARDGENERATION_H
