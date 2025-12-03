@@ -49,6 +49,6 @@ void askCoordinates(struct GameState *gameState);
  * This function checks if the current move is valid.
  * It returns true if the move is valid, false otherwise.
  */
-bool isMoveValid(char x[2], char y[2], struct GameState *gameState);
+bool isMoveValid(char x, char y, struct GameState *gameState);
 
 #endif //PROJECT_PLAYERACTIONS_H
