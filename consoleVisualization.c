@@ -13,21 +13,15 @@ void showBoard(struct GameState *gameState) {
     for (int x = 0; x <= gameState->x_Board_size; x++) {
         for (int y = 0; y <= gameState->y_Board_size; y++) {
 
-            horChr = 64 + y%26;
-            horMul = y / 26 + 1;
-
-            vertChr = 64 + 32 + x%26;
-            vertMul = x / 26 + 1;
-
             if (x == 0 && y == 0) {
                 printf("\t");
             }
 
             if (x == 0 && y != 0)  {
-                printf("%c%d\t|\t", horChr, horMul);
+                printf("%d\t|\t", y);
             }
             else if (y == 0 && x != 0) {
-                printf("%c%d\t|\t", vertChr, vertMul);
+                printf("%d\t|\t", x);
             }
             else if (x != 0 && y != 0) {
                 if((gameState->Players[0].penguins->x == x) && (gameState->Players[0].penguins->y == y)){
