@@ -4,6 +4,7 @@
 
 #include "GameState.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 
 struct GameState gameState;
@@ -17,5 +18,9 @@ void init() {
         gameState.Players[i].current_score = 0;
         gameState.Players[i].id = i;
         gameState.Players[i].penguins = malloc(gameState.num_of_penguins_per_player * sizeof(struct Penguin));
+        if (gameState.Players[i].penguins == NULL) {
+            printf("Fild provided by you is too big. You do not have enough memory.\n");
+            exit(1);
+        }
     }
 }
