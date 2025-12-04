@@ -14,7 +14,7 @@ void showBoard(struct GameState *gameState) {
         for (int y = 0; y <= gameState->y_Board_size; y++) {
 
             if (x == 0 && y == 0) {
-                printf("\t");
+                printf("\t|\t");
             }
 
             if (x == 0 && y != 0)  {
