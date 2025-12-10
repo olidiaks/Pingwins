@@ -13,5 +13,5 @@
 13. Write checking if a move is possible.
 14. Implement an algorithm for finding the best move.
 15. Write checking if penguins on filed are placed correctly.
-16. Write an implementation of handling more than two players.
-17. Implement more penguins than one penguin per player.
+16. Write an implementation of handling more than two players. – Oliwier
+17. Implement more penguins than one penguin per player. – Oliwier
