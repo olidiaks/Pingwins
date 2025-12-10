@@ -19,4 +19,6 @@ add_executable(project
         GameState.c
         GameState.h
         interactive_mode.c
-        interactive_mode.h)
+        interactive_mode.h
+        autonomus_mode.c
+        autonomus_mode.h)

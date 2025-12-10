@@ -7,6 +7,8 @@
 
 #include "interactive_mode.h"
 #include <stdlib.h>
+#include "autonomus_mode.h"
+
 
 extern struct GameState gameState;
 
@@ -20,7 +22,8 @@ extern struct GameState gameState;
  *
  * @return int Returns 0 upon successful execution of the program.
  */
-int main();
+
+int main(int argc, char *argv[]);
 
 
 #endif //PROJECT_MAIN_H
