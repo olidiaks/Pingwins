@@ -1,8 +1,8 @@
 1. Implement call for interactive mode and autonomous mode. – Oliwier
-2. Write validation of moves.
+2. Write validation of moves. - Bryce
 3. Write autonomous
 4. Write opening files both for saving and loading.
-5. Write check if files are open correctly.
+5. Write check if files were opened correctly.
 6. Write closing files correctly.
 7. Write checking if players are in the list of players.
 8. Write getting id.
@@ -10,8 +10,8 @@
 10. Write a validating field.
 11. Write writing a player to a list of players who moved.
 12. Write placing of penguins.
-13. Write checking if a move is possible.
+13. Write checking if a move is possible. - Bryce
 14. Implement an algorithm for finding the best move.
-15. Write checking if penguins on filed are placed correctly.
+15. Write checking if penguins on field are placed correctly.
 16. Write an implementation of handling more than two players. – Oliwier
 17. Implement more penguins than one penguin per player. – Oliwier
