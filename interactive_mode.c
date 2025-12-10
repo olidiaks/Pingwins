@@ -1,0 +1,27 @@
+//
+// Created by olidiaks on 10.12.2025.
+//
+
+#include "interactive_mode.h"
+
+
+void interactive_mode(struct GameState *gameState) {
+    init();
+    placementPhase(gameState);
+    if (isEveryPenguinsPlaced(gameState)) {
+        printf("- - - - - - - - - - \nCommencing movement phase. \n- - - - - - - - - -\n");
+        movementPhase(gameState);
+        showBoard(gameState);
+        printf("No players can make any further moves.\n");
+        if (gameState->Players[0].current_score > gameState->Players[1].current_score) {
+            printf("Congratulations, Player 1! You have won.\n");
+        } else if (gameState->Players[0].current_score < gameState->Players[1].current_score) {
+            printf("Congratulations, Player 2! You have won.\n");
+        } else {
+            printf("Unfortunately or not, it's a tie!\n");
+        }
+    } else {
+        printf("Not all penguins were placed.\n");
+        exit(1);
+    }
+}

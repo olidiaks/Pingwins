@@ -17,4 +17,6 @@ add_executable(project
         playerActions.c
         playerActions.h
         GameState.c
-        GameState.h)
+        GameState.h
+        interactive_mode.c
+        interactive_mode.h)

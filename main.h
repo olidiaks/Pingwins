@@ -5,22 +5,20 @@
 #ifndef PROJECT_MAIN_H
 #define PROJECT_MAIN_H
 
-#include "movement.h"
-#include "placement.h"
-#include "GameState.h"
-
+#include "interactive_mode.h"
 #include <stdlib.h>
 
 extern struct GameState gameState;
 
 /**
- * The entry point of the program. Initiates and runs the game by performing
- * the placement and movement phases. Determines the winner based on scores
- * or identifies whether a tie occurred. Handles early termination if all
- * penguins are not properly placed during the placement phase.
+ * @brief The entry point of the program. Initializes the game by seeding the random number generator
+ *        and invoking the interactive game mode with the game state.
  *
- * @return 0 if the game executes successfully and proceeds through all phases,
- *         1 if not all penguins are placed.
+ * The function sets a fixed seed for the random number generator to ensure deterministic behavior
+ * during program execution. It then calls the interactive_mode function to start the game, passing
+ * the global gameState as a parameter, and returns 0 to indicate successful execution.
+ *
+ * @return int Returns 0 upon successful execution of the program.
  */
 int main();
 
