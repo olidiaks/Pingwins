@@ -15,7 +15,7 @@ void movementPhase(struct GameState* gameState)
             askCoordinates(gameState);
             while (!isMoveValid(gameState))
             {
-                printf("Gaven coordinates are invalid");
+                printf("Gaven coordinates are invalid!\n");
                 askCoordinates(gameState);
             }
             movePenguin(gameState);
