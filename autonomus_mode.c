@@ -4,3 +4,7 @@
 
 void autonomus_placement(struct GameState *gameState) {
 }
+
+void autonomus_movement(struct GameState *gameState) {
+
+}
