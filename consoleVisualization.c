@@ -42,7 +42,7 @@ void showBoard(struct GameState *gameState) {
         }
         printf("\n\t");
         for (int x = 0; x < gameState->y_Board_size; x++) {
-            printf("========");
+            printf("================");
         }
         printf("=\n");
     }

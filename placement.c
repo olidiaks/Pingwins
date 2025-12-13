@@ -12,7 +12,7 @@ void placementPhase(struct GameState *gameState) {
         askCoordinates(gameState);
         while (!isMoveValid(gameState))
         {
-            printf("Gaven coordinates are invalid");
+            printf("Given coordinates are invalid!\n");
             askCoordinates(gameState);
         }
         placePenguin(gameState);
