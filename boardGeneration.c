@@ -25,7 +25,7 @@ bool isBoardDimensionsValid(struct GameState *gameState) {
 void generateBoard(struct GameState* gameState)
 {
     printf("Generating random board...\n");
-    gameState->Board = malloc(gameState->x_Board_size * sizeof(struct Field *));
+    gameState->Board = malloc(gameState->x_Board_size * sizeof(struct Field));
     for (int x = 0; x < gameState->x_Board_size; x++) {
         gameState->Board[x] = malloc(gameState->y_Board_size * sizeof(struct Field));
         for (int y = 0; y < gameState->y_Board_size; y++) {
