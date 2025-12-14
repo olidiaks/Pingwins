@@ -5,6 +5,7 @@
 #define PROJECT_PLACEMENT_H
 
 #include <stdbool.h>
+#include "GameState.h"
 #include "main.h"
 #include "playerActions.h"
 #include "boardGeneration.h"

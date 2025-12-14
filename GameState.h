@@ -95,4 +95,6 @@ struct GameState {
  */
 void init();
 
+void askInitQuestions();
+
 #endif //PROJECT_GAMESTRUCTURE_H
