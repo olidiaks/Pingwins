@@ -41,5 +41,5 @@ bool isMoveValid(struct GameState *gameState) {
     // make the function read xo and yo from the askCoordinates function
     int x = gameState->Players[gameState->current_player].penguins->x;
     int y = gameState->Players[gameState->current_player].penguins->y;
-    return (0 > x) && (x < gameState->x_Board_size) && (0 > y) && (y < gameState->y_Board_size);
+    return (0 < x) && (x < gameState->x_Board_size) && (0 < y) && (y < gameState->y_Board_size);
 }

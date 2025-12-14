@@ -7,7 +7,7 @@
 
 #include "interactive_mode.h"
 #include <stdlib.h>
-#include "autonomus_mode.h"
+#include "autonomous_mode.h"
 
 
 extern struct GameState gameState;
