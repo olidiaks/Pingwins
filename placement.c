@@ -11,7 +11,8 @@ void placementPhase(struct GameState *gameState) {
     while (canPlayerPlacePenguin(gameState)) {
         showBoard(gameState);
         askCoordinates(gameState);
-        while (!isCoordinateValid(gameState) && !isPlacemntVaild(gameState)) {
+        while (!isCoordinateValid(gameState) || !isPlacemntVaild(gameState))
+        {
             printf(
                 "Given coordinates are invalid!\nAlso notice that penguin can be only placed on filed where is only one fish.\n");
             askCoordinates(gameState);
