@@ -53,7 +53,7 @@ bool isThereAnyPenguinMoveAvailable(struct GameState *gameState);
  * @return A boolean value indicating whether the current player can move any of their penguins.
  *         Returns true if at least one penguin has valid moves available, otherwise false.
  */
-bool isPlayerAbleToMobeAnyPenguin(struct GameState* gameState);
+bool isPlayerAbleToMoveAnyPenguin(struct GameState* gameState);
 
 /**
  * This function moves the currently selected penguin for the active player

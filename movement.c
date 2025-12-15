@@ -8,7 +8,7 @@ void movementPhase(struct GameState* gameState)
 {
     while (isThereAnyPenguinMoveAvailable(gameState))
     {
-        while (isPlayerAbleToMobeAnyPenguin(gameState))
+        while (isPlayerAbleToMoveAnyPenguin(gameState))
         {
             showBoard(gameState);
             askWhichPenguinMove(gameState);
@@ -49,7 +49,7 @@ bool isThereAnyPenguinMoveAvailable(struct GameState* gameState)
     }
 }
 
-bool isPlayerAbleToMobeAnyPenguin(struct GameState* gameState)
+bool isPlayerAbleToMoveAnyPenguin(struct GameState* gameState)
 {
     for (int i = 0; i < gameState->num_of_penguins_per_player; ++i)
     {
