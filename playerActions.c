@@ -18,17 +18,21 @@ void changeCurrentPlayer(struct GameState *gameState) {
 }
 
 void askCoordinates(struct GameState *gameState) {
-    char x; 
-    char y;
+    char *x = NULL; 
+    char *y = NULL;
 
     unsigned short lenX;
     unsigned short lenY;
 
-    scanf("%s %s", &x, &y);
-    lenX = strlen(x);
-    lenY = strlen(y);
+    if (scanf("%ms %ms", &x, &y) == 2) {
 
-    printf("X: %d, Y: %d\n", x, y);
+        lenX = strlen(x);
+        lenY = strlen(y);
+    }
+    else
+        return;
+
+    printf("X: %s, Y: %s\n", x, y);
 
     /*
     printf("Player %d, please input coordinates seperated with a space (row, column): \n",
