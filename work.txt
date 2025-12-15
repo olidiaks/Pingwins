@@ -1,5 +1,5 @@
 1. Implement call for interactive mode and autonomous mode. – Oliwier Done
-2. Write validation of moves. - Wojtek
+2. Write validation of moves. - Wojtek Done
 3. Write autonomous
 4. Write opening files both for saving and loading. - Bryce
 5. Write check if files were opened correctly. - Bryce
@@ -15,3 +15,5 @@
 15. Write checking if penguins on field are placed correctly. - Wojtek
 16. Write an implementation of handling more than two players. – Oliwier
 17. Implement more penguins than one penguin per player. – Oliwier
+18. Fix askCordinates ASP!!
+19. Modernaize show border for more penguins.
