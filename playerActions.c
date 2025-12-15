@@ -54,20 +54,90 @@ bool isCoordinateValid(struct GameState* gameState)
     // make the function read xo and yo from the askCoordinates function
     int x = gameState->Players[gameState->current_player].x;
     int y = gameState->Players[gameState->current_player].y;
+
+    printf("CHECKING CORDS: X, Y: %d, %d\n", x, y);
+
     return (0 <= x) && (x < gameState->x_Board_size) && (0 <= y) && (y < gameState->y_Board_size);
+}
+
+bool isMoveValid(struct GameState* gameState)
+{
+    int curPlr = gameState->current_player;
+    int moveX, moveY, curX, curY;
+
+    curX = gameState->Players[curPlr].penguins[gameState->Players[curPlr].current_penguin].x;
+    curY = gameState->Players[curPlr].penguins[gameState->Players[curPlr].current_penguin].y;
+
+    moveX = gameState->Players[curPlr].x;
+    moveY = gameState->Players[curPlr].y;
+
+    int deltaX, deltaY, dt;
+    
+    deltaX = moveX - curX;
+    deltaY = moveY - curY;
+
+    if (deltaX * deltaY != 0) // Either one direction or another. If we move even a centimeter in both directions the delta for both will be non-zero
+        return false;
+    
+    if (deltaX != 0) {
+
+        int iterator = 0;
+        int cPosX, cPosY = curX, curY;
+        int sign = deltaX / abs(deltaX);
+
+        if (iterator > deltaX) {
+            iterator = deltaX;
+            deltaX = 0;         //We perform this fantastic manouver to make sure for if goes lower -> bigger
+
+            for (iterator; iterator <= deltaX; iterator++) {
+                cPosX += sign;
+                if (gameState->Board[cPosX][cPosY].amount_of_fish <= 0) {
+                    printf("MOVE FALSE X!\n");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+    else
+    {
+        
+        int iterator = 0;
+        int cPosX, cPosY = curX, curY;
+        int sign = deltaY / abs(deltaY);
+
+        if (iterator > deltaY) {
+            iterator = deltaY;
+            deltaY = 0;         //We perform this fantastic manouver to make sure for if goes lower -> bigger
+
+            for (iterator; iterator <= deltaY; iterator++) {
+                cPosY += sign;
+                if (gameState->Board[cPosX][cPosY].amount_of_fish <= 0) {
+                    printf("MOVE FALSE Y!\n");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+
 }
 
 void change_penguin_position(struct GameState* gameState)
 {
-    int x = gameState->Players[gameState->current_player].x;
-    gameState->Players[gameState->current_player].penguins[gameState->Players[gameState->current_player].
-        current_penguin].x = x;
-    int y = gameState->Players[gameState->current_player].y;
-    gameState->Players[gameState->current_player].penguins[gameState->Players[gameState->current_player].
-        current_penguin].y = y;
+    
+    int curPlr = gameState->current_player;
+    
+    int x = gameState->Players[curPlr].x;
+    gameState->Players[curPlr].penguins[gameState->Players[curPlr].current_penguin].x = x;
 
-    gameState->Board[x][y].id_player = gameState->current_player;
-    gameState->Board[x][y].id_penguin = gameState->Players[gameState->current_player].current_penguin;
+    int y = gameState->Players[curPlr].y;
+    gameState->Players[curPlr].penguins[gameState->Players[curPlr].current_penguin].y = y;
+
+    gameState->Board[x][y].id_player = curPlr;
+    gameState->Board[x][y].id_penguin = gameState->Players[curPlr].current_penguin;
 }
 
 void changeCurrentPenguin(struct GameState* gameState)

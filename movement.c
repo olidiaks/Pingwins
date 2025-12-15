@@ -13,7 +13,7 @@ void movementPhase(struct GameState* gameState)
             showBoard(gameState);
             askWhichPenguinMove(gameState);
             askCoordinates(gameState);
-            while (!isCoordinateValid(gameState))
+            while (!(isCoordinateValid(gameState) && isMoveValid(gameState)))
             {
                 printf("Given coordinates are invalid!\n");
                 askCoordinates(gameState);
