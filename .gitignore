@@ -1,2 +1,7 @@
 .idea/
 .idea/editor.xml
+/CMakeFiles
+*cmake*
+*CMake*
+Makefile
+project
