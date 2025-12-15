@@ -18,6 +18,7 @@ void movementPhase(struct GameState *gameState) {
             collectFish(gameState);
             hasCurrentPlayerMoved = true;
         }
+        changeCurrentPenguin(gameState);
         changeCurrentPlayer(gameState);
     }
 }
