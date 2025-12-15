@@ -17,4 +17,4 @@
 17. Implement more penguins than one penguin per player. – Oliwier Done
 18. Fix askCordinates ASP!!
 19. Modernaize show border for more penguins.
-20. Add to algorith of generating field possibility to generate some island where there is no fish – Oliwier.
+20. Add to algorith of generating field possibility to generate some island where there is no fish – Wojcie.
