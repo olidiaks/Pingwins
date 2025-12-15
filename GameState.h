@@ -5,14 +5,15 @@
 #define PROJECT_GAMESTRUCTURE_H
 
 /**
- * Represents a single field on the game board, tracking its attributes and player interaction.
+ * Represents a single field on the game board and its current state.
  *
- * This structure encapsulates information about an individual field within the game board.
- * It manages resource availability and player-specific data related to the field.
+ * This structure tracks the attributes of an individual field, including the
+ * amount of fish available on the field, and any player or penguin associated with it.
  *
  * Members:
- * - amount_of_fish: An integer indicating the number of fish available on the field.
- * - id_player1: An integer identifying the player currently associated with the field.
+ * - amount_of_fish: An integer indicating the number of fish currently present on the field.
+ * - id_player: An integer representing the ID of the player occupying the field or -1 if unoccupied.
+ * - id_penguin: An integer representing the ID of the penguin on the field or -1 if no penguin is present.
  */
 struct Field {
     int amount_of_fish;
