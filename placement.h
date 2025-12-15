@@ -49,9 +49,9 @@ bool canPlayerPlacePenguin(struct GameState *gameState);
 /**
  * @brief Checks if all penguins have been placed during the placement phase.
  *
- * This function returns 1 if every penguin has been placed, and 0 otherwise.
+ * This function returns true if every penguin has been placed, and false otherwise.
  *
- * @return 1 if all penguins are placed, 0 otherwise.
+ * @return true if all penguins are placed, false otherwise.
  */
 bool isEveryPenguinsPlaced(struct GameState *gameState);
 

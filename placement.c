@@ -39,22 +39,12 @@ bool canPlayerPlacePenguin(struct GameState *gameState) {
 
 
 bool isEveryPenguinsPlaced(struct GameState *gameState) {
-    int counter = 0;
-    for (int i = 0; i < gameState->x_Board_size; i++) {
-        for (int j = 0; j < gameState->y_Board_size; j++) {
-            if (gameState->Board[i][j].amount_of_fish == 0) {
-                counter++;
-            }
+    for (int i = 0; i < gameState->num_of_players; ++i) {
+        if (gameState->Players[i].current_penguin != gameState->num_of_penguins_per_player) {
+            return false;
         }
     }
-
-    // printf("spots with 0 %d \n",counter);
-
-    if (counter == 2) {
-        return 1;
-    } else if (!(canPlayerPlacePenguin(gameState))) {
-        return 0;
-    }
+    return true;
 }
 
 bool isPlacemntVaild(struct GameState *gameState) {
