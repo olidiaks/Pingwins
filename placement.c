@@ -9,7 +9,7 @@ void placementPhase(struct GameState* gameState)
 {
     readBoardDimensions(gameState);
     generateBoard(gameState);
-    while (canPlayerPlacePenguin(gameState))
+    while (canPlayerPlacePenguin(gameState) && !isEveryPenguinsPlaced(gameState))
     {
         showBoard(gameState);
         printGameInfo(gameState);
