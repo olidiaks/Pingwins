@@ -12,6 +12,7 @@ void placementPhase(struct GameState* gameState)
     while (canPlayerPlacePenguin(gameState))
     {
         showBoard(gameState);
+        printGameInfo(gameState);
         askCoordinates(gameState);
         while (!isCoordinateValid(gameState) || !isPlacemntVaild(gameState))
         {

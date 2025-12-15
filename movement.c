@@ -11,6 +11,7 @@ void movementPhase(struct GameState* gameState)
         while (isPlayerAbleToMobeAnyPenguin(gameState))
         {
             showBoard(gameState);
+            printGameInfo(gameState);
             askWhichPenguinMove(gameState);
             askCoordinates(gameState);
             while (!isCoordinateValid(gameState))

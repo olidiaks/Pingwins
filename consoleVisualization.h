@@ -18,4 +18,14 @@
  */
 void showBoard(struct GameState *gameState);
 
+/**
+ * Prints information about the current state of the game to the console.
+ * Information includes the current player's turn, the currently selected penguin,
+ * and the total score (fish gathered) for each player.
+ *
+ * @param gameState A pointer to the GameState structure containing game details such as
+ *                  the current player, player scores, and the number of players.
+ */
+void printGameInfo(struct GameState* gameState);
+
 #endif //PROJECT_CONSOLEVISUALIZATION_H
