@@ -36,7 +36,6 @@ struct Field {
  * - y: An integer indicating the current y-coordinate of the player's position.
  */
 struct Player {
-    int id;
     int current_score;
     int current_penguin;
     struct Penguin *penguins;

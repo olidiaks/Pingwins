@@ -15,7 +15,6 @@ void init() {
     gameState.Players = malloc(gameState.num_of_players * sizeof(struct Player));
     for (int i = 0; i < gameState.num_of_players; i++) {
         gameState.Players[i].current_score = 0;
-        gameState.Players[i].id = i;
         gameState.Players[i].current_penguin = 0;
         gameState.Players[i].x = -1;
         gameState.Players[i].y = -1;
