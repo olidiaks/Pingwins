@@ -56,3 +56,7 @@ void placePenguin(struct GameState *gameState) {
     gameState->Board[x - 1][y - 1].id_player = gameState->current_player;
     gameState->Board[x - 1][y - 1].id_penguin = gameState->Players[gameState->current_player].current_penguin;
 }
+
+void changeCurrentPenguin(struct GameState *gameState) {
+    gameState->Players[gameState->current_player].current_penguin++;
+}

@@ -4,6 +4,7 @@
 
 #include "placement.h"
 
+
 void placementPhase(struct GameState *gameState) {
     readBoardDimensions(gameState);
     generateBoard(gameState);
@@ -17,6 +18,7 @@ void placementPhase(struct GameState *gameState) {
         }
         placePenguin(gameState);
         collectFish(gameState);
+        changeCurrentPenguin(gameState);
         changeCurrentPlayer(gameState);
     }
 }
@@ -52,3 +54,4 @@ bool isPlacemntVaild(struct GameState *gameState) {
     int y = gameState->Players[gameState->current_player].penguins->y;
     return gameState->Board[x][y].amount_of_fish == 1;
 }
+

@@ -77,4 +77,17 @@ bool isCoordinateValid(struct GameState *gameState);
  */
 void placePenguin(struct GameState *gameState);
 
+
+/**
+ * @brief Updates the current penguin index for the active player.
+ *
+ * This function increments the `current_penguin` index for the currently active
+ * player, allowing the game to track which penguin should be manipulated next.
+ * It helps cycle through the penguins of the active player during game actions.
+ *
+ * @param gameState A pointer to the GameState structure that contains the current
+ *                  game board, players' data, and game state information.
+ */
+void changeCurrentPenguin(struct GameState *gameState);
+
 #endif //PROJECT_PLAYERACTIONS_H
