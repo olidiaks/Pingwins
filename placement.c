@@ -19,7 +19,7 @@ void placementPhase(struct GameState* gameState)
                 "Given coordinates are invalid!\nAlso notice that penguin can be only placed on filed where is only one fish.\n");
             askCoordinates(gameState);
         }
-        change_penguin_position(gameState);
+        placePenguin(gameState);
         collectFish(gameState);
         changeCurrentPenguin(gameState);
         changeCurrentPlayer(gameState);
@@ -44,6 +44,7 @@ bool canPlayerPlacePenguin(struct GameState* gameState)
 
 bool isEveryPenguinsPlaced(struct GameState* gameState)
 {
+    //TODO: Veryfai if this actually make sance?
     for (int i = 0; i < gameState->num_of_players; ++i)
     {
         if (gameState->Players[i].current_penguin != gameState->num_of_penguins_per_player)
