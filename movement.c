@@ -29,8 +29,10 @@ bool check_adjacent_fish_availability(struct GameState* gameState, int x, int y)
 {
     return (0 < x && gameState->Board[x - 1][y].amount_of_fish) || //check if one to the left has any fish
         (0 < y && gameState->Board[x][y - 1].amount_of_fish) || // check if one to the top has any fish
-        (x < gameState->x_Board_size && gameState->Board[x + 1][y].amount_of_fish) || // check if one to the bottom has any fish
-        (y < gameState->y_Board_size && gameState->Board[x][y + 1].amount_of_fish); // check if one to the right has any fish
+        (x < gameState->x_Board_size && gameState->Board[x + 1][y].amount_of_fish) ||
+        // check if one to the bottom has any fish
+        (y < gameState->y_Board_size && gameState->Board[x][y + 1].amount_of_fish);
+    // check if one to the right has any fish
 }
 
 bool isThereAnyPenguinMoveAvailable(struct GameState* gameState)
