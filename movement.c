@@ -8,7 +8,7 @@ void movementPhase(struct GameState* gameState)
 {
     while (isThereAnyPenguinMoveAvailable(gameState))
     {
-        if (isPlayerMoveAvailable())
+        if (isPlayerAbleToMobeAnyPenguin(gameState))
         {
             showBoard(gameState);
             askWhichPenguinMove(gameState);
@@ -49,12 +49,15 @@ bool isThereAnyPenguinMoveAvailable(struct GameState* gameState)
     }
 }
 
-bool isPlayerMoveAvailable()
+bool isPlayerAbleToMobeAnyPenguin(struct GameState* gameState)
 {
-    // if the current player's penguin is surrounded from every direction by 0 (where 0 can also mean that 
-    //there's another player's penguin standing on that spot) that player cannot move
+    for (int i = 0; i < gameState->num_of_penguins_per_player; ++i)
+    {
+        int x = gameState->Players[gameState->current_player].penguins[i].x;
+        int y = gameState->Players[gameState->current_player].penguins[i].y;
 
-    return 1;
+        return check_adjacent_fish_availability(gameState, x, y);
+    }
 }
 
 void movePenguin(struct GameState* gameState)

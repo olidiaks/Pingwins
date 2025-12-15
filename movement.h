@@ -43,10 +43,17 @@ void movementPhase(struct GameState *gameState);
 bool isThereAnyPenguinMoveAvailable(struct GameState *gameState);
 
 /**
- * This function check if player can make move.
- * @return Return true if player can move and false if can't.
+ * Checks if the current player is able to move any of their penguins.
+ * A penguin can move if there are adjacent fields containing any fish.
+ * The function iterates through all the penguins of the current player and
+ * determines if at least one penguin has possible moves available.
+ *
+ * @param gameState A pointer to the GameState structure containing the current game's state,
+ *                  including the board, players, and current player's data.
+ * @return A boolean value indicating whether the current player can move any of their penguins.
+ *         Returns true if at least one penguin has valid moves available, otherwise false.
  */
-bool isPlayerMoveAvailable(void);
+bool isPlayerAbleToMobeAnyPenguin(struct GameState* gameState);
 
 /**
  * This function moves the currently selected penguin for the active player
