@@ -51,14 +51,17 @@ void changeCurrentPlayer(struct GameState *gameState);
 void askCoordinates(struct GameState *gameState);
 
 /**
- * @brief Verifies if a player's move is valid within the game board boundaries.
+ * @brief Validates if the coordinates of the current player's penguin are within the game board boundaries.
  *
- * This function checks whether the coordinates of the current player's penguin are within
- * the valid range of the game board dimensions, ensuring the move remains inside the board.
+ * This function verifies that the x and y coordinates of the current penguin
+ * are greater than zero and less than the dimensions of the game board. It ensures
+ * that the coordinates are located within the playable area.
  *
- * @param gameState A pointer to the GameState structure containing the game board and player details.
- * @return A boolean value indicating whether the move is valid (true) or invalid (false).
+ * @param gameState A pointer to the GameState structure that contains the current
+ *                  game board, players' data, and game state information.
+ * @return True if the coordinates are valid, i.e., within the boundaries of the game board;
+ *         otherwise, false.
  */
-bool isMoveValid(struct GameState* gameState);
+bool isCoordinateValid(struct GameState *gameState);
 
 #endif //PROJECT_PLAYERACTIONS_H

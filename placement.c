@@ -10,13 +10,12 @@ void placementPhase(struct GameState *gameState) {
     while (canPlayerPlacePenguin(gameState)) {
         showBoard(gameState);
         askCoordinates(gameState);
-        while (!isMoveValid(gameState)) {
+        while (!isCoordinateValid(gameState)) {
             printf("Given coordinates are invalid!\n");
             askCoordinates(gameState);
         }
         placePenguin(gameState);
         collectFish(gameState);
-        canPlayerPlacePenguin(gameState);
         changeCurrentPlayer(gameState);
     }
 }

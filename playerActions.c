@@ -21,7 +21,7 @@ void askCoordinates(struct GameState *gameState) {
     char x[50], y[50];
     printf("Player %d, please input coordinates seperated with a space (row, column): \n",
            1 + gameState->current_player);
-    // while (scanf("%s %s", &x, &y) != 2 || !isMoveValid(x, y, gameState)) { // For now we assume that every movement is valid.
+    // while (scanf("%s %s", &x, &y) != 2 || !isCoordinateValid(x, y, gameState)) { // For now we assume that every movement is valid.
     while (scanf("%s %s", &x, &y) != 2) {
         printf("Please provide correct values!\n");
         while (getchar() != '\n');
@@ -37,7 +37,7 @@ void askCoordinates(struct GameState *gameState) {
     gameState->Players[gameState->current_player].penguins->y = yo + 1;
 }
 
-bool isMoveValid(struct GameState *gameState) {
+bool isCoordinateValid(struct GameState *gameState) {
     // make the function read xo and yo from the askCoordinates function
     int x = gameState->Players[gameState->current_player].penguins->x;
     int y = gameState->Players[gameState->current_player].penguins->y;
