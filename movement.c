@@ -69,10 +69,15 @@ void movePenguin(struct GameState* gameState)
 
 void askWhichPenguinMove(struct GameState* gameState)
 {
-    printf("Which pengiun(0 – %d) do you want to move?\n", gameState->num_of_penguins_per_player - 1);
+    printf("Which pengiun(1 – %d) do you want to move?\n", gameState->num_of_penguins_per_player);
     int id;
-    while (scanf("%d", &id) && 0 <= id && id < gameState->num_of_penguins_per_player)
+
+
+    do
     {
-        gameState->Players[gameState->current_player].current_penguin = id;
+        scanf("%d", &id);
+        id--;
+        gameState->Players[gameState->current_player].current_penguin = id - 1;
     }
+    while (0 <= id && id < gameState->num_of_penguins_per_player);
 }
