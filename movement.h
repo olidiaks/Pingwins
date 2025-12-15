@@ -55,4 +55,6 @@ bool isPlayerMoveAvailable(void);
  */
 void movePenguin(struct GameState *gameState);
 
+void askWhichPenguinMove(struct GameState *gameState);
+
 #endif //PROJECT_MOVEMENT_H
