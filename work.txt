@@ -5,8 +5,8 @@
 5. Write check if files were opened correctly. - Bryce Done
 6. Write closing files correctly. - Bryce
 7. Write checking if players are in the list of players.
-8. Write getting id.
-9. Write printing a name.
+8. Write getting id – Oliwier.
+9. Write printing a name – Done.
 10. Write a validating field.
 11. Write writing a player to a list of players who moved. - Wojtek
 12. Write placing of penguins. - Wojtek
@@ -18,3 +18,4 @@
 18. Fix askCordinates ASP!!
 19. Modernaize show border for more penguins.
 20. Add to algorith of generating field possibility to generate some island where there is no fish – Wojcie.
+21. Write loading a field from file. – Oliwier
