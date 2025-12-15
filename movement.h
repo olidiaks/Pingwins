@@ -28,13 +28,17 @@
 void movementPhase(struct GameState *gameState);
 
 /**
- * Checks if there are any valid moves available for penguins on the game board.
- * This is determined by verifying whether any board cell has fish available.
- * If all cells have zero fish, it indicates no moves are possible for any player.
+ * This function determines if there are any penguin moves available for any player in the game.
+ * For each player's penguins, it checks if there are adjacent fields on the board containing fish.
+ * A valid move exists if at least one adjacent field in any direction (left, top, bottom, right)
+ * has one or more fish.
  *
- * @param gameState A pointer to the GameState structure containing the board state
- *                  and game parameters, including board size and its fields.
- * @return Returns 1 if there are valid moves available; otherwise, returns 0.
+ * The function iterates through all players and their penguins, examining the board dimensions
+ * and the fish count in each adjacent field to validate the availability of a move.
+ *
+ * @param gameState A pointer to the GameState structure containing the board state, players,
+ *                  and their respective penguins.
+ * @return Returns true if at least one valid move is available; otherwise, returns false.
  */
 bool isThereAnyPenguinMoveAvailable(struct GameState *gameState);
 
@@ -56,5 +60,18 @@ bool isPlayerMoveAvailable(void);
 void movePenguin(struct GameState *gameState);
 
 void askWhichPenguinMove(struct GameState *gameState);
+
+/**
+ * Checks if there are any adjacent tiles with available fish around the specified coordinates
+ * on the game board. This function evaluates all four possible directions (top, bottom, left, right)
+ * from the provided coordinates to determine the presence of fish on neighboring tiles.
+ *
+ * @param gameState A pointer to the GameState structure containing the board information.
+ * @param x The x-coordinate of the tile to check around.
+ * @param y The y-coordinate of the tile to check around.
+ * @return A boolean value indicating whether there is at least one adjacent tile
+ *         with available fish (true if fish are present, false otherwise).
+ */
+bool check_adjacent_fish_availability(struct GameState* gameState, int x, int y);
 
 #endif //PROJECT_MOVEMENT_H
