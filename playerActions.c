@@ -29,10 +29,21 @@ void askCoordinates(struct GameState *gameState) {
         lenX = strlen(x);
         lenY = strlen(y);
     }
-    else
-        return;
 
-    printf("X: %s, Y: %s\n", x, y);
+    if (lenX == 2 && lenY == 2) {
+
+        x = toupper(x);
+        y = toupper(y);
+
+        char xDirect, xOffset = x[0], x[1];
+        char yDirect, yOffset = y[0], y[1];
+
+        int xFinal = xDirect - 65 + (atoi(&xOffset) - 1) * 26;
+        int yFinal = yDirect - 65 + (atoi(&yOffset) - 1) * 26;
+
+        gameState->Players[gameState->current_player].x = xFinal;
+        gameState->Players[gameState->current_player].y = yFinal;
+    }
 
     /*
     printf("Player %d, please input coordinates seperated with a space (row, column): \n",
@@ -50,8 +61,8 @@ void askCoordinates(struct GameState *gameState) {
     int yo = (int) (y_FirstChar - 65) + (atoi(&y_SecondChar) - 1) * 26 - 260;
     */
 
-    gameState->Players[gameState->current_player].x = x; //temp change
-    gameState->Players[gameState->current_player].y = y; //temp change
+    //gameState->Players[gameState->current_player].x = x; //temp change
+    //gameState->Players[gameState->current_player].y = y; //temp change
 }
 
 bool isCoordinateValid(struct GameState *gameState) {
