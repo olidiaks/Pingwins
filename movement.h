@@ -59,7 +59,14 @@ bool isPlayerMoveAvailable(void);
  */
 void movePenguin(struct GameState *gameState);
 
-
+/**
+ * This function prompts the current player to choose which penguin they want to move.
+ * The player is asked to input the ID of a penguin, and the selection is validated
+ * to ensure that the input is within the valid range. Once a valid penguin ID is entered,
+ * it updates the current player's selected penguin in the game state.
+ * @param gameState A pointer to the GameState structure containing the current game state,
+ *                  including player and board information.
+ */
 void askWhichPenguinMove(struct GameState *gameState);
 
 /**
