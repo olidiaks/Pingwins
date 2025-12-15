@@ -16,6 +16,9 @@ void init() {
     for (int i = 0; i < gameState.num_of_players; i++) {
         gameState.Players[i].current_score = 0;
         gameState.Players[i].id = i;
+        gameState.Players[i].current_penguin = 0;
+        gameState.Players[i].x = -1;
+        gameState.Players[i].y = -1;
         gameState.Players[i].penguins = malloc(gameState.num_of_penguins_per_player * sizeof(struct Penguin));
         if (gameState.Players[i].penguins == NULL) {
             printf("Fild provided by you is too big. You do not have enough memory.\n");

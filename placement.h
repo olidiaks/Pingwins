@@ -45,16 +45,6 @@ void placementPhase(struct GameState *gameState);
  */
 bool canPlayerPlacePenguin(struct GameState *gameState);
 
-/**
- * @brief Places a penguin on the board for the current player.
- *
- * This function updates the board state by placing the current player's penguin at the specified coordinates.
- * It then triggers the collection of fish from the placed penguin's position.
- * The function is called after a valid move is confirmed and is part of the game's placement phase loop.
- *
- * @param gameState A pointer to the GameState structure containing the board dimensions.
- */
-void placePenguin(struct GameState *gameState);
 
 /**
  * @brief Checks if all penguins have been placed during the placement phase.
@@ -64,5 +54,18 @@ void placePenguin(struct GameState *gameState);
  * @return 1 if all penguins are placed, 0 otherwise.
  */
 bool isEveryPenguinsPlaced(struct GameState *gameState);
+
+/**
+ * @brief Checks if the penguin placement at the current coordinates is valid.
+ *
+ * Validates whether the current player's penguin can be placed on the board
+ * at its current position. A placement is considered valid when the field
+ * has exactly one fish and no other penguins are already occupying that field.
+ *
+ * @param gameState A pointer to the GameState structure containing information
+ *                  about the board, players, and their positions.
+ * @return Returns 1 if the placement is valid; otherwise, returns 0.
+ */
+bool isPlacemntVaild(struct GameState *gameState);
 
 #endif //PROJECT_PLACEMENT_H

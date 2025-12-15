@@ -10,8 +10,9 @@ void placementPhase(struct GameState *gameState) {
     while (canPlayerPlacePenguin(gameState)) {
         showBoard(gameState);
         askCoordinates(gameState);
-        while (!isCoordinateValid(gameState)) {
-            printf("Given coordinates are invalid!\n");
+        while (!isCoordinateValid(gameState) && !isPlacemntVaild(gameState)) {
+            printf(
+                "Given coordinates are invalid!\nAlso notice that penguin can be only placed on filed where is only one fish.\n");
             askCoordinates(gameState);
         }
         placePenguin(gameState);
@@ -36,9 +37,6 @@ bool canPlayerPlacePenguin(struct GameState *gameState) {
            gameState->num_of_penguins_per_player;
 }
 
-void placePenguin(struct GameState *gameState) {
-    printf("Player %d 's penguin has been placed.\n", gameState->current_player + 1);
-}
 
 bool isEveryPenguinsPlaced(struct GameState *gameState) {
     int counter = 0;
@@ -57,4 +55,10 @@ bool isEveryPenguinsPlaced(struct GameState *gameState) {
     } else if (!(canPlayerPlacePenguin(gameState))) {
         return 0;
     }
+}
+
+bool isPlacemntVaild(struct GameState *gameState) {
+    int x = gameState->Players[gameState->current_player].penguins->x;
+    int y = gameState->Players[gameState->current_player].penguins->y;
+    return gameState->Board[x][y].amount_of_fish == 1;
 }

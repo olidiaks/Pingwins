@@ -17,26 +17,31 @@
 struct Field {
     int amount_of_fish;
     int id_player;
+    int id_penguin;
 };
 
 
 /**
- * Represents a player in the game, including their unique identifier and current score.
+ * Represents a player in the game and tracks their current state.
  *
- * This structure stores the essential information related to a player's identity
- * and ongoing progress within the game. The `id` uniquely identifies each player,
- * while the `current_score` tracks their accumulated score during gameplay.
+ * This structure encapsulates essential player-related attributes and their current position
+ * in the game for managing game logic and interactions.
  *
  * Members:
- * - id: An integer uniquely identifying the player within the game.
- * - current_score: An integer tracking the player's score accumulated during gameplay.
- * - x,y: Two integers representing the values provided by the player to either place a penguin or move a penguin.
- * - Penguins:  A pointer to an array of 'Penguin' structures containing penguin-related data for the specific player.
+ * - id: An integer representing the unique identifier for the player.
+ * - current_score: An integer storing the current score of the player.
+ * - current_penguin: An integer representing the index of the penguin the player last interacted with.
+ * - penguins: A pointer to an array of `Penguin` structures associated with the player.
+ * - x: An integer indicating the current x-coordinate of the player's position.
+ * - y: An integer indicating the current y-coordinate of the player's position.
  */
 struct Player {
     int id;
     int current_score;
+    int current_penguin;
     struct Penguin *penguins;
+    int x;
+    int y;
 };
 
 /**

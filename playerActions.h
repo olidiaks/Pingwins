@@ -64,4 +64,17 @@ void askCoordinates(struct GameState *gameState);
  */
 bool isCoordinateValid(struct GameState *gameState);
 
+/**
+ * @brief Places a penguin for the currently active player on the game board.
+ *
+ * This function sets the position of the penguin on the game board to the coordinates
+ * specified by the current player's data and associates the penguin with the current
+ * player in the game state. It updates the corresponding field on the board to reflect
+ * the player's and penguin's identifiers.
+ *
+ * @param gameState A pointer to the GameState structure that contains the current
+ *                  game board, players' data, and game state information.
+ */
+void placePenguin(struct GameState *gameState);
+
 #endif //PROJECT_PLAYERACTIONS_H
