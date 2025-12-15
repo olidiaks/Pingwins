@@ -18,7 +18,19 @@ void changeCurrentPlayer(struct GameState *gameState) {
 }
 
 void askCoordinates(struct GameState *gameState) {
-    char x[50], y[50];
+    char x; 
+    char y;
+
+    unsigned short lenX;
+    unsigned short lenY;
+
+    scanf("%s %s", &x, &y);
+    lenX = strlen(x);
+    lenY = strlen(y);
+
+    printf("X: %d, Y: %d\n", x, y);
+
+    /*
     printf("Player %d, please input coordinates seperated with a space (row, column): \n",
            1 + gameState->current_player);
     // while (scanf("%s %s", &x, &y) != 2 || !isCoordinateValid(x, y, gameState)) { // For now we assume that every movement is valid.
@@ -32,9 +44,10 @@ void askCoordinates(struct GameState *gameState) {
     char y_SecondChar = toupper(y[1]);
     int xo = (int) (x_FirstChar - 65) + (atoi(&x_SecondChar) - 1) * 26;
     int yo = (int) (y_FirstChar - 65) + (atoi(&y_SecondChar) - 1) * 26 - 260;
+    */
 
-    gameState->Players[gameState->current_player].x = xo;
-    gameState->Players[gameState->current_player].y = yo;
+    gameState->Players[gameState->current_player].x = x; //temp change
+    gameState->Players[gameState->current_player].y = y; //temp change
 }
 
 bool isCoordinateValid(struct GameState *gameState) {
