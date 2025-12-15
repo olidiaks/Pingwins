@@ -7,8 +7,8 @@
 void collectFish(struct GameState *gameState) {
     int x = gameState->Players[gameState->current_player].x;
     int y = gameState->Players[gameState->current_player].y;
-    gameState->Players[gameState->current_player].current_score += gameState->Board[x - 1][y - 1].amount_of_fish;
-    gameState->Board[x - 1][y - 1].amount_of_fish = 0;
+    gameState->Players[gameState->current_player].current_score += gameState->Board[x][y].amount_of_fish;
+    gameState->Board[x][y].amount_of_fish = 0;
     printf("Player %d has collected fish.\n", gameState->current_player + 1);
 }
 
@@ -33,15 +33,15 @@ void askCoordinates(struct GameState *gameState) {
     int xo = (int) (x_FirstChar - 65) + (atoi(&x_SecondChar) - 1) * 26;
     int yo = (int) (y_FirstChar - 65) + (atoi(&y_SecondChar) - 1) * 26 - 260;
 
-    gameState->Players[gameState->current_player].x = xo + 1;
-    gameState->Players[gameState->current_player].y = yo + 1;
+    gameState->Players[gameState->current_player].x = xo;
+    gameState->Players[gameState->current_player].y = yo;
 }
 
 bool isCoordinateValid(struct GameState *gameState) {
     // make the function read xo and yo from the askCoordinates function
     int x = gameState->Players[gameState->current_player].x;
     int y = gameState->Players[gameState->current_player].y;
-    return (0 < x) && (x < gameState->x_Board_size) && (0 < y) && (y < gameState->y_Board_size);
+    return (0 <= x) && (x < gameState->x_Board_size) && (0 <= y) && (y < gameState->y_Board_size);
 }
 
 void change_penguin_position(struct GameState *gameState) {
@@ -52,8 +52,8 @@ void change_penguin_position(struct GameState *gameState) {
     gameState->Players[gameState->current_player].penguins[gameState->Players[gameState->current_player].
         current_penguin].y = y;
 
-    gameState->Board[x - 1][y - 1].id_player = gameState->current_player;
-    gameState->Board[x - 1][y - 1].id_penguin = gameState->Players[gameState->current_player].current_penguin;
+    gameState->Board[x][y].id_player = gameState->current_player;
+    gameState->Board[x][y].id_penguin = gameState->Players[gameState->current_player].current_penguin;
 }
 
 void changeCurrentPenguin(struct GameState *gameState) {
