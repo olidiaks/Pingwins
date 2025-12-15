@@ -39,14 +39,16 @@ void collectFish(struct GameState *gameState);
 void changeCurrentPlayer(struct GameState *gameState);
 
 /**
- * @brief Prompts the current player to input coordinates and updates the game's state accordingly.
+ * @brief Handles input for coordinates during the game.
  *
- * This function asks the current player for input to specify the coordinates of a target cell
- * on the game board. It processes the player's input, validates it, and updates the position
- * of the player’s penguin in the game state.
+ * This function prompts the user to input coordinates for a specific action
+ * (e.g., placing or moving a penguin). It validates the input, converts the
+ * alphanumeric coordinates to numerical indices, and updates the current player's
+ * position in the game state. The calculated coordinates are applied to the active
+ * player's data within the GameState structure.
  *
- * @param gameState A pointer to the GameState structure, containing information about
- * the current game state, including the board configuration, players, and penguin positions.
+ * @param gameState A pointer to the GameState structure containing the current
+ *                  game state, including the board and player data.
  */
 void askCoordinates(struct GameState *gameState);
 
