@@ -59,7 +59,7 @@ bool isPlacemntVaild(struct GameState* gameState)
 {
     int x = gameState->Players[gameState->current_player].penguins->x;
     int y = gameState->Players[gameState->current_player].penguins->y;
-    return gameState->Board[x - 1][y - 1].amount_of_fish == 1;
+    return gameState->Board[x][y].amount_of_fish == 1;
 }
 
 void placePenguin(struct GameState* gameState)
