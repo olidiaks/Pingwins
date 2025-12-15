@@ -10,7 +10,7 @@
 10. Write a validating field.
 11. Write writing a player to a list of players who moved. - Wojtek
 12. Write placing of penguins. - Wojtek
-13. Write checking if a move is possible. - Wojtek
+13. Write checking if a move is possible. - Wojtek Done
 14. Implement an algorithm for finding the best move.
 15. Write checking if penguins on field are placed correctly. - Wojtek
 16. Write an implementation of handling more than two players. – Oliwier Done
