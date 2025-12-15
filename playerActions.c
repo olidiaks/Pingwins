@@ -18,7 +18,7 @@ void changeCurrentPlayer(struct GameState *gameState) {
 }
 
 void askCoordinates(struct GameState *gameState) {
-    char *x = NULL; 
+    char *x = NULL;
     char *y = NULL;
 
     unsigned short lenX;
@@ -44,8 +44,8 @@ void askCoordinates(struct GameState *gameState) {
 
         printf("xFinal: %d, yFinal: %d\n", xFinal, yFinal);
 
-        gameState->Players[gameState->current_player].x = xFinal;
-        gameState->Players[gameState->current_player].y = yFinal;
+        gameState->Players[gameState->current_player].x = xFinal - 1;
+        gameState->Players[gameState->current_player].y = yFinal - 1;
     }
 
 }
