@@ -9,11 +9,12 @@
 #include "GameState.h"
 
 /**
- * Displays the current state of the game board with all relevant information,
- * including the positions of penguins, fish counts on fields, and player scores.
+ * Displays the current game board along with player scores.
+ * The board includes information about fish, penguins, and player ownership for each field.
+ * Row and column indices are labeled alphabetically for easy reference.
  *
- * @param gameState A pointer to the GameState struct, containing all information
- *                   about the board, players, penguins, and game state.
+ * @param gameState A pointer to the GameState structure containing the current state of the game,
+ *                  including board dimensions, player scores, player count, and the state of the game board.
  */
 void showBoard(struct GameState *gameState);
 
