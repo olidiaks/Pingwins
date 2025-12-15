@@ -32,14 +32,16 @@ void askCoordinates(struct GameState *gameState) {
 
     if (lenX == 2 && lenY == 2) {
 
-        x = toupper(x);
-        y = toupper(y);
+        char xOffset = toupper(x[0]);
+        char xDirect = toupper(x[1]);
+        char yOffset = toupper(y[0]);
+        char yDirect = toupper(y[1]);
 
-        char xDirect, xOffset = x[0], x[1];
-        char yDirect, yOffset = y[0], y[1];
-
-        int xFinal = xDirect - 65 + (atoi(&xOffset) - 1) * 26;
-        int yFinal = yDirect - 65 + (atoi(&yOffset) - 1) * 26;
+        int xFinal = atoi(&xDirect) + (xOffset - 65) * 26;
+        int yFinal = atoi(&yDirect) + (yOffset - 65) * 26;
+        
+        printf("%d, %d\n", atoi(&xDirect), (xOffset - 65));
+        printf("xFinal: %d, yFinal: %d\n", xFinal, yFinal);
 
         gameState->Players[gameState->current_player].x = xFinal;
         gameState->Players[gameState->current_player].y = yFinal;
