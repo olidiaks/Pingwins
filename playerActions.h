@@ -92,4 +92,19 @@ void change_penguin_position(struct GameState *gameState);
  */
 void changeCurrentPenguin(struct GameState *gameState);
 
+/**
+ * @brief Determines if the attempted move for the active penguin is valid.
+ *
+ * This function evaluates whether the move specified by the active player's current
+ * selection of coordinates is valid. It considers the rules of movement, such as
+ * moving in a straight line along the board without skipping over empty or invalid tiles
+ * (represented by fields with no fish). The move validity depends on the game's board state
+ * and the selected penguin's current and target positions.
+ *
+ * @param gameState A pointer to the GameState structure that contains the current
+ *                  game board, active player's data, and overall game state information.
+ * @return True if the move is valid, otherwise false.
+ */
+bool isMoveValid(struct GameState* gameState);
+
 #endif //PROJECT_PLAYERACTIONS_H
