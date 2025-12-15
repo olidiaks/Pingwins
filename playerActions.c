@@ -40,32 +40,9 @@ void askCoordinates(struct GameState *gameState) {
         int xFinal = xOffset - 64 + (xDirect - 49) * 26;
         int yFinal = yOffset - 64 + (yDirect - 49) * 26;
 
-        printf("%c %d\n", xDirect, *&xDirect);
-
-        printf("xFinal: %d, yFinal: %d\n", xFinal, yFinal);
-
-        gameState->Players[gameState->current_player].x = xFinal;
-        gameState->Players[gameState->current_player].y = yFinal;
+        gameState->Players[gameState->current_player].x = xFinal - 1;
+        gameState->Players[gameState->current_player].y = yFinal - 1;
     }
-
-    /*
-    printf("Player %d, please input coordinates seperated with a space (row, column): \n",
-           1 + gameState->current_player);
-    // while (scanf("%s %s", &x, &y) != 2 || !isCoordinateValid(x, y, gameState)) { // For now we assume that every movement is valid.
-    while (scanf("%s %s", &x, &y) != 2) {
-        printf("Please provide correct values!\n");
-        while (getchar() != '\n');
-    }
-    char x_FirstChar = toupper(x[0]);
-    char x_SecondChar = toupper(x[1]);
-    char y_FirstChar = toupper(y[0]);
-    char y_SecondChar = toupper(y[1]);
-    int xo = (int) (x_FirstChar - 65) + (atoi(&x_SecondChar) - 1) * 26;
-    int yo = (int) (y_FirstChar - 65) + (atoi(&y_SecondChar) - 1) * 26 - 260;
-    */
-
-    //gameState->Players[gameState->current_player].x = x; //temp change
-    //gameState->Players[gameState->current_player].y = y; //temp change
 }
 
 bool isCoordinateValid(struct GameState *gameState) {
