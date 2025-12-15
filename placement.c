@@ -28,22 +28,17 @@ void placementPhase(struct GameState* gameState)
 
 bool canPlayerPlacePenguin(struct GameState* gameState)
 {
-    int counter = 0;
     for (int i = 0; i < gameState->x_Board_size; i++)
     {
         for (int j = 0; j < gameState->y_Board_size; j++)
         {
-            // printf("%d\n",gameState->Board[i][j].amount_of_fish);
-            if (gameState->Board[i][j].amount_of_fish == 0)
+            if (gameState->Board[i][j].amount_of_fish == 1)
             {
-                counter++;
+                return true;
             }
         }
     }
-    // printf("spots with 0 %d \n",counter);
-    // printf("%d %d \n",gameState->x_Board_size,gameState->y_Board_size);
-    return counter != gameState->x_Board_size * gameState->y_Board_size && counter != gameState->num_of_players *
-        gameState->num_of_penguins_per_player;
+    return false;
 }
 
 
