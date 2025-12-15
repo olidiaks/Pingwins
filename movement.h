@@ -45,11 +45,13 @@ bool isThereAnyPenguinMoveAvailable(struct GameState *gameState);
 bool isPlayerMoveAvailable(void);
 
 /**
- * This function moves the current player's penguin on the board.
- * It updates the game state by moving the penguin and prints a message.
- * The caller handles the actual movement logic.
+ * This function moves the currently selected penguin for the active player
+ * during their turn in the game's movement phase. It performs the necessary
+ * updates to the penguin's position on the game board and logs the action.
  *
- * @param gameState A pointer to the GameState structure containing the board dimensions.
+ * @param gameState A pointer to the GameState structure that maintains the
+ *                  current state of the game, including player information,
+ *                  board configuration, and penguin positions.
  */
 void movePenguin(struct GameState *gameState);
 

@@ -68,4 +68,18 @@ bool isEveryPenguinsPlaced(struct GameState *gameState);
  */
 bool isPlacemntVaild(struct GameState *gameState);
 
+/**
+ * @brief Places a penguin for the current player on the game board.
+ *
+ * This function registers the placement of a penguin by the current player. It updates
+ * the game board and player data to reflect the player's action and then proceeds to
+ * adjust the penguin's position by invoking a helper function. This function assumes
+ * that the game state contains the relevant information for the current board, players,
+ * and penguins.
+ *
+ * @param gameState A pointer to the GameState structure containing the current state
+ *                  of the game, including the board layout, players, and penguin positions.
+ */
+void placePenguin(struct GameState *gameState);
+
 #endif //PROJECT_PLACEMENT_H

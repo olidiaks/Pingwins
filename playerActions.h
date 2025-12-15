@@ -75,7 +75,7 @@ bool isCoordinateValid(struct GameState *gameState);
  * @param gameState A pointer to the GameState structure that contains the current
  *                  game board, players' data, and game state information.
  */
-void placePenguin(struct GameState *gameState);
+void change_penguin_position(struct GameState *gameState);
 
 
 /**

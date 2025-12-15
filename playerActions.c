@@ -44,8 +44,7 @@ bool isCoordinateValid(struct GameState *gameState) {
     return (0 < x) && (x < gameState->x_Board_size) && (0 < y) && (y < gameState->y_Board_size);
 }
 
-void placePenguin(struct GameState *gameState) {
-    printf("Player %d 's penguin has been placed.\n", gameState->current_player + 1);
+void change_penguin_position(struct GameState *gameState) {
     int x = gameState->Players[gameState->current_player].x;
     gameState->Players[gameState->current_player].penguins[gameState->Players[gameState->current_player].
         current_penguin].x = x;
