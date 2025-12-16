@@ -6,8 +6,9 @@
 
 void collectFish(struct GameState* gameState)
 {
-    int x = gameState->Players[gameState->current_player].x;
-    int y = gameState->Players[gameState->current_player].y;
+    int x = gameState->Players[gameState->current_player].penguins->x;
+    int y = gameState->Players[gameState->current_player].penguins->y;
+    printf("x = %d, y = %d \n",x,y);
     gameState->Players[gameState->current_player].current_score += gameState->Board[x][y].amount_of_fish;
     gameState->Board[x][y].amount_of_fish = 0;
     printf("Player %d has collected fish.\n", gameState->current_player + 1);
@@ -53,18 +54,13 @@ void askCoordinates(struct GameState* gameState)
 
 bool isCoordinateValid(struct GameState* gameState)
 {
-    // make the function read xo and yo from the askCoordinates function
     int x = gameState->Players[gameState->current_player].x;
     int y = gameState->Players[gameState->current_player].y;
 
     printf("CHECKING COORDINATES: X = %d, Y = %d\n", x, y);
 
-    if ((0 <= x) && (x < gameState->x_Board_size) && (0 <= y) && (y < gameState->y_Board_size)) {
-        gameState->Players[gameState->current_player].penguins->y = y;
-        gameState->Players[gameState->current_player].penguins->x = x;
-        return 1;
-    };
-    return 0;
+    return ((0 <= x) && (x < gameState->x_Board_size) && (0 <= y) && (y < gameState->y_Board_size));
+
 }
 
 bool isMoveValid(struct GameState* gameState)
@@ -78,13 +74,29 @@ bool isMoveValid(struct GameState* gameState)
     moveX = gameState->Players[curPlr].x;
     moveY = gameState->Players[curPlr].y;
 
+    printf("cur X = %d cur Y = %d move X = %d move Y = %d\n",curX,curY,moveX,moveY);
+
     int deltaX, deltaY, dt;
     
-    deltaX = moveX - curX;
-    deltaY = moveY - curY;
+    deltaX = abs(moveX - curX);
+    deltaY = abs(moveY - curY);
 
-    if (deltaX * deltaY != 0) // Either one direction or another. If we move even a centimeter in both directions the delta for both will be non-zero
+    printf("delta x = %d delta y = %d\n",deltaX,deltaY);
+    printf("%d \n",gameState->Board[moveY,moveX]->amount_of_fish);
+
+    if (gameState->Board[moveY,moveX]->amount_of_fish == 0) {
         return false;
+    }
+
+    printf("Player didn't move penguin to a hole/another penguin\n");
+
+    if (deltaX * deltaY != 0) {
+        // Either one direction or another. If we move even a centimeter in both directions the delta for both will be non-zero
+        printf("You're trying to move the penguin in an illegal way.\n");
+        return false;
+    }
+
+    printf("Player didn't input an invalid move\n");
     
     if (deltaX != 0) {
 

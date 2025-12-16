@@ -14,7 +14,7 @@ void placementPhase(struct GameState* gameState)
         showBoard(gameState);
         printGameInfo(gameState);
         askCoordinates(gameState);
-        while (!(isCoordinateValid(gameState) && !isPlacementValid(gameState))){
+        while (!(isCoordinateValid(gameState) && isPlacementValid(gameState))){
             printf("Given coordinates are invalid!\nPlease notice that you may only place a penguin on a tile with a singular fish.\n");
             askCoordinates(gameState);
         }
@@ -58,14 +58,19 @@ bool isEveryPenguinsPlaced(struct GameState* gameState)
 bool isPlacementValid(struct GameState* gameState)
 {
     printf("Checking whether the placement is valid or not.\n");
-    int x = gameState->Players[gameState->current_player].penguins->x;
-    int y = gameState->Players[gameState->current_player].penguins->y;
+    int x = gameState->Players[gameState->current_player].x;
+    int y = gameState->Players[gameState->current_player].y;
     //printf("%d %d \n",x,y);
     if (x<0 || y<0) {
         return false;
     }
     //printf("%d \n",gameState->Board[x][y].amount_of_fish == 1);
-    return !(gameState->Board[x][y].amount_of_fish == 1);
+    if(gameState->Board[x][y].amount_of_fish == 1) {
+        gameState->Players[gameState->current_player].penguins->y = y;
+        gameState->Players[gameState->current_player].penguins->x = x;
+        return true;
+    }
+    else return false;
 }
 
 void placePenguin(struct GameState* gameState)
