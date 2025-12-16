@@ -77,7 +77,6 @@ void askWhichPenguinMove(struct GameState* gameState)
     {
         scanf("%d", &id);
         id--;
-        gameState->Players[gameState->current_player].current_penguin = id - 1;
-    }
-    while (0 <= id && id < gameState->num_of_penguins_per_player);
+        gameState->Players[gameState->current_player].current_penguin = id;
+    } while (0 > id || id >= gameState->num_of_penguins_per_player);
 }
