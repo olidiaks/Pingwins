@@ -14,10 +14,8 @@ void placementPhase(struct GameState* gameState)
         showBoard(gameState);
         printGameInfo(gameState);
         askCoordinates(gameState);
-        while (!isCoordinateValid(gameState) || !isPlacemntVaild(gameState))
-        {
-            printf(
-                "Given coordinates are invalid!\nPlease notice that you may only place a penguin on a tile with a singular fish.\n");
+        while (!(isCoordinateValid(gameState) && !isPlacementValid(gameState))){
+            printf("Given coordinates are invalid!\nPlease notice that you may only place a penguin on a tile with a singular fish.\n");
             askCoordinates(gameState);
         }
         placePenguin(gameState);
@@ -45,7 +43,8 @@ bool canPlayerPlacePenguin(struct GameState* gameState)
 
 bool isEveryPenguinsPlaced(struct GameState* gameState)
 {
-    //TODO: Veryfai if this actually make sance?
+    //TO DO: Verify if this actually make sense?
+    //Note from Bryce: Please learn how to spell things correctly I am so tired of fixing your mistakes
     for (int i = 0; i < gameState->num_of_players; ++i)
     {
         if (gameState->Players[i].current_penguin != gameState->num_of_penguins_per_player)
@@ -56,11 +55,17 @@ bool isEveryPenguinsPlaced(struct GameState* gameState)
     return true;
 }
 
-bool isPlacemntVaild(struct GameState* gameState)
+bool isPlacementValid(struct GameState* gameState)
 {
+    printf("Checking whether the placement is valid or not.\n");
     int x = gameState->Players[gameState->current_player].penguins->x;
     int y = gameState->Players[gameState->current_player].penguins->y;
-    return gameState->Board[x][y].amount_of_fish == 1;
+    //printf("%d %d \n",x,y);
+    if (x<0 || y<0) {
+        return false;
+    }
+    //printf("%d \n",gameState->Board[x][y].amount_of_fish == 1);
+    return !(gameState->Board[x][y].amount_of_fish == 1);
 }
 
 void placePenguin(struct GameState* gameState)

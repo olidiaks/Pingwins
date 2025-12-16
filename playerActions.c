@@ -57,9 +57,14 @@ bool isCoordinateValid(struct GameState* gameState)
     int x = gameState->Players[gameState->current_player].x;
     int y = gameState->Players[gameState->current_player].y;
 
-    printf("CHECKING COORDINATES: X, Y: %d, %d\n", x, y);
+    printf("CHECKING COORDINATES: X = %d, Y = %d\n", x, y);
 
-    return (0 <= x) && (x < gameState->x_Board_size) && (0 <= y) && (y < gameState->y_Board_size);
+    if ((0 <= x) && (x < gameState->x_Board_size) && (0 <= y) && (y < gameState->y_Board_size)) {
+        gameState->Players[gameState->current_player].penguins->y = y;
+        gameState->Players[gameState->current_player].penguins->x = x;
+        return 1;
+    };
+    return 0;
 }
 
 bool isMoveValid(struct GameState* gameState)

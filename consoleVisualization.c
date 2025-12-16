@@ -40,7 +40,7 @@ void showBoard(struct GameState* gameState)
                 if (id_player != -1)
                 {
                     int id_penguin = gameState->Board[x][y].id_penguin;
-                    printf("%d %d\t|\t", id_player + 1, id_penguin + 1);
+                    printf("P%dp%d\t|\t", id_player + 1, id_penguin + 1);
                 }
                 else
                 {
@@ -62,6 +62,17 @@ void printGameInfo(struct GameState* gameState)
     int current_player = gameState->current_player;
     printf("Current player is player number: %d.\n", current_player + 1);
     printf("Current penguin is penguin number: %d.\n", gameState->Players[current_player].current_penguin + 1);
+
+    for (int i = 0; i < gameState->num_of_players; ++i)
+    {
+        printf("Player %d has %d fish.\n", i + 1, gameState->Players[i].current_score);
+    }
+}
+
+void printGameInfoMovement(struct GameState* gameState)
+{
+    int current_player = gameState->current_player;
+    printf("Current player is player number: %d.\n", current_player + 1);
 
     for (int i = 0; i < gameState->num_of_players; ++i)
     {

@@ -11,7 +11,7 @@ void movementPhase(struct GameState* gameState)
         while (isPlayerAbleToMoveAnyPenguin(gameState))
         {
             showBoard(gameState);
-            printGameInfo(gameState);
+            printGameInfoMovement(gameState);
             askWhichPenguinMove(gameState);
             askCoordinates(gameState);
             while (!(isCoordinateValid(gameState) && isMoveValid(gameState)))
@@ -71,8 +71,6 @@ void askWhichPenguinMove(struct GameState* gameState)
 {
     printf("Which penguin (from 1 to %d) do you want to move?\n", gameState->num_of_penguins_per_player);
     int id;
-
-
     do
     {
         scanf("%d", &id);

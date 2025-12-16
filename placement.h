@@ -66,7 +66,7 @@ bool isEveryPenguinsPlaced(struct GameState *gameState);
  *                  about the board, players, and their positions.
  * @return Returns 1 if the placement is valid; otherwise, returns 0.
  */
-bool isPlacemntVaild(struct GameState *gameState);
+bool isPlacementValid(struct GameState *gameState);
 
 /**
  * @brief Places a penguin for the current player on the game board.
