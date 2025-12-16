@@ -21,7 +21,7 @@ void changeCurrentPlayer(struct GameState* gameState)
 
 void askCoordinates(struct GameState* gameState)
 {
-    printf("Gave coordinates for move separated by space.\n");
+    printf("Please input coordinates (row column): \n");
 
     char* x = NULL;
     char* y = NULL;
@@ -57,7 +57,7 @@ bool isCoordinateValid(struct GameState* gameState)
     int x = gameState->Players[gameState->current_player].x;
     int y = gameState->Players[gameState->current_player].y;
 
-    printf("CHECKING CORDS: X, Y: %d, %d\n", x, y);
+    printf("CHECKING COORDINATES: X, Y: %d, %d\n", x, y);
 
     return (0 <= x) && (x < gameState->x_Board_size) && (0 <= y) && (y < gameState->y_Board_size);
 }
@@ -94,7 +94,7 @@ bool isMoveValid(struct GameState* gameState)
             for (iterator; iterator <= deltaX; iterator++) {
                 cPosX += sign;
                 if (gameState->Board[cPosX][cPosY].amount_of_fish <= 0) {
-                    printf("MOVE FALSE X!\n");
+                    printf("MOVE INCORRECT (ROW)!\n");
                     return false;
                 }
             }
@@ -116,7 +116,7 @@ bool isMoveValid(struct GameState* gameState)
             for (iterator; iterator <= deltaY; iterator++) {
                 cPosY += sign;
                 if (gameState->Board[cPosX][cPosY].amount_of_fish <= 0) {
-                    printf("MOVE FALSE Y!\n");
+                    printf("MOVE INCORRECT (COLUMN)!\n");
                     return false;
                 }
             }

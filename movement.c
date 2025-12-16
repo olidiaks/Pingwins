@@ -69,7 +69,7 @@ void movePenguin(struct GameState* gameState)
 
 void askWhichPenguinMove(struct GameState* gameState)
 {
-    printf("Which pengiun(1 – %d) do you want to move?\n", gameState->num_of_penguins_per_player);
+    printf("Which penguin (from 1 to %d) do you want to move?\n", gameState->num_of_penguins_per_player);
     int id;
 
 
