@@ -20,7 +20,7 @@ void init() {
         gameState.Players[i].y = -1;
         gameState.Players[i].penguins = malloc(gameState.num_of_penguins_per_player * sizeof(struct Penguin));
         if (gameState.Players[i].penguins == NULL) {
-            printf("Fild provided by you is too big. You do not have enough memory.\n");
+            printf("The field provided is too big. You do not have enough memory.\n");
             exit(4);
         }
     }
@@ -35,7 +35,7 @@ void askInitQuestions() {
     gameState.num_of_players = num_of_players;
 
 
-    printf("How many penguins should each player have?: (1 – 9)\n");
+    printf("How many penguins should each player have?: (from 1 to 9)\n");
     while (!scanf("%d", &gameState.num_of_penguins_per_player) || gameState.num_of_penguins_per_player < 1 || gameState.
            num_of_penguins_per_player > 9) {
         printf("Please enter a number between 1 and 9.\n");
