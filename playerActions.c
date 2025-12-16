@@ -21,6 +21,8 @@ void changeCurrentPlayer(struct GameState* gameState)
 
 void askCoordinates(struct GameState* gameState)
 {
+    printf("Gave coordinates for move separated by space.\n");
+
     char* x = NULL;
     char* y = NULL;
 
