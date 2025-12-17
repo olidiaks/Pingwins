@@ -5,6 +5,7 @@
 #include "autonomousMode.h"
 
 #include "boardGeneration.h"
+#include "loadValidator.h"
 #include "main.h"
 
 FILE *openOutputFileAndHandleError(char *filePath) {
@@ -15,6 +16,28 @@ FILE *openOutputFileAndHandleError(char *filePath) {
                "permission for access.\n");
         exit(3);
     }
+
+    int rows, cols;
+    if (!checkHeader(output_file, &rows, &cols)) {
+        printf("Error opening output file\nHeader malformed.\n");
+        exit(2);
+    }
+
+    if (!checkDimensions(output_file, rows, cols)) {
+        printf("Error opening output file\nDimension - reported size mismatch.\n");
+        exit(2);
+    }
+
+    if (!checkRectangularConsistency(output_file)) {
+        printf("Error opening output file\nBoard malformed.\n");
+        exit(2);
+    }
+
+    if (!checkZeroConstraint(output_file)) {
+        printf("Error opening output file\nCritical placement error.\n");
+        exit(2);
+    }
+
     return output_file;
 }
 
@@ -26,6 +49,9 @@ FILE *openInputFileAndHandleError(char *filePath) {
                "permission for access.\n");
         exit(3);
     }
+
+
+
     return inputFile;
 }
 
@@ -33,37 +59,39 @@ char readFile(FILE *givenFile) {
     char line[127];
     int counter = 0;
     int rows = 0, cols = 0;
-    while (fgets(line,127,givenFile)) {
-        printf("%s \n", line);
-        if (counter == 0) {
-            // reading board dimensions
-            rows = atoi(&line[3]);
-            cols = atoi(&line[0]);
+    const char *delimiters = " \r\n"; // Split by space, carriage return, or newline
 
-            gameState.xBoardSize = rows;
-            gameState.yBoardSize = cols;
-            generateBoard(&gameState);
+    while (fgets(line, sizeof(line), givenFile)) {
+        if (counter == 0) {
+            if (sscanf(line, "%d %d", &rows, &cols) == 2) {
+                gameState.xBoardSize = rows;
+                gameState.yBoardSize = cols;
+
+                generateVoidBoard(&gameState);
+                printf("Map Dimensions found: %d rows, %d cols\n", rows, cols);
+            }
         }
-        else if (counter <= cols) {
-            // reading how the board is constructed
-            char * coordinates;
-            coordinates = strtok(line, " ");
-            while (coordinates != NULL) {
-                char *boardspot = coordinates;
-                //printf("%s \n",boardspot);
-                for (int i = 0; i < cols; i++) {
-                    gameState.Board[counter-1][i].amountOfFish = atoi(&boardspot[0]);
-                }
-                coordinates = strtok(NULL, " ");
+
+        else if (counter <= rows) {
+            char *token = strtok(line, delimiters);
+            int colIndex = 0;
+
+            while (token != NULL && colIndex < cols) {
+                gameState.Board[counter - 1][colIndex].amountOfFish = atoi(token);
+
+                colIndex++;
+                token = strtok(NULL, delimiters);
             }
         }
         counter++;
     }
-    printf("The number of rows is %d, the number of columns is %d \n",rows,cols);
-    for (int i = 0; i < gameState.yBoardSize; i++) {
-        for (int j = 0; j < gameState.xBoardSize; j++) {
-            printf("%d ",gameState.Board[i][j].amountOfFish);
+
+    printf("\n--- Internal Check ---\n");
+    for (int i = 0; i < gameState.xBoardSize; i++) {
+        for (int j = 0; j < gameState.yBoardSize; j++) {
+            printf("%02d ", gameState.Board[i][j].amountOfFish);
         }
+        printf("\n");
     }
 }
 bool loadPlayers(struct GameState *game_state, FILE *input_file) {

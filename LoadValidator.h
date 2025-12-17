@@ -1,8 +1,0 @@
-//
-// Created by theVo on 12/17/2025.
-//
-
-#ifndef PROJECT_LOADVALIDATOR_H
-#define PROJECT_LOADVALIDATOR_H
-
-#endif // PROJECT_LOADVALIDATOR_H
