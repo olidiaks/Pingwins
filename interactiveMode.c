@@ -7,10 +7,10 @@
 
 void interactive_mode(struct GameState *gameState) {
     init();
-    placementPhase(gameState);
+    placementInteractiveMode(gameState);
     if (isEveryPenguinsPlaced(gameState)) {
         printf("- - - - - - - - - - \nCommencing movement phase. \n- - - - - - - - - -\n");
-        movementPhase(gameState);
+        movementPhaseInteractiveMode(gameState);
         showBoard(gameState);
         printf("No players can make any further moves.\n");
         if (gameState->Players[0].currentScore > gameState->Players[1].currentScore) {
