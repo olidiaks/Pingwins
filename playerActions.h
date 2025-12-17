@@ -107,4 +107,16 @@ void changeCurrentPenguin(struct GameState *gameState);
  */
 bool isMoveValid(struct GameState *gameState);
 
+/**
+ * @brief Swaps the values of two integers if the first is greater than the second.
+ *
+ * This function compares two integers and swaps their values if the first integer
+ * is greater than the second. It ensures that the smaller value is assigned to the
+ * first variable and the larger value to the second.
+ *
+ * @param x A pointer to the first integer.
+ * @param y A pointer to the second integer.
+ */
+void swapSmallerBiggerNumbers(int *x, int *y);
+
 #endif //PROJECT_PLAYERACTIONS_H

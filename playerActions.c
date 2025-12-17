@@ -56,7 +56,18 @@ bool isCoordinateValid(struct GameState *gameState) {
     return ((0 <= x) && (x < gameState->xBoardSize) && (0 <= y) && (y < gameState->yBoardSize));
 }
 
+void swapSmallerBiggerNumbers(int *x, int *y) {
+    if (*x > *y) {
+        int temp = *x;
+        *x = *y;
+        *y = temp;
+    }
+}
+
 bool isMoveValid(struct GameState *gameState) {
+
+    //TODO: Delete hot fix, and do it correctly Wojtek.
+
     int curPlr = gameState->currentPlayer;
     int moveX, moveY, curX, curY;
 
@@ -65,6 +76,39 @@ bool isMoveValid(struct GameState *gameState) {
 
     moveX = gameState->Players[curPlr].x;
     moveY = gameState->Players[curPlr].y;
+
+
+    //TODO: Delete hot fix, and do it correctly Wojtek.
+
+    if (curX != moveX && curY != moveY) {
+        printf("Invalid move! Move only horizontally or vertically.\n");
+        return false;
+    }
+
+    if (curX == moveX) {
+        swapSmallerBiggerNumbers(&moveY, &curY);
+        for (int y = moveY; y < curY; y++) {
+            if (gameState->Board[moveX][y].amountOfFish == 0) {
+                printf("Invalid move! You can only slide in straight lines to a tile with fish. Make sure your path is clear.\n");
+                return false;
+            }
+        }
+    }
+
+    if (curY == moveY) {
+        swapSmallerBiggerNumbers(&moveX, &curX);
+        for (int x = moveX; x < curX; x++) {
+            if (gameState->Board[x][moveY].amountOfFish == 0) {
+                printf("Invalid move! You can only slide in straight lines to a tile with fish. Make sure your path is clear.\n");
+                return false;
+            }
+        }
+    }
+
+    return true;
+
+
+    //End fo HotFix.
 
     printf("cur X = %d cur Y = %d move X = %d move Y = %d\n", curX, curY, moveX, moveY);
 
