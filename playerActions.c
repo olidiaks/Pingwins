@@ -5,9 +5,8 @@
 #include "playerActions.h"
 
 void collectFish(struct GameState *gameState) {
-    int x = gameState->Players[gameState->currentPlayer].penguins->x;
-    int y = gameState->Players[gameState->currentPlayer].penguins->y;
-    printf("x = %d, y = %d \n", x, y);
+    int x = gameState->Players[gameState->currentPlayer].x;
+    int y = gameState->Players[gameState->currentPlayer].y;
     gameState->Players[gameState->currentPlayer].currentScore += gameState->Board[x][y].amountOfFish;
     gameState->Board[x][y].amountOfFish = 0;
     printf("Player %d has collected fish.\n", gameState->currentPlayer + 1);
@@ -50,8 +49,6 @@ void askCoordinates(struct GameState *gameState) {
 bool isCoordinateValid(struct GameState *gameState) {
     int x = gameState->Players[gameState->currentPlayer].x;
     int y = gameState->Players[gameState->currentPlayer].y;
-
-    printf("CHECKING COORDINATES: X = %d, Y = %d\n", x, y);
 
     return ((0 <= x) && (x < gameState->xBoardSize) && (0 <= y) && (y < gameState->yBoardSize));
 }
