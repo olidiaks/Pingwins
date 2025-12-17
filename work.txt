@@ -7,7 +7,7 @@
 7. Write checking if players are in the list of players.
 8. Write getting id – Oliwier.
 9. Write printing a name – Done.
-10. Write a validating field.
+10. Write a validating field. – Wojtek
 11. Write writing a player to a list of players who moved. - Wojtek
 12. Write placing of penguins. - Wojtek
 13. Write checking if a move is possible. - Wojtek Done
@@ -23,4 +23,5 @@
 23. Looking if a player exists on players list. – Oliwier
 24. Write writing to file id of player if not found. – Oliwier
 25. Write reading from file id of player if found.
+26. Write an algorithm for finding the best move.
 
