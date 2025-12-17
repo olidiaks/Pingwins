@@ -7,9 +7,12 @@
 void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]) {
     FILE *inputFile = openInputFileAndHandleError(inputFilePath);
 
-    FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
 
     readFile(inputFile);
+    loadPlayers(gameState, inputFile);
 
+    fclose(inputFile);
+
+    FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
 }
 
