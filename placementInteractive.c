@@ -51,19 +51,9 @@ bool isEveryPenguinsPlaced(struct GameState* gameState)
 
 bool isPlacementValid(struct GameState* gameState)
 {
-    printf("Checking whether the placement is valid or not.\n");
     int x = gameState->Players[gameState->currentPlayer].x;
     int y = gameState->Players[gameState->currentPlayer].y;
-    //printf("%d %d \n",x,y);
-    if (x <0 || y<0) {
-        return false;
-    }
-    //printf("%d \n",gameState->Board[x][y].amountOfFish == 1);
-    if (gameState->Board[x][y].amountOfFish == 1) {
-        gameState->Players[gameState->currentPlayer].penguins->y = y;
-        gameState->Players[gameState->currentPlayer].penguins->x = x;
-        return true;
-    } else return false;
+    return gameState->Board[x][y].amountOfFish == 1;
 }
 
 void placePenguin(struct GameState* gameState)
