@@ -102,4 +102,15 @@ bool checkAdjacentFishAvailability(struct GameState *gameState, int x, int y);
  */
 bool isAnyMoveForCurrentPenguinAvailable(struct GameState *gameState);
 
+/**
+ * Removes a penguin from its current location on the board for the active player.
+ * This involves updating the board to reset the field's player and penguin IDs
+ * at the penguin's current coordinates.
+ * No changes are made to the player's structure in this function.
+ *
+ * @param gameState A pointer to the GameState structure containing the current game state,
+ *                  including the board, players, and their penguins.
+ */
+void remove_penguin_from_current_location(struct GameState *gameState);
+
 #endif //PROJECT_MOVEMENT_H

@@ -59,9 +59,21 @@ bool isPlayerAbleToMoveAnyPenguin(struct GameState *gameState) {
     }
 }
 
+void remove_penguin_from_current_location(struct GameState *gameState) {
+    int currentPlayer = gameState->currentPlayer;
+    int currentPenguin = gameState->Players[currentPlayer].currentPenguin;
+    int x = gameState->Players[currentPlayer].penguins[currentPenguin].x;
+    int y = gameState->Players[currentPlayer].penguins[currentPenguin].y;
+    gameState->Board[x][y].idPlayer = -1;
+    gameState->Board[x][y].idPenguin = -1;
+}
+
 void movePenguin(struct GameState *gameState) {
-    printf("Player %d's penguin has been moved.\n", gameState->currentPlayer + 1);
+    remove_penguin_from_current_location(gameState);
     changePenguinPosition(gameState);
+    int currentPlayer = gameState->currentPlayer;
+    int currentPenguin = gameState->Players[currentPlayer].currentPenguin;
+    printf("Player %d's %d penguin has been moved.\n", currentPlayer + 1, currentPenguin + 1);
 }
 
 void askWhichPenguinMove(struct GameState *gameState) {
