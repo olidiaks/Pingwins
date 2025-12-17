@@ -105,6 +105,6 @@ void changeCurrentPenguin(struct GameState *gameState);
  *                  game board, active player's data, and overall game state information.
  * @return True if the move is valid, otherwise false.
  */
-bool isMoveInvalid(struct GameState *gameState);
+bool isMoveValid(struct GameState *gameState);
 
 #endif //PROJECT_PLAYERACTIONS_H

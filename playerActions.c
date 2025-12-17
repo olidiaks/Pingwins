@@ -63,7 +63,7 @@ bool isCoordinateValid(struct GameState* gameState)
 
 }
 
-bool isMoveInvalid(struct GameState *gameState) {
+bool isMoveValid(struct GameState *gameState) {
     int curPlr = gameState->current_player;
     int moveX, moveY, curX, curY;
 
