@@ -1,5 +1,5 @@
 1. Implement call for interactive mode and autonomous mode. – Oliwier Done
-2. Write validation of moves. - Wojtek
+2. Write validation of moves. - Wojtek Done
 3. Write autonomous - Oliwier
 4. Write opening files both for saving and loading. - Bryce Done
 5. Write check if files were opened correctly. - Bryce Done
