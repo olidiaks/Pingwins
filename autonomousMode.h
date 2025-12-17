@@ -30,4 +30,7 @@
 FILE *openOutputFileAndHandleError(char *filePath);
 
 FILE *openInputFileAndHandleError(char *filePath);
+
+char readFile(FILE *givenFile);
+
 #endif //PROJECT_AUTONOMOUS_MODE_H

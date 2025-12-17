@@ -9,4 +9,6 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     FILE *inputFile = openInputFileAndHandleError(inputFilePath);
 
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
+
+    readFile(inputFile);
 }
