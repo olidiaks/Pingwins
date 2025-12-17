@@ -10,7 +10,7 @@
 #include "consoleVisualization.h"
 #include "main.h"
 #include "GameState.h"
-#include "placement.h"
+#include "placementInteractive.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,7 +25,7 @@
  * After the current player completes their moves, the turn passes to the next player.
  * @param gameState A pointer to the GameState structure containing the board dimensions.
  */
-void movementPhase(struct GameState *gameState);
+void movementPhaseInteractiveMode(struct GameState *gameState);
 
 /**
  * This function determines if there are any penguin moves available for any player in the game.

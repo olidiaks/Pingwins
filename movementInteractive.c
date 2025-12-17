@@ -2,9 +2,9 @@
 // Created by theVo on 19/11/2025.
 //
 
-#include "movement.h"
+#include "movementInteractive.h"
 
-void movementPhase(struct GameState *gameState) {
+void movementPhaseInteractiveMode(struct GameState *gameState) {
     while (isThereAnyPenguinMoveAvailable(gameState)) {
         while (isPlayerAbleToMoveAnyPenguin(gameState)) {
             showBoard(gameState);

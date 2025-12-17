@@ -2,11 +2,10 @@
 // Created by theVo on 19/11/2025.
 //
 
-#include "placement.h"
+#include "placementInteractive.h"
 
 
-void placementPhase(struct GameState* gameState)
-{
+void placementInteractiveMode(struct GameState *gameState) {
     readBoardDimensions(gameState);
     generateBoard(gameState);
     while (canPlayerPlacePenguin(gameState) && !isEveryPenguinsPlaced(gameState))

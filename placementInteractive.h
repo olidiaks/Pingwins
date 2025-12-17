@@ -29,7 +29,7 @@
  * The loop continues until no valid moves are left or all penguins are placed.
  * @param gameState A pointer to the GameState structure containing the board dimensions.
  */
-void placementPhase(struct GameState *gameState);
+void placementInteractiveMode(struct GameState *gameState);
 
 /**
  * @brief Checks if the current player is able to place any penguins on the board.

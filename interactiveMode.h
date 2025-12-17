@@ -6,8 +6,8 @@
 #ifndef PROJECT_INTERACTIVE_MODE_H
 #define PROJECT_INTERACTIVE_MODE_H
 
-#include "movement.h"
-#include "placement.h"
+#include "movementInteractive.h"
+#include "placementInteractive.h"
 #include "GameState.h"
 #include <stdlib.h>
 

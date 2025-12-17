@@ -10,10 +10,10 @@ add_executable(project
         consoleVisualization.h
         main.c
         main.h
-        movement.c
-        movement.h
-        placement.c
-        placement.h
+        movementInteractive.c
+        movementInteractive.h
+        placementInteractive.c
+        placementInteractive.h
         playerActions.c
         playerActions.h
         GameState.c
