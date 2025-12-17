@@ -8,6 +8,6 @@
 #include "autonomousMode.h"
 
 
-void autonomousMovement(struct GameState *gameState, char inputFilePath[], char outputFilePath[]);
+void autonomousMovement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]);
 
-#endif //PROJECT_AUTONOMUSMOVEMENT_H
+#endif // PROJECT_AUTONOMUSMOVEMENT_H

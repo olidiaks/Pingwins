@@ -66,4 +66,4 @@ char readFile(FILE *givenFile) {
         }
     }
 }
-
+void loadUs(struct GameState *game_state, FILE *input_file) {}

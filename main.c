@@ -9,15 +9,19 @@
 int main(int argc, char *argv[]) {
     srand(10);
 
+    char nameOfUs[] = "Pingwiniarze";
+
     switch (argc) {
         case 1: interactive_mode(&gameState);
             break;
-        case 2: printf("Pingwiniarze");
+        case 2:
+            printf("%s", nameOfUs);
             break;
         case 4:
-            autonomousMovement(&gameState, argv[2], argv[3]);
+            autonomousMovement(&gameState, argv[2], argv[3], nameOfUs);
             break;
-        case 5: autonomousPlacement(&gameState, argv[3], argv[4]);
+        case 5:
+            autonomousPlacement(&gameState, argv[3], argv[4], nameOfUs);
             break;
         default: printf("Too many arguments!\nAmount of given arguments: %d\n", argc);
             exit(5);

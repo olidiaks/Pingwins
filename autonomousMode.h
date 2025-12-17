@@ -33,4 +33,6 @@ FILE *openInputFileAndHandleError(char *filePath);
 
 char readFile(FILE *givenFile);
 
+void loadUs(struct GameState *game_state, FILE *input_file);
+
 #endif //PROJECT_AUTONOMOUS_MODE_H

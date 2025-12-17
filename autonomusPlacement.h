@@ -11,7 +11,7 @@
 #include <string.h>
 #include "autonomousMode.h"
 
-void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char outputFilePath[]);
+void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]);
 
 /**
  * Opens an input file in read mode, checks for errors, and handles them appropriately.

@@ -5,7 +5,7 @@
 #include "autonomusMovement.h"
 
 
-void autonomousMovement(struct GameState *gameState, char inputFilePath[], char outputFilePath[]) {
+void autonomousMovement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]) {
     FILE *inputFile = openInputFileAndHandleError(inputFilePath);
 
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
