@@ -4,6 +4,9 @@
 
 #include "autonomousMode.h"
 
+#include "boardGeneration.h"
+#include "main.h"
+
 FILE *openOutputFileAndHandleError(char *filePath) {
     printf("%s\n", filePath);
     FILE *output_file = fopen(filePath, "w");
@@ -27,9 +30,40 @@ FILE *openInputFileAndHandleError(char *filePath) {
 }
 
 char readFile(FILE *givenFile) {
-    int c;
-    while ((c = getc(givenFile)) != EOF) {
-        printf("%c \n", c);
+    char line[127];
+    int counter = 0;
+    int rows = 0, cols = 0;
+    while (fgets(line,127,givenFile)) {
+        printf("%s \n", line);
+        if (counter == 0) {
+            // reading board dimensions
+            rows = atoi(&line[3]);
+            cols = atoi(&line[0]);
+
+            gameState.xBoardSize = rows;
+            gameState.yBoardSize = cols;
+            generateBoard(&gameState);
+        }
+        else if (counter <= cols) {
+            // reading how the board is constructed
+            char * coordinates;
+            coordinates = strtok(line, " ");
+            while (coordinates != NULL) {
+                char *boardspot = coordinates;
+                //printf("%s \n",boardspot);
+                for (int i = 0; i < cols; i++) {
+                    gameState.Board[counter-1][i].amountOfFish = atoi(&boardspot[0]);
+                }
+                coordinates = strtok(NULL, " ");
+            }
+        }
+        counter++;
+    }
+    printf("The number of rows is %d, the number of columns is %d \n",rows,cols);
+    for (int i = 0; i < gameState.yBoardSize; i++) {
+        for (int j = 0; j < gameState.xBoardSize; j++) {
+            printf("%d ",gameState.Board[i][j].amountOfFish);
+        }
     }
 }
 
