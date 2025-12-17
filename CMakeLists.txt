@@ -21,4 +21,8 @@ add_executable(project
         interactiveMode.c
         interactiveMode.h
         autonomousMode.c
-        autonomousMode.h)
+        autonomousMode.h
+        autonomusPlacement.h
+        autonomusPlacement.c
+        autonomusMovement.c
+        autonomusMovement.h)

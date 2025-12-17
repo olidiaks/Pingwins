@@ -8,6 +8,8 @@
 #include "interactiveMode.h"
 #include <stdlib.h>
 #include "autonomousMode.h"
+#include "autonomusMovement.h"
+#include "autonomusPlacement.h"
 
 
 extern struct GameState gameState;
