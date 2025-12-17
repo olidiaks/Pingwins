@@ -9,7 +9,6 @@
 int main(int argc, char *argv[]) {
     srand(10);
 
-    init();
     char *nameOfUs = gameState.teamName;
 
     switch (argc) {
