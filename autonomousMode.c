@@ -32,4 +32,4 @@ char readFile(FILE *givenFile) {
         printf("%c \n", c);
     }
 }
-
+void loadUs(struct GameState *game_state, FILE *input_file) {}

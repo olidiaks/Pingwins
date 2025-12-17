@@ -4,7 +4,7 @@
 
 #include "autonomusPlacement.h"
 
-void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char outputFilePath[]) {
+void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]) {
     FILE *inputFile = openInputFileAndHandleError(inputFilePath);
 
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
