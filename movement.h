@@ -67,12 +67,11 @@ bool isPlayerAbleToMoveAnyPenguin(struct GameState* gameState);
 void movePenguin(struct GameState *gameState);
 
 /**
- * This function prompts the current player to choose which penguin they want to move.
- * The player is asked to input the ID of a penguin, and the selection is validated
- * to ensure that the input is within the valid range. Once a valid penguin ID is entered,
- * it updates the current player's selected penguin in the game state.
- * @param gameState A pointer to the GameState structure containing the current game state,
- *                  including player and board information.
+ * Prompts the current player to select which penguin they want to move.
+ * Ensures the selected penguin is valid and has at least one possible move available.
+ * If the player's input is invalid or the selected penguin cannot move, the function retries until valid input is provided.
+ * Updates the game state to reflect the selected penguin for the current player.
+ * @param gameState A pointer to the GameState structure that contains the current board, players, and game setup details.
  */
 void askWhichPenguinMove(struct GameState *gameState);
 
@@ -88,5 +87,19 @@ void askWhichPenguinMove(struct GameState *gameState);
  *         with available fish (true if fish are present, false otherwise).
  */
 bool check_adjacent_fish_availability(struct GameState* gameState, int x, int y);
+
+/**
+ * Determines if there is any possible move for the current penguin of the current player
+ * by checking the availability of adjacent fields with fish.
+ * The function retrieves the coordinates of the current penguin for the player whose turn
+ * it is, then utilizes a helper function to verify if any of the neighboring tiles
+ * contain fish.
+ *
+ * @param gameState A pointer to the GameState structure that contains the current state of the game,
+ *                  including the board, players, and their respective penguins.
+ * @return A non-zero value if there is at least one valid move for the current penguin,
+ *         otherwise 0 if no moves are possible.
+ */
+bool isAnyMoveForCurrentPenguinAvailable(struct GameState *gameState);
 
 #endif //PROJECT_MOVEMENT_H

@@ -63,8 +63,7 @@ bool isCoordinateValid(struct GameState* gameState)
 
 }
 
-bool isMoveValid(struct GameState* gameState)
-{
+bool isMoveInvalid(struct GameState *gameState) {
     int curPlr = gameState->current_player;
     int moveX, moveY, curX, curY;
 
@@ -77,7 +76,7 @@ bool isMoveValid(struct GameState* gameState)
     printf("cur X = %d cur Y = %d move X = %d move Y = %d\n",curX,curY,moveX,moveY);
 
     int deltaX, deltaY, dt;
-    
+
     deltaX = abs(moveX - curX);
     deltaY = abs(moveY - curY);
 
@@ -85,10 +84,10 @@ bool isMoveValid(struct GameState* gameState)
     printf("%d \n",gameState->Board[moveY,moveX]->amount_of_fish);
 
     if (gameState->Board[moveY,moveX]->amount_of_fish == 0) {
+        printf("Player didn't move penguin to a hole/another penguin\n");
         return false;
     }
 
-    printf("Player didn't move penguin to a hole/another penguin\n");
 
     if (deltaX * deltaY != 0) {
         // Either one direction or another. If we move even a centimeter in both directions the delta for both will be non-zero
@@ -97,7 +96,7 @@ bool isMoveValid(struct GameState* gameState)
     }
 
     printf("Player didn't input an invalid move\n");
-    
+
     if (deltaX != 0) {
 
         int iterator = 0;
@@ -119,9 +118,7 @@ bool isMoveValid(struct GameState* gameState)
             return true;
         }
     }
-    else
-    {
-        
+    else {
         int iterator = 0;
         int cPosX, cPosY = curX, curY;
         int sign = deltaY / abs(deltaY);
@@ -146,9 +143,8 @@ bool isMoveValid(struct GameState* gameState)
 
 void change_penguin_position(struct GameState* gameState)
 {
-    
     int curPlr = gameState->current_player;
-    
+
     int x = gameState->Players[curPlr].x;
     gameState->Players[curPlr].penguins[gameState->Players[curPlr].current_penguin].x = x;
 
