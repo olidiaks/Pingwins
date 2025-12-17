@@ -65,7 +65,6 @@ void swapSmallerBiggerNumbers(int *x, int *y) {
 }
 
 bool isMoveValid(struct GameState *gameState) {
-
     //TODO: Delete hot fix, and do it correctly Wojtek.
 
     int curPlr = gameState->currentPlayer;
@@ -89,7 +88,8 @@ bool isMoveValid(struct GameState *gameState) {
         swapSmallerBiggerNumbers(&moveY, &curY);
         for (int y = moveY; y < curY; y++) {
             if (gameState->Board[moveX][y].amountOfFish == 0) {
-                printf("Invalid move! You can only slide in straight lines to a tile with fish. Make sure your path is clear.\n");
+                printf(
+                    "Invalid move! You can only slide in straight lines to a tile with fish. Make sure your path is clear.\n");
                 return false;
             }
         }
@@ -99,7 +99,8 @@ bool isMoveValid(struct GameState *gameState) {
         swapSmallerBiggerNumbers(&moveX, &curX);
         for (int x = moveX; x < curX; x++) {
             if (gameState->Board[x][moveY].amountOfFish == 0) {
-                printf("Invalid move! You can only slide in straight lines to a tile with fish. Make sure your path is clear.\n");
+                printf(
+                    "Invalid move! You can only slide in straight lines to a tile with fish. Make sure your path is clear.\n");
                 return false;
             }
         }
