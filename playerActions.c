@@ -65,8 +65,6 @@ void swapSmallerBiggerNumbers(int *x, int *y) {
 }
 
 bool isMoveValid(struct GameState *gameState) {
-    //TODO: Delete hot fix, and do it correctly Wojtek.
-
     int curPlr = gameState->currentPlayer;
     int moveX, moveY, curX, curY;
 
@@ -83,6 +81,10 @@ bool isMoveValid(struct GameState *gameState) {
     }
 
     if (curX == moveX) {
+        if (!moveY) {
+            printf("Invalid move! In your destination mast be a fish and cannot be any other penguins.\n");
+            return false;
+        }
         swapSmallerBiggerNumbers(&moveY, &curY);
         for (int y = moveY; y < curY; y++) {
             if (gameState->Board[moveX][y].amountOfFish == 0) {
@@ -94,6 +96,10 @@ bool isMoveValid(struct GameState *gameState) {
     }
 
     if (curY == moveY) {
+        if (!moveY) {
+            printf("Invalid move! In your destination mast be a fish and cannot be any other penguins.\n");
+            return false;
+        }
         swapSmallerBiggerNumbers(&moveX, &curX);
         for (int x = moveX; x < curX; x++) {
             if (gameState->Board[x][moveY].amountOfFish == 0) {
