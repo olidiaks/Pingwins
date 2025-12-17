@@ -40,8 +40,8 @@ bool canPlayerPlacePenguin(struct GameState* gameState)
 
 bool isEveryPenguinsPlaced(struct GameState* gameState)
 {
-    //TO DO: Verify if this actually make sense?
     //Note from Bryce: Please learn how to spell things correctly I am so tired of fixing your mistakes
+    //Noted not executed
     for (int i = 0; i < gameState->numOfPlayers; ++i) {
         if (gameState->Players[i].currentPenguin != gameState->numOfPenguinsPerPlayer) {
             return false;
