@@ -1,13 +1,13 @@
 1. Implement call for interactive mode and autonomous mode. – Oliwier Done
-2. Write validation of moves. - Wojtek
-3. Write autonomous
+2. Write validation of moves. - Wojtek Done
+3. Write autonomous - Oliwier
 4. Write opening files both for saving and loading. - Bryce Done
 5. Write check if files were opened correctly. - Bryce Done
 6. Write closing files correctly. - Bryce
 7. Write checking if players are in the list of players.
 8. Write getting id – Oliwier.
 9. Write printing a name – Done.
-10. Write a validating field.
+10. Write a validating field. – Wojtek
 11. Write writing a player to a list of players who moved. - Wojtek
 12. Write placing of penguins. - Wojtek
 13. Write checking if a move is possible. - Wojtek Done
@@ -15,7 +15,13 @@
 15. Write checking if penguins on field are placed correctly. - Wojtek
 16. Write an implementation of handling more than two players. – Oliwier Done
 17. Implement more penguins than one penguin per player. – Oliwier Done
-18. Fix askCordinates ASP!!
-19. Modernaize show border for more penguins.
-20. Add to algorith of generating field possibility to generate some island where there is no fish – Wojcie.
-21. Write loading a field from file. – Oliwier
+18. Fix askCordinates ASP!! – Done
+19. Modernize the show border for more penguins. – Almost Done
+20. Add to algorith of generating field possibility to generate some island where there's no fish – Wojtek.
+21. Write loading field from a file. – Oliwier
+22. Write saving field to file. – Oliwier
+23. Looking if a player exists on players list. – Oliwier
+24. Write writing to file id of player if not found. – Oliwier
+25. Write reading from file id of player if found.
+26. Write an algorithm for finding the best move.
+

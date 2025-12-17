@@ -28,4 +28,13 @@ void showBoard(struct GameState *gameState);
  */
 void printGameInfo(struct GameState* gameState);
 
+/**
+ * Prints information about the current state of the game to the console during the movement phase
+ * Information includes the current player's turn and the total score (fish gathered) for each player.
+ *
+ * @param gameState A pointer to the GameState structure containing game details such as
+ *                  the current player, player scores, and the number of players.
+ */
+void printGameInfoMovement(struct GameState* gameState);
+
 #endif //PROJECT_CONSOLEVISUALIZATION_H

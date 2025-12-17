@@ -4,37 +4,30 @@
 
 #include "playerActions.h"
 
-void collectFish(struct GameState* gameState)
-{
-    int x = gameState->Players[gameState->current_player].x;
-    int y = gameState->Players[gameState->current_player].y;
-    gameState->Players[gameState->current_player].current_score += gameState->Board[x][y].amount_of_fish;
-    gameState->Board[x][y].amount_of_fish = 0;
-    printf("Player %d has collected fish.\n", gameState->current_player + 1);
+void collectFish(struct GameState *gameState) {
+    int x = gameState->Players[gameState->currentPlayer].penguins->x;
+    int y = gameState->Players[gameState->currentPlayer].penguins->y;
+    printf("x = %d, y = %d \n", x, y);
+    gameState->Players[gameState->currentPlayer].currentScore += gameState->Board[x][y].amountOfFish;
+    gameState->Board[x][y].amountOfFish = 0;
+    printf("Player %d has collected fish.\n", gameState->currentPlayer + 1);
 }
 
-void changeCurrentPlayer(struct GameState* gameState)
-{
-    gameState->current_player = (gameState->current_player + 1) % gameState->num_of_players;
-    printf("Current player is player %d.\n", 1 + gameState->current_player);
+void changeCurrentPlayer(struct GameState *gameState) {
+    gameState->currentPlayer = (gameState->currentPlayer + 1) % gameState->numOfPlayers;
+    printf("Current player is player %d.\n", 1 + gameState->currentPlayer);
 }
 
-void askCoordinates(struct GameState* gameState)
-{
-    char* x = NULL;
-    char* y = NULL;
+void askCoordinates(struct GameState *gameState) {
+    printf("Please input coordinates (row column): \n");
 
-    unsigned short lenX;
-    unsigned short lenY;
+    char *x = NULL;
+    char *y = NULL;
 
-    if (scanf("%ms %ms", &x, &y) == 2)
-    {
-        lenX = strlen(x);
-        lenY = strlen(y);
-    }
+    unsigned short lenX = 0;
+    unsigned short lenY = 0;
 
-    if (lenX == 2 && lenY == 2)
-    {
+    if (scanf("%ms %ms", &x, &y) == 2 && strlen(x) == 2 && strlen(y) == 2) {
         int xOffset = toupper(x[0]);
         int xDirect = toupper(x[1]);
         int yOffset = toupper(y[0]);
@@ -44,103 +37,92 @@ void askCoordinates(struct GameState* gameState)
         int yFinal = yOffset - 64 + (yDirect - 49) * 26;
 
 
-        gameState->Players[gameState->current_player].x = xFinal - 1;
-        gameState->Players[gameState->current_player].y = yFinal - 1;
+        gameState->Players[gameState->currentPlayer].x = xFinal - 1;
+        gameState->Players[gameState->currentPlayer].y = yFinal - 1;
+    } else {
+        printf("Check once again how cordinates of that field are called.\n");
+
+        gameState->Players[gameState->currentPlayer].x = -1;
+        gameState->Players[gameState->currentPlayer].y = -1;
     }
 }
 
-bool isCoordinateValid(struct GameState* gameState)
-{
-    // make the function read xo and yo from the askCoordinates function
-    int x = gameState->Players[gameState->current_player].x;
-    int y = gameState->Players[gameState->current_player].y;
+bool isCoordinateValid(struct GameState *gameState) {
+    int x = gameState->Players[gameState->currentPlayer].x;
+    int y = gameState->Players[gameState->currentPlayer].y;
 
-    printf("CHECKING CORDS: X, Y: %d, %d\n", x, y);
+    printf("CHECKING COORDINATES: X = %d, Y = %d\n", x, y);
 
-    return (0 <= x) && (x < gameState->x_Board_size) && (0 <= y) && (y < gameState->y_Board_size);
+    return ((0 <= x) && (x < gameState->xBoardSize) && (0 <= y) && (y < gameState->yBoardSize));
 }
 
-bool isMoveValid(struct GameState* gameState)
-{
-    int curPlr = gameState->current_player;
+void swapSmallerBiggerNumbers(int *x, int *y) {
+    if (*x > *y) {
+        int temp = *x;
+        *x = *y;
+        *y = temp;
+    }
+}
+
+bool isMoveValid(struct GameState *gameState) {
+    int curPlr = gameState->currentPlayer;
     int moveX, moveY, curX, curY;
 
-    curX = gameState->Players[curPlr].penguins[gameState->Players[curPlr].current_penguin].x;
-    curY = gameState->Players[curPlr].penguins[gameState->Players[curPlr].current_penguin].y;
+    curX = gameState->Players[curPlr].penguins[gameState->Players[curPlr].currentPenguin].x;
+    curY = gameState->Players[curPlr].penguins[gameState->Players[curPlr].currentPenguin].y;
 
     moveX = gameState->Players[curPlr].x;
     moveY = gameState->Players[curPlr].y;
 
-    int deltaX, deltaY, dt;
-    
-    deltaX = moveX - curX;
-    deltaY = moveY - curY;
 
-    if (deltaX * deltaY != 0) // Either one direction or another. If we move even a centimeter in both directions the delta for both will be non-zero
+    if (curX != moveX && curY != moveY) {
+        printf("Invalid move! Move only horizontally or vertically.\n");
         return false;
-    
-    if (deltaX != 0) {
-
-        int iterator = 0;
-        int cPosX, cPosY = curX, curY;
-        int sign = deltaX / abs(deltaX);
-
-        if (iterator > deltaX) {
-            iterator = deltaX;
-            deltaX = 0;         //We perform this fantastic manouver to make sure for if goes lower -> bigger
-
-            for (iterator; iterator <= deltaX; iterator++) {
-                cPosX += sign;
-                if (gameState->Board[cPosX][cPosY].amount_of_fish <= 0) {
-                    printf("MOVE FALSE X!\n");
-                    return false;
-                }
-            }
-
-            return true;
-        }
     }
-    else
-    {
-        
-        int iterator = 0;
-        int cPosX, cPosY = curX, curY;
-        int sign = deltaY / abs(deltaY);
 
-        if (iterator > deltaY) {
-            iterator = deltaY;
-            deltaY = 0;         //We perform this fantastic manouver to make sure for if goes lower -> bigger
+    if (!gameState->Board[moveX][moveY].amountOfFish) {
+        printf("Invalid move! In your destination mast be a fish and cannot be any other penguins.\n");
+        return false;
+    }
 
-            for (iterator; iterator <= deltaY; iterator++) {
-                cPosY += sign;
-                if (gameState->Board[cPosX][cPosY].amount_of_fish <= 0) {
-                    printf("MOVE FALSE Y!\n");
-                    return false;
-                }
+    if (curX == moveX) {
+        swapSmallerBiggerNumbers(&moveY, &curY);
+        for (int y = moveY + 1; y < curY; y++) {
+            if (gameState->Board[moveX][y].amountOfFish == 0) {
+                printf(
+                    "Invalid move! You can only slide in straight lines to a tile with fish. Make sure your path is clear.\n");
+                return false;
             }
-
-            return true;
         }
     }
 
+    if (curY == moveY) {
+        swapSmallerBiggerNumbers(&moveX, &curX);
+        for (int x = moveX + 1; x < curX; x++) {
+            if (gameState->Board[x][moveY].amountOfFish == 0) {
+                printf(
+                    "Invalid move! You can only slide in straight lines to a tile with fish. Make sure your path is clear.\n");
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
-void change_penguin_position(struct GameState* gameState)
-{
-    
-    int curPlr = gameState->current_player;
-    
+void changePenguinPosition(struct GameState *gameState) {
+    int curPlr = gameState->currentPlayer;
+
     int x = gameState->Players[curPlr].x;
-    gameState->Players[curPlr].penguins[gameState->Players[curPlr].current_penguin].x = x;
+    gameState->Players[curPlr].penguins[gameState->Players[curPlr].currentPenguin].x = x;
 
     int y = gameState->Players[curPlr].y;
-    gameState->Players[curPlr].penguins[gameState->Players[curPlr].current_penguin].y = y;
+    gameState->Players[curPlr].penguins[gameState->Players[curPlr].currentPenguin].y = y;
 
-    gameState->Board[x][y].id_player = curPlr;
-    gameState->Board[x][y].id_penguin = gameState->Players[curPlr].current_penguin;
+    gameState->Board[x][y].idPlayer = curPlr;
+    gameState->Board[x][y].idPenguin = gameState->Players[curPlr].currentPenguin;
 }
 
-void changeCurrentPenguin(struct GameState* gameState)
-{
-    gameState->Players[gameState->current_player].current_penguin++;
+void changeCurrentPenguin(struct GameState *gameState) {
+    gameState->Players[gameState->currentPlayer].currentPenguin++;
 }
