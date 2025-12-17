@@ -77,8 +77,6 @@ bool isMoveValid(struct GameState *gameState) {
     moveY = gameState->Players[curPlr].y;
 
 
-    //TODO: Delete hot fix, and do it correctly Wojtek.
-
     if (curX != moveX && curY != moveY) {
         printf("Invalid move! Move only horizontally or vertically.\n");
         return false;
@@ -107,73 +105,6 @@ bool isMoveValid(struct GameState *gameState) {
     }
 
     return true;
-
-
-    //End fo HotFix.
-
-    printf("cur X = %d cur Y = %d move X = %d move Y = %d\n", curX, curY, moveX, moveY);
-
-    int deltaX, deltaY, dt;
-
-    deltaX = abs(moveX - curX);
-    deltaY = abs(moveY - curY);
-
-    printf("delta x = %d delta y = %d\n", deltaX, deltaY);
-    printf("%d \n", gameState->Board[moveY, moveX]->amountOfFish);
-
-    if (gameState->Board[moveY, moveX]->amountOfFish == 0) {
-        printf("Player didn't move penguin to a hole/another penguin\n");
-        return false;
-    }
-
-
-    if (deltaX * deltaY != 0) {
-        // Either one direction or another. If we move even a centimeter in both directions the delta for both will be non-zero
-        printf("You're trying to move the penguin in an illegal way.\n");
-        return false;
-    }
-
-    printf("Player didn't input an invalid move\n");
-
-    if (deltaX != 0) {
-        int iterator = 0;
-        int cPosX, cPosY = curX, curY;
-        int sign = deltaX / abs(deltaX);
-
-        if (iterator > deltaX) {
-            iterator = deltaX;
-            deltaX = 0; //We perform this fantastic manouver to make sure for if goes lower -> bigger
-
-            for (iterator; iterator <= deltaX; iterator++) {
-                cPosX += sign;
-                if (gameState->Board[cPosX][cPosY].amountOfFish <= 0) {
-                    printf("MOVE INCORRECT (ROW)!\n");
-                    return false;
-                }
-            }
-
-            return true;
-        }
-    } else {
-        int iterator = 0;
-        int cPosX, cPosY = curX, curY;
-        int sign = deltaY / abs(deltaY);
-
-        if (iterator > deltaY) {
-            iterator = deltaY;
-            deltaY = 0; //We perform this fantastic manouver to make sure for if goes lower -> bigger
-
-            for (iterator; iterator <= deltaY; iterator++) {
-                cPosY += sign;
-                if (gameState->Board[cPosX][cPosY].amountOfFish <= 0) {
-                    printf("MOVE INCORRECT (COLUMN)!\n");
-                    return false;
-                }
-            }
-
-            return true;
-        }
-    }
 }
 
 void changePenguinPosition(struct GameState *gameState) {
