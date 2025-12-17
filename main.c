@@ -9,8 +9,8 @@
 int main(int argc, char *argv[]) {
     srand(10);
 
-    char nameOfUs[] = "Pingwiniarze";
     init();
+    char *nameOfUs = gameState.teamName;
 
     switch (argc) {
         case 1: interactive_mode(&gameState);

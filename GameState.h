@@ -77,6 +77,7 @@ struct Penguin {
  * - y_Board_size: The height of the game board (number of columns).
  */
 struct GameState {
+    char *teamName;
     int currentPlayer;
     struct Field **Board;
     struct Player *Players;
