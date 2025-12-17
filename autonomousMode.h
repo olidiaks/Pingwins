@@ -14,8 +14,6 @@
 
 
 
-
-
 /**
  * Opens an output file in write mode, checks for errors, and handles them appropriately.
  *
@@ -33,6 +31,22 @@ FILE *openInputFileAndHandleError(char *filePath);
 
 char readFile(FILE *givenFile);
 
-void loadUs(struct GameState *game_state, FILE *input_file);
+/**
+ * Loads player data from a given input file into the game state and determines
+ * if the user's team is present in the list of players.
+ *
+ * The function reads player data from the provided file in the format:
+ * player_nick_name id score. It ensures that data is correctly organized.
+ * If the user's team is found on the list, relevant fields in the game state
+ * are updated. Improper file format or memory allocation issues will cause
+ * the program to terminate with an error message.
+ *
+ * @param game_state Pointer to the GameState structure that stores the game's current state.
+ * @param input_file The file pointer to the input file containing player data.
+ * @return A boolean value indicating whether the user's team is present in the file (true if found, false otherwise).
+ * @throws Exits the program if the file data format is incorrect (exit code 2) or if memory allocation for players
+ * fails (exit code 2 or 3).
+ */
+bool loadPlayers(struct GameState *game_state, FILE *input_file);
 
 #endif //PROJECT_AUTONOMOUS_MODE_H

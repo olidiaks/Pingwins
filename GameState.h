@@ -61,22 +61,24 @@ struct Penguin {
 };
 
 /**
- * Represents the state of the game, including the board, players, and current progress.
+ * Represents the state of a game, including the game board, players, and associated configurations.
  *
- * This structure contains information about the current player, the game board,
- * the list of players, the number of players participating, and the dimensions
- * of the board. It serves as the central data structure for managing the game's
- * state during its execution.
+ * This structure manages various aspects of the game's current state, enabling the game flow
+ * such as movements, placements, and gameplay logic. It stores information about the game board,
+ * players, and game-specific settings.
  *
  * Members:
- * - current_player: An integer representing the index of the player whose turn it is.
- * - Board: A two-dimensional array of `Field` structures representing the game board.
- * - Players: A pointer to an array of `Player` structures containing player-specific data.
- * - num_of_players: An integer indicating the number of players currently in the game.
- * - x_Board_size: The width of the game board (number of rows).
- * - y_Board_size: The height of the game board (number of columns).
+ * - teamName: A pointer to a character array representing the name of the team currently in play.
+ * - currentPlayer: An integer indicating the index of the player whose turn it is.
+ * - Board: A 2D array of Field structures representing the game board's state.
+ * - Players: A pointer to an array of Player structures containing information about all players.
+ * - numOfPlayers: An integer representing the total number of players participating in the game.
+ * - xBoardSize: An integer specifying the width of the board in terms of the number of tiles.
+ * - yBoardSize: An integer specifying the height of the board in terms of the number of tiles.
+ * - numOfPenguinsPerPlayer: An integer indicating the number of penguins allocated to each player.
  */
 struct GameState {
+    char *teamName;
     int currentPlayer;
     struct Field **Board;
     struct Player *Players;

@@ -6,7 +6,6 @@
 
 
 void interactive_mode(struct GameState *gameState) {
-    init();
     placementInteractiveMode(gameState);
     if (isEveryPenguinsPlaced(gameState)) {
         printf("- - - - - - - - - - \nCommencing movement phase. \n- - - - - - - - - -\n");

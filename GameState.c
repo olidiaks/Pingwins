@@ -8,6 +8,7 @@
 struct GameState gameState;
 
 void init() {
+    gameState.teamName = "Pingwiniarze";
     askInitQuestions();
     gameState.currentPlayer = 0;
     gameState.Players = malloc(gameState.numOfPlayers * sizeof(struct Player));
