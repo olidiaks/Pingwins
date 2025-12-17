@@ -4,6 +4,9 @@
 #ifndef PROJECT_GAMESTRUCTURE_H
 #define PROJECT_GAMESTRUCTURE_H
 
+#include <stdio.h>
+#include <stdlib.h>
+
 /**
  * Represents a single field on the game board and its current state.
  *

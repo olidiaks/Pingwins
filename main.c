@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
         case 4:
             autonomousMovement(&gameState, argv[2], argv[3]);
             break;
-        case 5: autonomousPlacement(&gameState, argv[2], argv[3]);
+        case 5: autonomousPlacement(&gameState, argv[3], argv[4]);
             break;
         default: printf("Too many arguments!\nAmount of given arguments: %d\n", argc);
             exit(5);

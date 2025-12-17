@@ -9,9 +9,7 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
 
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
 
-    int c;
-    while ((c = getc(inputFile)) != EOF) {
-        printf("%d \n", c);
-    }
+    readFile(inputFile);
+
 }
 
