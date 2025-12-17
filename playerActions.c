@@ -27,10 +27,7 @@ void askCoordinates(struct GameState *gameState) {
     unsigned short lenX = 0;
     unsigned short lenY = 0;
 
-    if (scanf("%ms %ms", &x, &y) == 2) {
-        lenX = strlen(x);
-        lenY = strlen(y);
-    } else if (lenX == 2 && lenY == 2) {
+    if (scanf("%ms %ms", &x, &y) == 2 && strlen(x) == 2 && strlen(y) == 2) {
         int xOffset = toupper(x[0]);
         int xDirect = toupper(x[1]);
         int yOffset = toupper(y[0]);
