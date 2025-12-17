@@ -80,13 +80,14 @@ bool isMoveValid(struct GameState *gameState) {
         return false;
     }
 
+    if (!gameState->Board[moveX][moveY].amountOfFish) {
+        printf("Invalid move! In your destination mast be a fish and cannot be any other penguins.\n");
+        return false;
+    }
+
     if (curX == moveX) {
-        if (!moveY) {
-            printf("Invalid move! In your destination mast be a fish and cannot be any other penguins.\n");
-            return false;
-        }
         swapSmallerBiggerNumbers(&moveY, &curY);
-        for (int y = moveY; y < curY; y++) {
+        for (int y = moveY + 1; y < curY; y++) {
             if (gameState->Board[moveX][y].amountOfFish == 0) {
                 printf(
                     "Invalid move! You can only slide in straight lines to a tile with fish. Make sure your path is clear.\n");
@@ -96,12 +97,8 @@ bool isMoveValid(struct GameState *gameState) {
     }
 
     if (curY == moveY) {
-        if (!moveY) {
-            printf("Invalid move! In your destination mast be a fish and cannot be any other penguins.\n");
-            return false;
-        }
         swapSmallerBiggerNumbers(&moveX, &curX);
-        for (int x = moveX; x < curX; x++) {
+        for (int x = moveX + 1; x < curX; x++) {
             if (gameState->Board[x][moveY].amountOfFish == 0) {
                 printf(
                     "Invalid move! You can only slide in straight lines to a tile with fish. Make sure your path is clear.\n");
