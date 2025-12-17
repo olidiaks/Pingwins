@@ -29,6 +29,7 @@ bool canPlayerPlacePenguin(struct GameState* gameState)
     for (int i = 0; i < gameState->xBoardSize; i++) {
         for (int j = 0; j < gameState->yBoardSize; j++) {
             if (gameState->Board[i][j].amountOfFish == 1) {
+                printf("FOUND COORDS: %d, %d", i, j);
                 return true;
             }
         }
