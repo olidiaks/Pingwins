@@ -50,4 +50,18 @@ bool isBoardDimensionsValid(struct GameState *gameState);
  */
 void generateBoard(struct GameState* gameState);
 
+/**
+ * @brief Generates a random game board and initializes each field.
+ *
+ * This function dynamically allocates memory for the game board
+ * based on the dimensions specified in the GameState structure
+ * (xBoardSize and yBoardSize). It then initializes each field
+ * in a way to indicate clear, empty field.
+ *
+ * @param gameState Pointer to the GameState structure that holds the
+ *        board dimensions and other game-related information. The function
+ *        modifies the GameState to include the newly generated board.
+ */
+void generateVoidBoard(struct GameState* gameState);
+
 #endif //PROJECT_BOARDGENERATION_H
