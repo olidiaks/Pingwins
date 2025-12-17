@@ -6,18 +6,18 @@
 
 void collectFish(struct GameState* gameState)
 {
-    int x = gameState->Players[gameState->current_player].penguins->x;
-    int y = gameState->Players[gameState->current_player].penguins->y;
+    int x = gameState->Players[gameState->currentPlayer].penguins->x;
+    int y = gameState->Players[gameState->currentPlayer].penguins->y;
     printf("x = %d, y = %d \n",x,y);
-    gameState->Players[gameState->current_player].current_score += gameState->Board[x][y].amount_of_fish;
-    gameState->Board[x][y].amount_of_fish = 0;
-    printf("Player %d has collected fish.\n", gameState->current_player + 1);
+    gameState->Players[gameState->currentPlayer].currentScore += gameState->Board[x][y].amountOfFish;
+    gameState->Board[x][y].amountOfFish = 0;
+    printf("Player %d has collected fish.\n", gameState->currentPlayer + 1);
 }
 
 void changeCurrentPlayer(struct GameState* gameState)
 {
-    gameState->current_player = (gameState->current_player + 1) % gameState->num_of_players;
-    printf("Current player is player %d.\n", 1 + gameState->current_player);
+    gameState->currentPlayer = (gameState->currentPlayer + 1) % gameState->numOfPlayers;
+    printf("Current player is player %d.\n", 1 + gameState->currentPlayer);
 }
 
 void askCoordinates(struct GameState* gameState)
@@ -47,28 +47,27 @@ void askCoordinates(struct GameState* gameState)
         int yFinal = yOffset - 64 + (yDirect - 49) * 26;
 
 
-        gameState->Players[gameState->current_player].x = xFinal - 1;
-        gameState->Players[gameState->current_player].y = yFinal - 1;
+        gameState->Players[gameState->currentPlayer].x = xFinal - 1;
+        gameState->Players[gameState->currentPlayer].y = yFinal - 1;
     }
 }
 
 bool isCoordinateValid(struct GameState* gameState)
 {
-    int x = gameState->Players[gameState->current_player].x;
-    int y = gameState->Players[gameState->current_player].y;
+    int x = gameState->Players[gameState->currentPlayer].x;
+    int y = gameState->Players[gameState->currentPlayer].y;
 
     printf("CHECKING COORDINATES: X = %d, Y = %d\n", x, y);
 
-    return ((0 <= x) && (x < gameState->x_Board_size) && (0 <= y) && (y < gameState->y_Board_size));
-
+    return ((0 <= x) && (x < gameState->xBoardSize) && (0 <= y) && (y < gameState->yBoardSize));
 }
 
 bool isMoveValid(struct GameState *gameState) {
-    int curPlr = gameState->current_player;
+    int curPlr = gameState->currentPlayer;
     int moveX, moveY, curX, curY;
 
-    curX = gameState->Players[curPlr].penguins[gameState->Players[curPlr].current_penguin].x;
-    curY = gameState->Players[curPlr].penguins[gameState->Players[curPlr].current_penguin].y;
+    curX = gameState->Players[curPlr].penguins[gameState->Players[curPlr].currentPenguin].x;
+    curY = gameState->Players[curPlr].penguins[gameState->Players[curPlr].currentPenguin].y;
 
     moveX = gameState->Players[curPlr].x;
     moveY = gameState->Players[curPlr].y;
@@ -81,9 +80,9 @@ bool isMoveValid(struct GameState *gameState) {
     deltaY = abs(moveY - curY);
 
     printf("delta x = %d delta y = %d\n",deltaX,deltaY);
-    printf("%d \n",gameState->Board[moveY,moveX]->amount_of_fish);
+    printf("%d \n", gameState->Board[moveY, moveX]->amountOfFish);
 
-    if (gameState->Board[moveY,moveX]->amount_of_fish == 0) {
+    if (gameState->Board[moveY, moveX]->amountOfFish == 0) {
         printf("Player didn't move penguin to a hole/another penguin\n");
         return false;
     }
@@ -109,7 +108,7 @@ bool isMoveValid(struct GameState *gameState) {
 
             for (iterator; iterator <= deltaX; iterator++) {
                 cPosX += sign;
-                if (gameState->Board[cPosX][cPosY].amount_of_fish <= 0) {
+                if (gameState->Board[cPosX][cPosY].amountOfFish <= 0) {
                     printf("MOVE INCORRECT (ROW)!\n");
                     return false;
                 }
@@ -129,7 +128,7 @@ bool isMoveValid(struct GameState *gameState) {
 
             for (iterator; iterator <= deltaY; iterator++) {
                 cPosY += sign;
-                if (gameState->Board[cPosX][cPosY].amount_of_fish <= 0) {
+                if (gameState->Board[cPosX][cPosY].amountOfFish <= 0) {
                     printf("MOVE INCORRECT (COLUMN)!\n");
                     return false;
                 }
@@ -141,21 +140,19 @@ bool isMoveValid(struct GameState *gameState) {
 
 }
 
-void change_penguin_position(struct GameState* gameState)
-{
-    int curPlr = gameState->current_player;
+void changePenguinPosition(struct GameState *gameState) {
+    int curPlr = gameState->currentPlayer;
 
     int x = gameState->Players[curPlr].x;
-    gameState->Players[curPlr].penguins[gameState->Players[curPlr].current_penguin].x = x;
+    gameState->Players[curPlr].penguins[gameState->Players[curPlr].currentPenguin].x = x;
 
     int y = gameState->Players[curPlr].y;
-    gameState->Players[curPlr].penguins[gameState->Players[curPlr].current_penguin].y = y;
+    gameState->Players[curPlr].penguins[gameState->Players[curPlr].currentPenguin].y = y;
 
     gameState->Board[x][y].id_player = curPlr;
-    gameState->Board[x][y].id_penguin = gameState->Players[curPlr].current_penguin;
+    gameState->Board[x][y].idPenguin = gameState->Players[curPlr].currentPenguin;
 }
 
-void changeCurrentPenguin(struct GameState* gameState)
-{
-    gameState->Players[gameState->current_player].current_penguin++;
+void changeCurrentPenguin(struct GameState* gameState) {
+    gameState->Players[gameState->currentPlayer].currentPenguin++;
 }

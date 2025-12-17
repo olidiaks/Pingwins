@@ -53,7 +53,7 @@ bool isThereAnyPenguinMoveAvailable(struct GameState *gameState);
  * @return A boolean value indicating whether the current player can move any of their penguins.
  *         Returns true if at least one penguin has valid moves available, otherwise false.
  */
-bool isPlayerAbleToMoveAnyPenguin(struct GameState* gameState);
+bool isPlayerAbleToMoveAnyPenguin(struct GameState *gameState);
 
 /**
  * This function moves the currently selected penguin for the active player
@@ -86,7 +86,7 @@ void askWhichPenguinMove(struct GameState *gameState);
  * @return A boolean value indicating whether there is at least one adjacent tile
  *         with available fish (true if fish are present, false otherwise).
  */
-bool check_adjacent_fish_availability(struct GameState* gameState, int x, int y);
+bool checkAdjacentFishAvailability(struct GameState *gameState, int x, int y);
 
 /**
  * Determines if there is any possible move for the current penguin of the current player

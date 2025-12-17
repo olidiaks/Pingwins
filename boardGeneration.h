@@ -40,7 +40,7 @@ bool isBoardDimensionsValid(struct GameState *gameState);
  *
  * This function dynamically allocates memory for the game board
  * based on the dimensions specified in the GameState structure
- * (x_Board_size and y_Board_size). It then initializes each field
+ * (xBoardSize and yBoardSize). It then initializes each field
  * on the board with a random number of fish and sets the player ID to -1
  * (indicating no player is present in that field).
  *

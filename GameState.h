@@ -16,9 +16,9 @@
  * - id_penguin: An integer representing the ID of the penguin on the field or -1 if no penguin is present.
  */
 struct Field {
-    int amount_of_fish;
+    int amountOfFish;
     int id_player;
-    int id_penguin;
+    int idPenguin;
 };
 
 
@@ -37,8 +37,8 @@ struct Field {
  * - y: An integer indicating the current y-coordinate of the player's position.
  */
 struct Player {
-    int current_score;
-    int current_penguin;
+    int currentScore;
+    int currentPenguin;
     struct Penguin *penguins;
     int x;
     int y;
@@ -74,13 +74,13 @@ struct Penguin {
  * - y_Board_size: The height of the game board (number of columns).
  */
 struct GameState {
-    int current_player;
+    int currentPlayer;
     struct Field **Board;
     struct Player *Players;
-    int num_of_players;
-    int x_Board_size;
-    int y_Board_size;
-    int num_of_penguins_per_player;
+    int numOfPlayers;
+    int xBoardSize;
+    int yBoardSize;
+    int numOfPenguinsPerPlayer;
 };
 
 /**

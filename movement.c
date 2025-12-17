@@ -22,57 +22,57 @@ void movementPhase(struct GameState *gameState) {
     }
 }
 
-bool check_adjacent_fish_availability(struct GameState *gameState, int x, int y) {
-    return (0 < x && gameState->Board[x - 1][y].amount_of_fish) || //check if one to the left has any fish
-           (0 < y && gameState->Board[x][y - 1].amount_of_fish) || // check if one to the top has any fish
-           (x < gameState->x_Board_size && gameState->Board[x + 1][y].amount_of_fish) ||
+bool checkAdjacentFishAvailability(struct GameState *gameState, int x, int y) {
+    return (0 < x && gameState->Board[x - 1][y].amountOfFish) || //check if one to the left has any fish
+           (0 < y && gameState->Board[x][y - 1].amountOfFish) || // check if one to the top has any fish
+           (x < gameState->xBoardSize && gameState->Board[x + 1][y].amountOfFish) ||
            // check if one to the bottom has any fish
-           (y < gameState->y_Board_size && gameState->Board[x][y + 1].amount_of_fish);
+           (y < gameState->yBoardSize && gameState->Board[x][y + 1].amountOfFish);
     // check if one to the right has any fish
 }
 
 bool isAnyMoveForCurrentPenguinAvailable(struct GameState *gameState) {
-    int current_player = gameState->current_player;
-    int currnet_penguin = gameState->Players[current_player].current_penguin;
+    int current_player = gameState->currentPlayer;
+    int currnet_penguin = gameState->Players[current_player].currentPenguin;
     int x = gameState->Players[current_player].penguins[currnet_penguin].x;
     int y = gameState->Players[current_player].penguins[currnet_penguin].y;
-    return check_adjacent_fish_availability(gameState, x, y);
+    return checkAdjacentFishAvailability(gameState, x, y);
 }
 
 bool isThereAnyPenguinMoveAvailable(struct GameState *gameState) {
-    for (int i = 0; i < gameState->num_of_players; i++) {
-        for (int j = 0; j < gameState->num_of_penguins_per_player; j++) {
+    for (int i = 0; i < gameState->numOfPlayers; i++) {
+        for (int j = 0; j < gameState->numOfPenguinsPerPlayer; j++) {
             int x = gameState->Players[i].penguins[j].x;
             int y = gameState->Players[i].penguins[j].y;
 
-            return check_adjacent_fish_availability(gameState, x, y);
+            return checkAdjacentFishAvailability(gameState, x, y);
         }
     }
 }
 
 bool isPlayerAbleToMoveAnyPenguin(struct GameState *gameState) {
-    for (int i = 0; i < gameState->num_of_penguins_per_player; ++i) {
-        int x = gameState->Players[gameState->current_player].penguins[i].x;
-        int y = gameState->Players[gameState->current_player].penguins[i].y;
+    for (int i = 0; i < gameState->numOfPenguinsPerPlayer; ++i) {
+        int x = gameState->Players[gameState->currentPlayer].penguins[i].x;
+        int y = gameState->Players[gameState->currentPlayer].penguins[i].y;
 
-        return check_adjacent_fish_availability(gameState, x, y);
+        return checkAdjacentFishAvailability(gameState, x, y);
     }
 }
 
 void movePenguin(struct GameState *gameState) {
-    printf("Player %d's penguin has been moved.\n", gameState->current_player + 1);
-    change_penguin_position(gameState);
+    printf("Player %d's penguin has been moved.\n", gameState->currentPlayer + 1);
+    changePenguinPosition(gameState);
 }
 
 void askWhichPenguinMove(struct GameState *gameState) {
-    printf("Which penguin (from 1 to %d) do you want to move?\n", gameState->num_of_penguins_per_player);
+    printf("Which penguin (from 1 to %d) do you want to move?\n", gameState->numOfPenguinsPerPlayer);
     int id;
 
 read_id:
     scanf("%d", &id);
     id--;
-    gameState->Players[gameState->current_player].current_penguin = id;
-    if (0 > id || id >= gameState->num_of_penguins_per_player) {
+    gameState->Players[gameState->currentPlayer].currentPenguin = id;
+    if (0 > id || id >= gameState->numOfPenguinsPerPlayer) {
         printf("The number of penguin provided is incorrect. Please try again. \n");
         goto read_id;
     }

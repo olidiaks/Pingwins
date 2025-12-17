@@ -5,9 +5,9 @@
 #ifndef PROJECT_MAIN_H
 #define PROJECT_MAIN_H
 
-#include "interactive_mode.h"
+#include "interactiveMode.h"
 #include <stdlib.h>
-#include "autonomous_mode.h"
+#include "autonomousMode.h"
 
 
 extern struct GameState gameState;

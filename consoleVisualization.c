@@ -11,10 +11,8 @@ void showBoard(struct GameState* gameState)
     char horChr, vertChr;
     unsigned short int horMul, vertMul;
 
-    for (int x = -1; x < gameState->x_Board_size; x++)
-    {
-        for (int y = -1; y < gameState->y_Board_size; y++)
-        {
+    for (int x = -1; x < gameState->xBoardSize; x++) {
+        for (int y = -1; y < gameState->yBoardSize; y++) {
             horChr = 65 + y % 26;
             horMul = y / 26 + 1;
 
@@ -39,18 +37,17 @@ void showBoard(struct GameState* gameState)
                 int id_player = gameState->Board[x][y].id_player;
                 if (id_player != -1)
                 {
-                    int id_penguin = gameState->Board[x][y].id_penguin;
+                    int id_penguin = gameState->Board[x][y].idPenguin;
                     printf("P%dp%d\t|\t", id_player + 1, id_penguin + 1);
                 }
                 else
                 {
-                    printf("%d\t|\t", gameState->Board[x][y].amount_of_fish);
+                    printf("%d\t|\t", gameState->Board[x][y].amountOfFish);
                 }
             }
         }
         printf("\n\t");
-        for (int x = 0; x < gameState->y_Board_size; x++)
-        {
+        for (int x = 0; x < gameState->yBoardSize; x++) {
             printf("================");
         }
         printf("=\n");
@@ -59,23 +56,21 @@ void showBoard(struct GameState* gameState)
 
 void printGameInfo(struct GameState* gameState)
 {
-    int current_player = gameState->current_player;
+    int current_player = gameState->currentPlayer;
     printf("Current player is player number: %d.\n", current_player + 1);
-    printf("Current penguin is penguin number: %d.\n", gameState->Players[current_player].current_penguin + 1);
+    printf("Current penguin is penguin number: %d.\n", gameState->Players[current_player].currentPenguin + 1);
 
-    for (int i = 0; i < gameState->num_of_players; ++i)
-    {
-        printf("Player %d has %d fish.\n", i + 1, gameState->Players[i].current_score);
+    for (int i = 0; i < gameState->numOfPlayers; ++i) {
+        printf("Player %d has %d fish.\n", i + 1, gameState->Players[i].currentScore);
     }
 }
 
 void printGameInfoMovement(struct GameState* gameState)
 {
-    int current_player = gameState->current_player;
-    printf("Current player is player number: %d.\n", current_player + 1);
+    int currentPlayer = gameState->currentPlayer;
+    printf("Current player is player number: %d.\n", currentPlayer + 1);
 
-    for (int i = 0; i < gameState->num_of_players; ++i)
-    {
-        printf("Player %d has %d fish.\n", i + 1, gameState->Players[i].current_score);
+    for (int i = 0; i < gameState->numOfPlayers; ++i) {
+        printf("Player %d has %d fish.\n", i + 1, gameState->Players[i].currentScore);
     }
 }
