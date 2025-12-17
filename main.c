@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
             break;
         case 5: autonomousPlacement(&gameState, argv[2], argv[3]);
             break;
-        default: printf("Too many arguments!\nAmount of gaven arguments: %d\n", argc);
+        default: printf("Too many arguments!\nAmount of given arguments: %d\n", argc);
             exit(5);
     }
 

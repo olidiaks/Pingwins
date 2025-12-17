@@ -17,7 +17,7 @@
  */
 struct Field {
     int amountOfFish;
-    int id_player;
+    int idPlayer;
     int idPenguin;
 };
 

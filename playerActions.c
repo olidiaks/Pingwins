@@ -143,7 +143,7 @@ void changePenguinPosition(struct GameState *gameState) {
     int y = gameState->Players[curPlr].y;
     gameState->Players[curPlr].penguins[gameState->Players[curPlr].currentPenguin].y = y;
 
-    gameState->Board[x][y].id_player = curPlr;
+    gameState->Board[x][y].idPlayer = curPlr;
     gameState->Board[x][y].idPenguin = gameState->Players[curPlr].currentPenguin;
 }
 

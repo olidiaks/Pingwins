@@ -4,8 +4,7 @@
 #include "consoleVisualization.h"
 
 
-void showBoard(struct GameState* gameState)
-{
+void showBoard(struct GameState *gameState) {
     printf("Displaying the board.\n\n");
 
     char horChr, vertChr;
@@ -19,29 +18,18 @@ void showBoard(struct GameState* gameState)
             vertChr = 65 + 32 + x % 26;
             vertMul = x / 26 + 1;
 
-            if (x == -1 && y == -1)
-            {
+            if (x == -1 && y == -1) {
                 printf("\t|\t");
-            }
-
-            else if (x == -1)
-            {
+            } else if (x == -1) {
                 printf("%c%d\t|\t", horChr, horMul);
-            }
-            else if (y == -1)
-            {
+            } else if (y == -1) {
                 printf("%c%d\t|\t", vertChr, vertMul);
-            }
-            else
-            {
-                int id_player = gameState->Board[x][y].id_player;
-                if (id_player != -1)
-                {
+            } else {
+                int id_player = gameState->Board[x][y].idPlayer;
+                if (id_player != -1) {
                     int id_penguin = gameState->Board[x][y].idPenguin;
                     printf("P%dp%d\t|\t", id_player + 1, id_penguin + 1);
-                }
-                else
-                {
+                } else {
                     printf("%d\t|\t", gameState->Board[x][y].amountOfFish);
                 }
             }
@@ -54,8 +42,7 @@ void showBoard(struct GameState* gameState)
     }
 }
 
-void printGameInfo(struct GameState* gameState)
-{
+void printGameInfo(struct GameState *gameState) {
     int current_player = gameState->currentPlayer;
     printf("Current player is player number: %d.\n", current_player + 1);
     printf("Current penguin is penguin number: %d.\n", gameState->Players[current_player].currentPenguin + 1);
@@ -65,8 +52,7 @@ void printGameInfo(struct GameState* gameState)
     }
 }
 
-void printGameInfoMovement(struct GameState* gameState)
-{
+void printGameInfoMovement(struct GameState *gameState) {
     int currentPlayer = gameState->currentPlayer;
     printf("Current player is player number: %d.\n", currentPlayer + 1);
 

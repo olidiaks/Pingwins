@@ -22,14 +22,13 @@ bool isBoardDimensionsValid(struct GameState *gameState) {
     return gameState->xBoardSize > 0 && gameState->yBoardSize > 0;
 }
 
-void generateBoard(struct GameState* gameState)
-{
+void generateBoard(struct GameState *gameState) {
     printf("Generating random board...\n");
     gameState->Board = malloc(gameState->xBoardSize * sizeof(struct Field));
     for (int x = 0; x < gameState->xBoardSize; x++) {
         gameState->Board[x] = malloc(gameState->yBoardSize * sizeof(struct Field));
         for (int y = 0; y < gameState->yBoardSize; y++) {
-            gameState->Board[x][y].id_player = -1;
+            gameState->Board[x][y].idPlayer = -1;
             gameState->Board[x][y].idPenguin = -1;
 
             const int ceil = 100;
@@ -40,11 +39,9 @@ void generateBoard(struct GameState* gameState)
 
             if (randNum < step3) {
                 gameState->Board[x][y].amountOfFish = 3;
-            }
-            else if (randNum < step2) {
+            } else if (randNum < step2) {
                 gameState->Board[x][y].amountOfFish = 2;
-            }
-            else if (randNum < step1) {
+            } else if (randNum < step1) {
                 gameState->Board[x][y].amountOfFish = 1;
             }
         }
