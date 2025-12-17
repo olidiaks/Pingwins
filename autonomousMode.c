@@ -8,8 +8,8 @@ FILE *openOutputFileAndHandleError(char *filePath) {
     printf("%s\n", filePath);
     FILE *output_file = fopen(filePath, "w");
     if (output_file == NULL) {
-        printf(
-            "Error opening output file\nProbably path to given file is incorrect or program do not have enough permission for access.\n");
+        printf("Error opening output file\nProbably path to given file is incorrect or program do not have enough "
+               "permission for access.\n");
         exit(3);
     }
     return output_file;
@@ -19,8 +19,8 @@ FILE *openInputFileAndHandleError(char *filePath) {
     printf("%s\n", filePath);
     FILE *inputFile = fopen(filePath, "r");
     if (inputFile == NULL) {
-        printf(
-            "Error opening input file\nProbably path to given file is incorrect or program do not have enough permission for access.\n");
+        printf("Error opening input file\nProbably path to given file is incorrect or program do not have enough "
+               "permission for access.\n");
         exit(3);
     }
     return inputFile;
@@ -32,4 +32,26 @@ char readFile(FILE *givenFile) {
         printf("%c \n", c);
     }
 }
-void loadUs(struct GameState *game_state, FILE *input_file) {}
+void loadUs(struct GameState *game_state, FILE *input_file) {
+    bool isUsOnList = false;
+    int idCount = 0;
+
+    while (1) {
+        char *name = NULL;
+        int id, score;
+        int fscanfStatus = fscanf(input_file, "%ms %d %d", name, &id, &score) != 3;
+        if (fscanfStatus == EOF) {
+            break;
+        }
+        if (fscanfStatus != 3) {
+            printf("Players should be in order of player_nick_name id score and they are not in that order.");
+            exit(2);
+        }
+        if (name == game_state->teamName)
+            isUsOnList = true;
+        game_state->currentPlayer = id - 1;
+        game_state->Players[id - 1].currentScore = score;
+        free(name);
+    }
+    printf("Successfully loaded players from file.");
+}

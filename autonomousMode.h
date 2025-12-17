@@ -14,8 +14,6 @@
 
 
 
-
-
 /**
  * Opens an output file in write mode, checks for errors, and handles them appropriately.
  *
