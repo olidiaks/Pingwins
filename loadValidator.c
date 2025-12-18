@@ -42,6 +42,8 @@ bool checkDimensions(FILE *file, int expectedRows, int expectedCols) {
     rewind(file);
     char buffer[1024]; // Just to be safe
 
+    printf("Expected dim: %d, %d\n", expectedRows, expectedCols);
+
     //Skip
     fgets(buffer, sizeof(buffer), file);
 
@@ -147,4 +149,42 @@ bool checkZeroConstraint(FILE *file) {
         row++;
     }
     return true;
+}
+
+bool checkFirstBoardValue(FILE *file) {
+    if (file == NULL) {
+        fprintf(stderr, "Error: File pointer is NULL.\n");
+        return false;
+    }
+
+    rewind(file);
+    char buffer[1024];
+
+    // 1. Skip the Header Line (Dimensions)
+    if (fgets(buffer, sizeof(buffer), file) == NULL) {
+        fprintf(stderr, "Error: File is empty.\n");
+        return false;
+    }
+
+    // 2. Read the First Value of the Board
+    // We try to read the first integer from the NEXT line (start of board data)
+    int firstVal;
+
+    // Loop to skip potential empty lines between header and data
+    while (fgets(buffer, sizeof(buffer), file)) {
+        // Try to read one integer from the start of the line
+        if (sscanf(buffer, "%d", &firstVal) == 1) {
+
+            // 3. Check if it is 0, 1, 2, or 3
+            if (firstVal >= 0 && firstVal <= 3) {
+                return true;
+            } else {
+                fprintf(stderr, "Error: First board value is %d. Expected 0, 1, 2, or 3.\n", firstVal);
+                return false;
+            }
+        }
+    }
+
+    fprintf(stderr, "Error: Could not find any board data to check.\n");
+    return false;
 }
