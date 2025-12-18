@@ -59,7 +59,6 @@ void execute_player_move(struct GameState *gameState, int currentX, int currentY
     gameState->Board[lastX][lastY].idPlayer = 0;
     collectFish(gameState);
     printf("Succesfule move was done!\n");
-    return;
 }
 void movePenguinAutomaticli(struct GameState *gameState) {
     for (int x = 0; x < gameState->xBoardSize; ++x) {
