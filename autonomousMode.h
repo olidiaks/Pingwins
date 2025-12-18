@@ -75,20 +75,19 @@ FILE *openInputFileAndHandleError(char *filePath);
 char readFile(FILE *givenFile, struct GameState *gameState);
 
 /**
- * Loads player data from a given input file into the game state and determines
- * if the user's team is present in the list of players.
+ * Loads player data from the provided input file into the given game state.
  *
- * The function reads player data from the provided file in the format:
- * player_nick_name id score. It ensures that data is correctly organized.
- * If the user's team is found on the list, relevant fields in the game state
- * are updated. Improper file format or memory allocation issues will cause
- * the program to terminate with an error message.
+ * This function initializes the players in the game state, reading their data
+ * (name, ID, and score) from the input file. If any errors occur during the
+ * process (e.g., invalid format, out-of-bounds player ID, or memory allocation
+ * failure), the function will print an appropriate error message and terminate
+ * the program with a specific exit code.
  *
- * @param game_state Pointer to the GameState structure that stores the game's current state.
- * @param input_file The file pointer to the input file containing player data.
- * @return A boolean value indicating whether the user's team is present in the file (true if found, false otherwise).
- * @throws Exits the program if the file data format is incorrect (exit code 2) or if memory allocation for players
- * fails (exit code 2 or 3).
+ * @param game_state A pointer to the GameState structure where the player data
+ *                   will be stored.
+ * @param input_file A pointer to the file containing player data to be loaded.
+ * @return True if all players are successfully loaded; otherwise, exits the
+ *         program with an error message.
  */
 bool loadPlayers(struct GameState *game_state, FILE *input_file);
 
