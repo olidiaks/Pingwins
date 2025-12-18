@@ -75,7 +75,7 @@ char readFile(FILE *givenFile, struct GameState *gameState) {
             int colIndex = 0;
 
             while (token != NULL && colIndex < cols) {
-                gameState->Board[counter - 1][colIndex].amountOfFish = atoi(token) / 10;
+                gameState->Board[counter - 1][colIndex].amountOfFish = atoi(token);
                 gameState->Board[counter - 1][colIndex].idPlayer = atoi(token) % 10;
 
                 colIndex++;
@@ -93,32 +93,34 @@ char readFile(FILE *givenFile, struct GameState *gameState) {
         printf("\n");
     }
 }
-bool loadPlayers(struct GameState *game_state, FILE *input_file) {
 
-    char c;
+bool loadPlayers(struct GameState *game_state, FILE *input_file) {
+    char buffer[256];
     bool isUsOnList = false;
-    int idCount = 0;
-    int idUsed = 0;
     int linesToSkip = 0;
     int n = 0;
 
-    gameState.Players = malloc(sizeof(struct Player) * 9);
-    if (gameState.Players == NULL) {
-        printf("Not enough memory to load players from file.\n");
+    game_state->Players = calloc(9, sizeof(struct Player));
+    if (game_state->Players == NULL) {
+        fprintf(stderr, "Not enough memory to load players.\n");
         exit(3);
     }
 
     if (fscanf(input_file, "%d %d", &linesToSkip, &n) != 2) {
-        printf("Error: Could not read the number of header lines to skip.\n");
+        fprintf(stderr, "Error: Could not read header.\n");
         exit(2);
     }
 
+    fgetc(input_file);
 
-    for (int i = 0; i <= linesToSkip; i++) {
-        while ((c = fgetc(input_file)) != '\n' && c != EOF)
-            printf("%c", c);
-        printf("\n");
+    for (int i = 0; i < linesToSkip; i++) {
+        if (fgets(buffer, sizeof(buffer), input_file) != NULL) {
+            printf("%s", buffer);
+        }
     }
+
+    game_state->numOfPlayers = 0;
+    int occupiedIDs[9] = {0};
 
     while (1) {
         char *name = NULL;
@@ -126,38 +128,50 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
 
         int fscanfStatus = fscanf(input_file, "%ms %d %d", &name, &id, &score);
 
-        if (fscanfStatus == EOF) {
-            if (name)
-                free(name);
-            break;
-        }
+        if (fscanfStatus == EOF) break;
 
         if (fscanfStatus != 3) {
-            printf("Players should be in order of player_nick_name id score.\n");
-            if (name)
-                free(name);
+            printf("Error: Invalid player format.\n");
+            free(name);
             exit(2);
         }
 
+        if (id < 1 || id > 9) {
+            printf("Error: Player ID %d out of bounds.\n", id);
+            free(name);
+            continue;
+        }
+
+        int idx = id - 1;
+        game_state->Players[idx].name = name;
+        game_state->Players[idx].currentScore = score;
+        occupiedIDs[idx] = 1;
+        game_state->numOfPlayers++;
+
         if (strcmp(name, game_state->teamName) == 0) {
-            game_state->currentPlayer = id - 1;
+            game_state->currentPlayer = idx;
             isUsOnList = true;
         }
-
-        if (idCount == id - 1) {
-            idCount++;
-            game_state->Players[id].name = name;
-        }
-
-        game_state->Players[id - 1].currentScore = score;
-
-        free(name);
     }
-
-    printf("Successfully loaded players from file.\n");
 
     if (!isUsOnList) {
-        game_state->Players[game_state->currentPlayer].name = game_state->teamName;
-        game_state->Players[game_state->currentPlayer].currentScore = 0;
+        int availIdx = -1;
+
+        for (int i = 0; i < 9; i++) {
+            if (occupiedIDs[i] == 0) {
+                availIdx = i;
+                break;
+            }
+        }
+
+        assert(availIdx != -1);
+
+        game_state->Players[availIdx].name = strdup(game_state->teamName);
+        game_state->Players[availIdx].currentScore = 0;
+        game_state->currentPlayer = availIdx;
+        game_state->numOfPlayers++;
     }
+
+    printf("Successfully loaded %d players.\n", game_state->numOfPlayers);
+    return true;
 }

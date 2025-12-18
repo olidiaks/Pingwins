@@ -29,6 +29,7 @@ void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
         fprintf(outputFile, "\n");
     }
 
+    printf("Enumerating players, plr count: %d\n", gameState->numOfPlayers);
     for (int k = 0; k < gameState->numOfPlayers; k++) {
 
         int displayID = k + 1;
