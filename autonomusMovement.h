@@ -44,4 +44,19 @@ void writeBoardToFile(FILE *outputFile, struct GameState *gameState);
  */
 void autonomousMovement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]);
 
+
+/**
+ * Moves the current player's penguin automatically to a valid position on the board.
+ *
+ * The function attempts to move the penguin based on random coordinates until a valid
+ * move is found, adhering to the game rules. It updates the penguin's position,
+ * places the penguin on the board, and collects fish from the new tile.
+ *
+ * @param gameState A pointer to the GameState structure containing the board state,
+ *                  player data, and other game-related information. The function modifies
+ *                  this structure by updating the current player's penguin position
+ *                  and associated game state.
+ */
+void movePenguinAutomaticli(struct GameState *gameState);
+
 #endif // PROJECT_AUTONOMUSMOVEMENT_H

@@ -4,6 +4,8 @@
 
 #include "autonomusMovement.h"
 
+#include "playerActions.h"
+
 void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
     if (outputFile == NULL) {
         fprintf(stderr, "Error: Invalid file pointer or game state.\n");
@@ -46,4 +48,13 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
 
     fclose(inputFile);
     fclose(outputFile);
+}
+void movePenguinAutomaticli(struct GameState *gameState) {
+    do {
+        // TODO: DOkoniczyć to tak aby odnosił się jakoś do swojego pingwinka.
+        gameState->Players[gameState->currentPlayer].x = rand() % gameState->xBoardSize;
+        gameState->Players[gameState->currentPlayer].y = rand() % gameState->yBoardSize;
+    } while (!(isCoordinateValid(gameState) && isMoveValid(gameState)));
+    placePenguin(gameState);
+    collectFish(gameState);
 }
