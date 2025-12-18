@@ -23,7 +23,7 @@ void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
                 playerDigit = currentField.idPlayer;
             }
 
-            fprintf(outputFile, "%d%d ", currentField.amountOfFish/10, playerDigit);
+            fprintf(outputFile, "%d%d ", currentField.amountOfFish / 10, playerDigit);
         }
 
         fprintf(outputFile, "\n");
@@ -49,12 +49,35 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     fclose(inputFile);
     fclose(outputFile);
 }
-void movePenguinAutomaticli(struct GameState *gameState) {
-    do {
-        // TODO: DOkoniczyć to tak aby odnosił się jakoś do swojego pingwinka.
-        gameState->Players[gameState->currentPlayer].x = rand() % gameState->xBoardSize;
-        gameState->Players[gameState->currentPlayer].y = rand() % gameState->yBoardSize;
-    } while (!(isCoordinateValid(gameState) && isMoveValid(gameState)));
-    placePenguin(gameState);
+void execute_player_move(struct GameState *gameState, int x, int y) {
+    gameState->Board[x][y].idPlayer = gameState->currentPlayer + 1;
     collectFish(gameState);
+    printf("Succesfule move was done!\n");
+    return;
+}
+void movePenguinAutomaticli(struct GameState *gameState) {
+    for (int x = 0; x < gameState->xBoardSize; ++x) {
+        for (int y = 0; y < gameState->yBoardSize; ++y) {
+            if (gameState->Board[x][y].amountOfFish == gameState->currentPlayer) {
+                if (x > 0 && gameState->Board[x - 1][y].amountOfFish > 0) {
+                    execute_player_move(gameState, x - 1, y);
+                    return;
+                }
+                if (x < gameState->xBoardSize - 1 && gameState->Board[x + 1][y].amountOfFish > 0) {
+                    execute_player_move(gameState, x + 1, y);
+                    return;
+                }
+                if (y > 0 && gameState->Board[x][y - 1].amountOfFish > 0) {
+                    execute_player_move(gameState, x, y - 1);
+                    return;
+                }
+                if (y < gameState->yBoardSize - 1 && gameState->Board[x][y + 1].amountOfFish > 0) {
+                    execute_player_move(gameState, x, y + 1);
+                    return;
+                }
+            }
+        }
+    }
+    printf("Cannot make any move.\n");
+    exit(1);
 }

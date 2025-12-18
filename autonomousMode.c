@@ -76,6 +76,7 @@ char readFile(FILE *givenFile, struct GameState *gameState) {
 
             while (token != NULL && colIndex < cols) {
                 gameState->Board[counter - 1][colIndex].amountOfFish = atoi(token) / 10;
+                gameState->Board[counter - 1][colIndex].idPlayer = atoi(token) % 10;
 
                 colIndex++;
                 token = strtok(NULL, delimiters);

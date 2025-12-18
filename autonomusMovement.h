@@ -9,6 +9,21 @@
 #include  "GameState.h"
 
 /**
+ * Executes a move for the current player's penguin to the specified board position.
+ *
+ * This function updates the state of the board to reflect the move made by the current player's penguin.
+ * It assigns the board position at (x, y) to the current player by setting the idPlayer field in the Board matrix.
+ * After updating the board, the function triggers the collection of fish for the current player on that position.
+ * Any necessary output or status reporting is also handled during the move execution.
+ *
+ * @param gameState A pointer to the current GameState structure that holds the game's board,
+ *                  players, and other relevant information.
+ * @param x The x-coordinate (column index) of the target board position where the penguin will move.
+ * @param y The y-coordinate (row index) of the target board position where the penguin will move.
+ */
+void execute_player_move(struct GameState *gameState, int x, int y);
+
+/**
  * Writes the current board state and player information to a specified file.
  *
  * The function outputs the board dimensions, the state of each field on the board
