@@ -11,17 +11,24 @@
 #include <string.h>
 #include "autonomousMode.h"
 
-void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char outputFilePath[]);
+/**
+ * Handles the autonomous placement of penguins in the game.
+ * Reads the game state from an input file, processes the input, and writes the updated state to an output file.
+ *
+ * @param gameState Pointer to the GameState structure representing the current state of the game.
+ * @param inputFilePath Path to the input file containing the initial game data.
+ * @param outputFilePath Path to the output file where the updated game state will be written.
+ * @param nameOfUs Name of the current team executing the function.
+ */
+void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]);
 
 /**
- * Opens an input file in read mode, checks for errors, and handles them appropriately.
+ * Automatically places a penguin for the current player in the game.
+ * This function randomly selects a position on the board and ensures the placement
+ * is valid, following the game's rules for coordinate and placement validity.
  *
- * If the file cannot be opened (e.g., due to an incorrect path or insufficient
- * permissions), the function will print an error message and terminate the program
- * with an exit code of 3.
- *
- * @param filePath The name or path of the input file to be opened.
- * @return A pointer to the opened input file.
- * @throws Exits the program on error with exit code 3, and prints an error message.
+ * @param gameState Pointer to the GameState structure containing the current game state,
+ * including the board, players, and gameplay-related parameters.
  */
+void placePenguinAutomaticli(struct GameState *gameState);
 #endif //PROJECT_AUTONOMUS_PLACEMENT_H

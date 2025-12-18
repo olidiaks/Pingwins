@@ -12,6 +12,7 @@ void placementInteractiveMode(struct GameState *gameState) {
     {
         showBoard(gameState);
         printGameInfo(gameState);
+        printf("Fish %d\n", gameState->Board[2][0].amountOfFish);
         askCoordinates(gameState);
         while (!(isCoordinateValid(gameState) && isPlacementValid(gameState))){
             printf("Given coordinates are invalid!\nPlease notice that you may only place a penguin on a tile with a singular fish.\n");
@@ -28,7 +29,8 @@ bool canPlayerPlacePenguin(struct GameState* gameState)
 {
     for (int i = 0; i < gameState->xBoardSize; i++) {
         for (int j = 0; j < gameState->yBoardSize; j++) {
-            if (gameState->Board[i][j].amountOfFish == 1) {
+            int amount_of_fish = gameState->Board[i][j].amountOfFish;
+            if (amount_of_fish == 1) {
                 return true;
             }
         }
@@ -39,8 +41,8 @@ bool canPlayerPlacePenguin(struct GameState* gameState)
 
 bool isEveryPenguinsPlaced(struct GameState* gameState)
 {
-    //TO DO: Verify if this actually make sense?
     //Note from Bryce: Please learn how to spell things correctly I am so tired of fixing your mistakes
+    //Noted not executed
     for (int i = 0; i < gameState->numOfPlayers; ++i) {
         if (gameState->Players[i].currentPenguin != gameState->numOfPenguinsPerPlayer) {
             return false;

@@ -1,0 +1,16 @@
+3. Write autonomous - Oliwier
+6. Write closing files correctly. - Bryce
+7. Write checking if players are in the list of players.
+8. Write getting id – Oliwier.
+10. Write file validation. – Wojtek -- DONE
+11. Write writing a player to a list of players who moved. - Wojtek -- DONE
+12. Write placing of penguins. - Wojtek -- DONE
+14. Write checking if penguins on field are placed correctly. - Wojtek -- DONE
+15. Write messages information why game cannot load a file. - Wojtek -- DONE
+21. Write loading field from a file. – Oliwier
+22. Write saving field to file. – Oliwier
+23. Looking if a player exists on players list. – Oliwier
+24. Write writing to file id of player if not found. – Oliwier
+25. Implement an algorithm for finding any move.
+26. Write check messege that game cannot do move and exit with error code 1.
+
