@@ -26,5 +26,5 @@ add_executable(project
         autonomusPlacement.c
         autonomusMovement.c
         autonomusMovement.h
-        LoadValidator.c
-        LoadValidator.h)
+        loadValidator.c
+        loadValidator.h)
