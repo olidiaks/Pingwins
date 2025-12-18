@@ -112,9 +112,10 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
     }
 
 
-    for (int i = 0; i < linesToSkip; i++) {
+    for (int i = 0; i <= linesToSkip; i++) {
         while ((c = fgetc(input_file)) != '\n' && c != EOF)
-            ;
+            printf("%c", c);
+        printf("\n");
     }
 
     while (1) {
