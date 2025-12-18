@@ -18,11 +18,6 @@ void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
         for (int j = 0; j < gameState->yBoardSize; j++) {
             struct Field currentField = gameState->Board[i][j];
 
-            int playerDigit = 0;
-            if (currentField.idPlayer != -1) {
-                playerDigit = currentField.idPlayer;
-            }
-
             fprintf(outputFile, "%d%d ", currentField.amountOfFish, currentField.idPlayer);
         }
 
