@@ -18,12 +18,7 @@ void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
         for (int j = 0; j < gameState->yBoardSize; j++) {
             struct Field currentField = gameState->Board[i][j];
 
-            int playerDigit = 0;
-            if (currentField.idPlayer != -1) {
-                playerDigit = currentField.idPlayer;
-            }
-
-            fprintf(outputFile, "%d%d ", currentField.amountOfFish / 10, playerDigit);
+            fprintf(outputFile, "%d%d ", currentField.amountOfFish, currentField.idPlayer);
         }
 
         fprintf(outputFile, "\n");
@@ -40,18 +35,28 @@ void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
 
 void autonomousMovement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]) {
     FILE *inputFile = openInputFileAndHandleError(inputFilePath);
+    fclose(inputFile);
+
+    inputFile = fopen(inputFilePath, "r");
+    readFile(inputFile, gameState);
+    fclose(inputFile);
+
+    inputFile = fopen(inputFilePath, "r");
+    loadPlayers(gameState, inputFile);
+    fclose(inputFile);
+
+    movePenguinAutomaticli(gameState);
 
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
-
-    readFile(inputFile, gameState);
-
     writeBoardToFile(outputFile, gameState);
 
-    fclose(inputFile);
     fclose(outputFile);
 }
-void execute_player_move(struct GameState *gameState, int x, int y) {
-    gameState->Board[x][y].idPlayer = gameState->currentPlayer + 1;
+void execute_player_move(struct GameState *gameState, int currentX, int currentY, int lastX, int lastY) {
+    gameState->Players[gameState->currentPlayer].x = currentX;
+    gameState->Players[gameState->currentPlayer].y = currentY;
+    gameState->Board[currentX][currentY].idPlayer = gameState->currentPlayer + 1;
+    gameState->Board[lastX][lastY].idPlayer = 0;
     collectFish(gameState);
     printf("Succesfule move was done!\n");
     return;
@@ -59,21 +64,21 @@ void execute_player_move(struct GameState *gameState, int x, int y) {
 void movePenguinAutomaticli(struct GameState *gameState) {
     for (int x = 0; x < gameState->xBoardSize; ++x) {
         for (int y = 0; y < gameState->yBoardSize; ++y) {
-            if (gameState->Board[x][y].amountOfFish == gameState->currentPlayer) {
+            if (gameState->Board[x][y].idPlayer == gameState->currentPlayer + 1) {
                 if (x > 0 && gameState->Board[x - 1][y].amountOfFish > 0) {
-                    execute_player_move(gameState, x - 1, y);
+                    execute_player_move(gameState, x - 1, y, x, y);
                     return;
                 }
                 if (x < gameState->xBoardSize - 1 && gameState->Board[x + 1][y].amountOfFish > 0) {
-                    execute_player_move(gameState, x + 1, y);
+                    execute_player_move(gameState, x + 1, y, x, y);
                     return;
                 }
                 if (y > 0 && gameState->Board[x][y - 1].amountOfFish > 0) {
-                    execute_player_move(gameState, x, y - 1);
+                    execute_player_move(gameState, x, y - 1, x, y);
                     return;
                 }
                 if (y < gameState->yBoardSize - 1 && gameState->Board[x][y + 1].amountOfFish > 0) {
-                    execute_player_move(gameState, x, y + 1);
+                    execute_player_move(gameState, x, y + 1, x, y);
                     return;
                 }
             }

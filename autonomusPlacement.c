@@ -33,8 +33,7 @@ void placePenguinAutomatically(struct GameState *gameState) {
                 int current_player = gameState->currentPlayer;
                 gameState->Players[current_player].x = i;
                 gameState->Players[current_player].y = j;
-                gameState->Board[i][j].idPlayer = current_player;
-                gameState->Board[i][j].idPenguin = gameState->Players[current_player].currentPenguin;
+                gameState->Board[i][j].idPlayer = current_player + 1;
                 collectFish(gameState);
                 return;
             }
