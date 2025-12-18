@@ -27,10 +27,15 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
     fclose(outputFile);
 }
 void placePenguinAutomatically(struct GameState *gameState) {
-    do {
-        gameState->Players[gameState->currentPlayer].x = rand() % gameState->xBoardSize;
-        gameState->Players[gameState->currentPlayer].y = rand() % gameState->yBoardSize;
-    } while (!(isCoordinateValid(gameState) && isPlacementValid(gameState)));
-    placePenguin(gameState);
-    collectFish(gameState);
+    for (int i = 0; i < gameState->xBoardSize; ++i) {
+        for (int j = 0; j < gameState->yBoardSize; ++j) {
+            if (gameState->Board[i][j].amountOfFish == 1) {
+                placePenguin(gameState);
+                collectFish(gameState);
+                return;
+            }
+        }
+    }
+    printf("Imposible to place peenguin.\n");
+    exit(1);
 }
