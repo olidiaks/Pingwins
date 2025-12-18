@@ -160,22 +160,16 @@ bool checkFirstBoardValue(FILE *file) {
     rewind(file);
     char buffer[1024];
 
-    // 1. Skip the Header Line (Dimensions)
     if (fgets(buffer, sizeof(buffer), file) == NULL) {
         fprintf(stderr, "Error: File is empty.\n");
         return false;
     }
 
-    // 2. Read the First Value of the Board
-    // We try to read the first integer from the NEXT line (start of board data)
     int firstVal;
 
-    // Loop to skip potential empty lines between header and data
     while (fgets(buffer, sizeof(buffer), file)) {
-        // Try to read one integer from the start of the line
         if (sscanf(buffer, "%d", &firstVal) == 1) {
 
-            // 3. Check if it is 0, 1, 2, or 3
             if (firstVal >= 0 && firstVal <= 3) {
                 return true;
             } else {
