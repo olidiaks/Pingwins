@@ -63,7 +63,7 @@ void execute_player_move(struct GameState *gameState, int currentX, int currentY
 void movePenguinAutomaticli(struct GameState *gameState) {
     for (int x = 0; x < gameState->xBoardSize; ++x) {
         for (int y = 0; y < gameState->yBoardSize; ++y) {
-            if (gameState->Board[x][y].amountOfFish == gameState->currentPlayer) {
+            if (gameState->Board[x][y].idPlayer == gameState->currentPlayer + 1) {
                 if (x > 0 && gameState->Board[x - 1][y].amountOfFish > 0) {
                     execute_player_move(gameState, x - 1, y, x, y);
                     return;
