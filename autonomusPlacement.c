@@ -9,10 +9,13 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
 
 
     readFile(inputFile);
+    fclose(inputFile);
+    inputFile = openInputFileAndHandleError(inputFilePath);
     loadPlayers(gameState, inputFile);
 
     fclose(inputFile);
 
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
+    fclose(outputFile);
 }
 

@@ -93,36 +93,63 @@ char readFile(FILE *givenFile) {
     }
 }
 bool loadPlayers(struct GameState *game_state, FILE *input_file) {
+    gameState.Players = malloc(sizeof(struct Player) * 9);
+    if (gameState.Players == NULL) {
+        printf("Not enough memory to load players from file.\n");
+        exit(3);
+    }
     bool isUsOnList = false;
     int idCount = 0;
+    int linesToSkip = 0;
+
+    if (fscanf(input_file, "%d", &linesToSkip) != 1) {
+        printf("Error: Could not read the number of header lines to skip.\n");
+        exit(2);
+    }
+
+    int c;
+    while ((c = fgetc(input_file)) != '\n' && c != EOF)
+        ;
+
+    for (int i = 0; i < linesToSkip; i++) {
+        while ((c = fgetc(input_file)) != '\n' && c != EOF)
+            ;
+    }
 
     while (1) {
         char *name = NULL;
         int id, score;
-        int fscanfStatus = fscanf(input_file, "%ms %d %d", name, &id, &score);
+
+        int fscanfStatus = fscanf(input_file, "%ms %d %d", &name, &id, &score);
+
         if (fscanfStatus == EOF) {
+            if (name)
+                free(name);
             break;
         }
+
         if (fscanfStatus != 3) {
-            printf("Players should be in order of player_nick_name id score and they are not in that order.");
+            printf("Players should be in order of player_nick_name id score.\n");
+            if (name)
+                free(name);
             exit(2);
         }
-        if (name == game_state->teamName) {
+
+        if (strcmp(name, game_state->teamName) == 0) {
             isUsOnList = true;
             game_state->currentPlayer = id - 1;
         }
+
         if (idCount == id - 1) {
             idCount++;
-            game_state->Players = realloc(game_state->Players, idCount * sizeof(struct Player));
-            if (game_state->Players == NULL) {
-                printf("Not enough memory to load players from file.");
-                exit(3);
-            }
+            game_state->Players[id].name = name;
         }
 
         game_state->Players[id - 1].currentScore = score;
+
         free(name);
     }
-    printf("Successfully loaded players from file.");
+
+    printf("Successfully loaded players from file.\n");
     return isUsOnList;
 }
