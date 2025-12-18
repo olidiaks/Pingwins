@@ -23,7 +23,7 @@ void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
                 playerDigit = currentField.idPlayer;
             }
 
-            fprintf(outputFile, "%d%d ", currentField.amountOfFish, playerDigit);
+            fprintf(outputFile, "%d%d ", currentField.amountOfFish/10, playerDigit);
         }
 
         fprintf(outputFile, "\n");

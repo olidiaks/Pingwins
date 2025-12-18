@@ -16,7 +16,7 @@ FILE *openOutputFileAndHandleError(char *filePath) {
                "permission for access.\n");
         exit(3);
     }
-
+    //printf("The output file created as %s\n", filePath);
     return output_file;
 }
 

@@ -30,5 +30,5 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
  * @param gameState Pointer to the GameState structure containing the current game state,
  * including the board, players, and gameplay-related parameters.
  */
-void placePenguinAutomaticli(struct GameState *gameState);
+void placePenguinAutomatically(struct GameState *gameState);
 #endif //PROJECT_AUTONOMUS_PLACEMENT_H

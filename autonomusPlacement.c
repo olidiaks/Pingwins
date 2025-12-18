@@ -19,13 +19,14 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
 
     fclose(inputFile);
 
-    placePenguinAutomaticli(gameState);
-
+    placePenguinAutomatically(gameState);
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
+    //("The file doesn't have any errors\n");
     writeBoardToFile(outputFile, gameState);
+    printf("File has been written into.\n");
     fclose(outputFile);
 }
-void placePenguinAutomaticli(struct GameState *gameState) {
+void placePenguinAutomatically(struct GameState *gameState) {
     do {
         gameState->Players[gameState->currentPlayer].x = rand() % gameState->xBoardSize;
         gameState->Players[gameState->currentPlayer].y = rand() % gameState->yBoardSize;
