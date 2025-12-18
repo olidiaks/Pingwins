@@ -11,6 +11,13 @@
 #include <string.h>
 #include "autonomousMode.h"
 
+/**
+ * Counts the number of penguins placed on the board for the current player
+ * and verifies if the desired number of penguins has been placed.
+ *
+ * @param gameState Pointer to the GameState structure representing the current state of the game.
+ * @param numOfPengiuns The total number of penguins the current player is expected to place on the board.
+ */
 void countPenguins(struct GameState *gameState, int numOfPengiuns);
 
 /**
