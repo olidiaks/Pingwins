@@ -4,6 +4,36 @@
 
 #include "autonomusMovement.h"
 
+void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
+    if (outputFile == NULL) {
+        fprintf(stderr, "Error: Invalid file pointer or game state.\n");
+        return;
+    }
+
+    fprintf(outputFile, "%d %d\n", gameState->xBoardSize, gameState->yBoardSize);
+
+    for (int i = 0; i < gameState->xBoardSize; i++) {
+        for (int j = 0; j < gameState->yBoardSize; j++) {
+            struct Field currentField = gameState->Board[i][j];
+
+            int playerDigit = 0;
+            if (currentField.idPlayer != -1) {
+                playerDigit = currentField.idPlayer;
+            }
+
+            fprintf(outputFile, "%d%d ", currentField.amountOfFish, playerDigit);
+        }
+
+        fprintf(outputFile, "\n");
+    }
+
+    for (int k = 0; k < gameState->numOfPlayers; k++) {
+
+        int displayID = k + 1;
+        char *pName = (gameState->Players[k].name != NULL) ? gameState->Players[k].name : "Unknown";
+        fprintf(outputFile, "%s %d %d\n", pName, displayID, gameState->Players[k].currentScore);
+    }
+}
 
 void autonomousMovement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]) {
     FILE *inputFile = openInputFileAndHandleError(inputFilePath);
@@ -11,4 +41,9 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
 
     readFile(inputFile);
+
+    writeBoardToFile(outputFile, gameState);
+
+    fclose(inputFile);
+    fclose(outputFile);
 }
