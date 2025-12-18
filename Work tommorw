@@ -2,11 +2,11 @@
 6. Write closing files correctly. - Bryce
 7. Write checking if players are in the list of players.
 8. Write getting id – Oliwier.
-10. Write file validation. – Wojtek
+10. Write file validation. – Wojtek -- DONE
 11. Write writing a player to a list of players who moved. - Wojtek
-12. Write placing of penguins. - Wojtek
-14. Write checking if penguins on field are placed correctly. - Wojtek
-15. Write messages information why game cannot load a file. - Wojtek
+12. Write placing of penguins. - Wojtek -- DONE
+14. Write checking if penguins on field are placed correctly. - Wojtek -- DONE
+15. Write messages information why game cannot load a file. - Wojtek -- DONE
 21. Write loading field from a file. – Oliwier
 22. Write saving field to file. – Oliwier
 23. Looking if a player exists on players list. – Oliwier
