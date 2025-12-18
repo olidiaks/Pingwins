@@ -34,17 +34,26 @@ void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
 
 void autonomousMovement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]) {
     FILE *inputFile = openInputFileAndHandleError(inputFilePath);
+    fclose(inputFile);
+
+    inputFile = fopen(inputFilePath, "r");
+    readFile(inputFile, gameState);
+    fclose(inputFile);
+
+    inputFile = fopen(inputFilePath, "r");
+    loadPlayers(gameState, inputFile);
+    fclose(inputFile);
+
+    movePenguinAutomaticli(gameState);
 
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
-
-    readFile(inputFile, gameState);
-
     writeBoardToFile(outputFile, gameState);
 
-    fclose(inputFile);
     fclose(outputFile);
 }
 void execute_player_move(struct GameState *gameState, int x, int y) {
+    gameState->Players[gameState->currentPlayer].x = x;
+    gameState->Players[gameState->currentPlayer].y = y;
     gameState->Board[x][y].idPlayer = gameState->currentPlayer + 1;
     collectFish(gameState);
     printf("Succesfule move was done!\n");
