@@ -25,11 +25,13 @@ void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
     }
 
     printf("Enumerating players, plr count: %d\n", gameState->numOfPlayers);
-    for (int k = 0; k < gameState->numOfPlayers; k++) {
+    for (int k = 0; k < 9; k++) {
 
         int displayID = k + 1;
-        char *pName = (gameState->Players[k].name != NULL) ? gameState->Players[k].name : "Unknown";
-        fprintf(outputFile, "%s %d %d\n", pName, displayID, gameState->Players[k].currentScore);
+        if (gameState->Players[k].name != NULL) {
+            fprintf(outputFile, "%s %d %d\n", gameState->Players[k].name, displayID,
+                    gameState->Players[k].currentScore);
+        }
     }
 }
 

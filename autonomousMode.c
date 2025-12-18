@@ -148,10 +148,6 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
         game_state->Players[idx].currentScore = score;
         occupiedIDs[idx] = 1;
         game_state->numOfPlayers++;
-        if (idx > game_state->numOfPlayers) {
-            printf("Id's of player need to be filled incrementali and for layer %s, that do not happend.\n", name);
-            exit(2);
-        }
 
         if (strcmp(name, game_state->teamName) == 0) {
             game_state->currentPlayer = idx;
