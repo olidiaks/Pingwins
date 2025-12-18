@@ -51,10 +51,11 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
 
     fclose(outputFile);
 }
-void execute_player_move(struct GameState *gameState, int x, int y) {
-    gameState->Players[gameState->currentPlayer].x = x;
-    gameState->Players[gameState->currentPlayer].y = y;
-    gameState->Board[x][y].idPlayer = gameState->currentPlayer + 1;
+void execute_player_move(struct GameState *gameState, int currentX, int currentY, int lastX, int lastY) {
+    gameState->Players[gameState->currentPlayer].x = currentX;
+    gameState->Players[gameState->currentPlayer].y = currentY;
+    gameState->Board[currentX][currentY].idPlayer = gameState->currentPlayer + 1;
+    gameState->Board[lastX][lastY].idPlayer = 0;
     collectFish(gameState);
     printf("Succesfule move was done!\n");
     return;
@@ -64,19 +65,19 @@ void movePenguinAutomaticli(struct GameState *gameState) {
         for (int y = 0; y < gameState->yBoardSize; ++y) {
             if (gameState->Board[x][y].amountOfFish == gameState->currentPlayer) {
                 if (x > 0 && gameState->Board[x - 1][y].amountOfFish > 0) {
-                    execute_player_move(gameState, x - 1, y);
+                    execute_player_move(gameState, x - 1, y, x, y);
                     return;
                 }
                 if (x < gameState->xBoardSize - 1 && gameState->Board[x + 1][y].amountOfFish > 0) {
-                    execute_player_move(gameState, x + 1, y);
+                    execute_player_move(gameState, x + 1, y, x, y);
                     return;
                 }
                 if (y > 0 && gameState->Board[x][y - 1].amountOfFish > 0) {
-                    execute_player_move(gameState, x, y - 1);
+                    execute_player_move(gameState, x, y - 1, x, y);
                     return;
                 }
                 if (y < gameState->yBoardSize - 1 && gameState->Board[x][y + 1].amountOfFish > 0) {
-                    execute_player_move(gameState, x, y + 1);
+                    execute_player_move(gameState, x, y + 1, x, y);
                     return;
                 }
             }

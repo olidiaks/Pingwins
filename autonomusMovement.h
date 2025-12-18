@@ -9,19 +9,22 @@
 #include  "GameState.h"
 
 /**
- * Executes a move for the current player's penguin to the specified board position.
+ * Executes a player's move on the game board and updates the game state.
  *
- * This function updates the state of the board to reflect the move made by the current player's penguin.
- * It assigns the board position at (x, y) to the current player by setting the idPlayer field in the Board matrix.
- * After updating the board, the function triggers the collection of fish for the current player on that position.
- * Any necessary output or status reporting is also handled during the move execution.
+ * The function updates the player's position and reflects the movement
+ * by modifying the respective fields on the game board. Additionally,
+ * it handles fish collection for the current player and prints a success
+ * message upon completing the move.
  *
- * @param gameState A pointer to the current GameState structure that holds the game's board,
- *                  players, and other relevant information.
- * @param x The x-coordinate (column index) of the target board position where the penguin will move.
- * @param y The y-coordinate (row index) of the target board position where the penguin will move.
+ * @param gameState A pointer to the GameState structure containing the
+ *                  current game information, including the board, players,
+ *                  and active player.
+ * @param currentX  The x-coordinate of the player's new position on the board.
+ * @param currentY  The y-coordinate of the player's new position on the board.
+ * @param lastX     The x-coordinate of the player's previous position on the board.
+ * @param lastY     The y-coordinate of the player's previous position on the board.
  */
-void execute_player_move(struct GameState *gameState, int x, int y);
+void execute_player_move(struct GameState *gameState, int currentX, int currentY, int lastX, int lastY);
 
 /**
  * Writes the current board state and player information to a specified file.
