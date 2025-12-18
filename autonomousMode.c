@@ -54,7 +54,7 @@ FILE *openInputFileAndHandleError(char *filePath) {
 }
 
 char readFile(FILE *givenFile, struct GameState *gameState) {
-    char line[127];
+    char line[8192];
     int counter = 0;
     int rows = 0, cols = 0;
     const char *delimiters = " \r\n"; // Split by space, carriage return, or newline
@@ -96,7 +96,8 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
 
     char c;
     bool isUsOnList = false;
-    int idCount = 9;
+    int idCount = 0;
+    int idUsed = 0;
     int linesToSkip = 0;
     int n = 0;
 
