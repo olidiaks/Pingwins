@@ -63,6 +63,6 @@ void placePenguinAutomatically(struct GameState *gameState) {
             }
         }
     }
-    printf("Imposible to place peenguin.\n");
+    printf("Impossible to place penguin.\n");
     exit(1);
 }
