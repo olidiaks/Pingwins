@@ -30,6 +30,8 @@ void placePenguinAutomatically(struct GameState *gameState) {
     for (int i = 0; i < gameState->xBoardSize; ++i) {
         for (int j = 0; j < gameState->yBoardSize; ++j) {
             if (gameState->Board[i][j].amountOfFish == 1) {
+                gameState->Players[gameState->currentPlayer].x = i;
+                gameState->Players[gameState->currentPlayer].y = j;
                 placePenguin(gameState);
                 collectFish(gameState);
                 return;
