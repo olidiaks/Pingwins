@@ -40,7 +40,7 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
 
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
 
-    readFile(inputFile);
+    readFile(inputFile, gameState);
 
     writeBoardToFile(outputFile, gameState);
 

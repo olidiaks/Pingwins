@@ -28,9 +28,50 @@
  */
 FILE *openOutputFileAndHandleError(char *filePath);
 
+/**
+ * Opens an input file in read mode, validates its content for correctness, and handles errors appropriately.
+ *
+ * This function ensures that the input file:
+ * 1. Exists and can be successfully opened.
+ * 2. Has a valid header with the correct dimensions.
+ * 3. Has matching dimensions for the reported size.
+ * 4. Maintains rectangular consistency in its structure.
+ * 5. Abides by the zero placement constraint.
+ *
+ * If any of these checks fail, the function will print an error message and terminate the program
+ * with an appropriate exit code:
+ * - Exit code 3: Failed to open the file.
+ * - Exit code 2: File structure or content validation issues.
+ *
+ * @param filePath The path to the input file to be opened and validated.
+ * @return A pointer to the opened and validated input file.
+ * @throws Exits the program with an error code and prints an appropriate error message upon failure.
+ */
 FILE *openInputFileAndHandleError(char *filePath);
 
-char readFile(FILE *givenFile);
+/**
+ * Reads and processes game board data from a file to populate the game state.
+ *
+ * The method reads a file containing information about the map dimensions
+ * (number of rows and columns) and the distribution of fish on the board.
+ * It initializes the game board and updates the relevant fields in the
+ * provided game state structure. If the file contains improperly formatted
+ * data or exceeds the expected dimensions, the behavior may be undefined.
+ * The board is represented as a 2D array of `Field` structures within
+ * the game state.
+ *
+ * @param givenFile A pointer to the file to be read. The file should contain
+ *                  the map dimensions on the first line, followed by rows of
+ *                  space-separated integers specifying the number of fish in
+ *                  each cell.
+ * @param gameState A GameState structure that holds the state of the game,
+ *                  including the board dimensions and fields. The structure
+ *                  will be modified to reflect the data read from the file.
+ * @return A character status indicating the result of the file processing.
+ *         The specific meaning of the returned character depends on the
+ *         implementation.
+ */
+char readFile(FILE *givenFile, struct GameState *gameState);
 
 /**
  * Loads player data from a given input file into the game state and determines

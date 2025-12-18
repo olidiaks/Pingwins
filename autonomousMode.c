@@ -53,7 +53,7 @@ FILE *openInputFileAndHandleError(char *filePath) {
     return inputFile;
 }
 
-char readFile(FILE *givenFile) {
+char readFile(FILE *givenFile, struct GameState *gameState) {
     char line[127];
     int counter = 0;
     int rows = 0, cols = 0;
@@ -62,10 +62,10 @@ char readFile(FILE *givenFile) {
     while (fgets(line, sizeof(line), givenFile)) {
         if (counter == 0) {
             if (sscanf(line, "%d %d", &rows, &cols) == 2) {
-                gameState.xBoardSize = rows;
-                gameState.yBoardSize = cols;
+                gameState->xBoardSize = rows;
+                gameState->yBoardSize = cols;
 
-                generateVoidBoard(&gameState);
+                generateVoidBoard(gameState);
                 printf("Map Dimensions found: %d rows, %d cols\n", rows, cols);
             }
         }
@@ -75,7 +75,7 @@ char readFile(FILE *givenFile) {
             int colIndex = 0;
 
             while (token != NULL && colIndex < cols) {
-                gameState.Board[counter - 1][colIndex].amountOfFish = atoi(token);
+                gameState->Board[counter - 1][colIndex].amountOfFish = atoi(token);
 
                 colIndex++;
                 token = strtok(NULL, delimiters);
@@ -85,9 +85,9 @@ char readFile(FILE *givenFile) {
     }
 
     printf("\n--- Internal Check ---\n");
-    for (int i = 0; i < gameState.xBoardSize; i++) {
-        for (int j = 0; j < gameState.yBoardSize; j++) {
-            printf("%02d ", gameState.Board[i][j].amountOfFish);
+    for (int i = 0; i < gameState->xBoardSize; i++) {
+        for (int j = 0; j < gameState->yBoardSize; j++) {
+            printf("%02d ", gameState->Board[i][j].amountOfFish);
         }
         printf("\n");
     }
