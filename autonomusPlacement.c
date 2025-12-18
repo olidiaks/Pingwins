@@ -4,6 +4,8 @@
 
 #include "autonomusPlacement.h"
 
+#include "autonomusMovement.h"
+
 void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]) {
     FILE *inputFile = openInputFileAndHandleError(inputFilePath);
     readFile(inputFile);
@@ -15,6 +17,6 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
     fclose(inputFile);
 
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
+    writeBoardToFile(outputFile, gameState);
     fclose(outputFile);
 }
-
