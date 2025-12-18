@@ -45,6 +45,7 @@ struct Player {
     struct Penguin *penguins;
     int x;
     int y;
+    char *name;
 };
 
 /**
