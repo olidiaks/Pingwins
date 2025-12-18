@@ -5,9 +5,13 @@
 
 #include "main.h"
 
+#include <time.h>
+
 
 int main(int argc, char *argv[]) {
-    srand(10);
+    time_t tt;
+
+    srand(time(&tt));
 
     gameState.teamName = "Pingwiniarze";
     char *nameOfUs = gameState.teamName;
