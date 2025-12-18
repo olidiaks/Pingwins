@@ -19,6 +19,7 @@ void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
             struct Field currentField = gameState->Board[i][j];
 
             fprintf(outputFile, "%d%d ", currentField.amountOfFish, currentField.idPlayer);
+            printf("Amount of fish: %d\n", currentField.amountOfFish);
         }
 
         fprintf(outputFile, "\n");
