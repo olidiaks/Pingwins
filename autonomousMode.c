@@ -93,23 +93,24 @@ char readFile(FILE *givenFile) {
     }
 }
 bool loadPlayers(struct GameState *game_state, FILE *input_file) {
+
+    char c;
+    bool isUsOnList = false;
+    int idCount = 9;
+    int linesToSkip = 0;
+    int n = 0;
+
     gameState.Players = malloc(sizeof(struct Player) * 9);
     if (gameState.Players == NULL) {
         printf("Not enough memory to load players from file.\n");
         exit(3);
     }
-    bool isUsOnList = false;
-    int idCount = 0;
-    int linesToSkip = 0;
 
-    if (fscanf(input_file, "%d", &linesToSkip) != 1) {
+    if (fscanf(input_file, "%d %d", &linesToSkip, &n) != 2) {
         printf("Error: Could not read the number of header lines to skip.\n");
         exit(2);
     }
 
-    int c;
-    while ((c = fgetc(input_file)) != '\n' && c != EOF)
-        ;
 
     for (int i = 0; i < linesToSkip; i++) {
         while ((c = fgetc(input_file)) != '\n' && c != EOF)
@@ -136,8 +137,8 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
         }
 
         if (strcmp(name, game_state->teamName) == 0) {
-            isUsOnList = true;
             game_state->currentPlayer = id - 1;
+            isUsOnList = true;
         }
 
         if (idCount == id - 1) {
@@ -151,5 +152,9 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
     }
 
     printf("Successfully loaded players from file.\n");
-    return isUsOnList;
+
+    if (!isUsOnList) {
+        game_state->Players[game_state->currentPlayer].name = game_state->teamName;
+        game_state->Players[game_state->currentPlayer].currentScore = 0;
+    }
 }
