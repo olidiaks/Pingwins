@@ -66,4 +66,16 @@ bool checkRectangularConsistency(FILE *file);
  */
 bool checkZeroConstraint(FILE *file);
 
+/**
+ * @brief Checks if the first value of the board is 0, 1, 2, or 3.
+ *
+ * This function skips the file header (dimensions) and reads the very first
+ * board value (top-left corner). It verifies that this value is strictly
+ * within the set {0, 1, 2, 3}.
+ *
+ * @param file A pointer to the open file to be checked.
+ * @return Returns true if the first board value is 0, 1, 2, or 3; otherwise, returns false.
+ */
+bool checkFirstBoardValue(FILE *file);
+
 #endif // PROJECT_LOADVALIDATOR_H

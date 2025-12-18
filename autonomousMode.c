@@ -17,27 +17,6 @@ FILE *openOutputFileAndHandleError(char *filePath) {
         exit(3);
     }
 
-    int rows, cols;
-    if (!checkHeader(output_file, &rows, &cols)) {
-        printf("Error opening output file\nHeader malformed.\n");
-        exit(2);
-    }
-
-    if (!checkDimensions(output_file, rows, cols)) {
-        printf("Error opening output file\nDimension - reported size mismatch.\n");
-        exit(2);
-    }
-
-    if (!checkRectangularConsistency(output_file)) {
-        printf("Error opening output file\nBoard malformed.\n");
-        exit(2);
-    }
-
-    if (!checkZeroConstraint(output_file)) {
-        printf("Error opening output file\nCritical placement error.\n");
-        exit(2);
-    }
-
     return output_file;
 }
 
@@ -50,7 +29,26 @@ FILE *openInputFileAndHandleError(char *filePath) {
         exit(3);
     }
 
+    int rows, cols;
+    if (!checkHeader(inputFile, &rows, &cols)) {
+        printf("Error opening output file\nHeader malformed.\n");
+        exit(2);
+    }
 
+    if (!checkDimensions(inputFile, rows, cols)) {
+        printf("Error opening output file\nDimension - reported size mismatch.\n");
+        exit(2);
+    }
+
+    if (!checkRectangularConsistency(inputFile)) {
+        printf("Error opening output file\nBoard malformed.\n");
+        exit(2);
+    }
+
+    if (!checkZeroConstraint(inputFile)) {
+        printf("Error opening output file\nCritical placement error.\n");
+        exit(2);
+    }
 
     return inputFile;
 }
