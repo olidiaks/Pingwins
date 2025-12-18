@@ -139,7 +139,7 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
         if (id < 1 || id > 9) {
             printf("Error: Player ID %d out of bounds.\n", id);
             free(name);
-            continue;
+            exit(2);
         }
 
         int idx = id - 1;
