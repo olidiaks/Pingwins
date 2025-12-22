@@ -49,34 +49,36 @@ struct Player {
 };
 
 /**
- * Represents the penguins of a player
+ * Represents a Penguin with its position on the game board.
  *
- * This structure stores the essential information related to a player's penguins
- * and ongoing progress within the game.
+ * This structure is used to track the position of an individual penguin
+ * within the game. Each penguin is associated with a specific player and
+ * is identified by its coordinates on the game board.
  *
  * Members:
- * - x,y:
+ * - x: An integer representing the x-coordinate of the penguin's position on the board.
+ * - y: An integer representing the y-coordinate of the penguin's position on the board.
  */
 struct Penguin {
-    int x,y;
+    int x, y;
 };
 
 /**
- * Represents the state of a game, including the game board, players, and associated configurations.
+ * Represents the overall state of the game at any given moment.
  *
- * This structure manages various aspects of the game's current state, enabling the game flow
- * such as movements, placements, and gameplay logic. It stores information about the game board,
- * players, and game-specific settings.
+ * This structure contains all the critical information and parameters required
+ * to manage and track the progress of the game, including players, board configuration,
+ * and game-specific settings.
  *
  * Members:
- * - teamName: A pointer to a character array representing the name of the team currently in play.
- * - currentPlayer: An integer indicating the index of the player whose turn it is.
- * - Board: A 2D array of Field structures representing the game board's state.
- * - Players: A pointer to an array of Player structures containing information about all players.
- * - numOfPlayers: An integer representing the total number of players participating in the game.
- * - xBoardSize: An integer specifying the width of the board in terms of the number of tiles.
- * - yBoardSize: An integer specifying the height of the board in terms of the number of tiles.
- * - numOfPenguinsPerPlayer: An integer indicating the number of penguins allocated to each player.
+ * - teamName: A pointer to a null-terminated string representing the name of the current team.
+ * - currentPlayer: An integer representing the index of the player who is currently taking their turn.
+ * - Board: A 2D dynamic array of Field structures representing the game board.
+ * - Players: A dynamic array of Player structures representing all players participating in the game.
+ * - numOfPlayers: The number of players currently playing the game.
+ * - xBoardSize: The number of columns on the game board.
+ * - yBoardSize: The number of rows on the game board.
+ * - numOfPenguinsPerPlayer: The number of penguins allocated for each player.
  */
 struct GameState {
     char *teamName;
@@ -90,22 +92,33 @@ struct GameState {
 };
 
 /**
- * Initializes the game state by setting up player information and initial game configuration.
+ * Initializes the game state by setting up players, their attributes,
+ * and allocating memory for penguins and other game-related structures.
  *
- * This function allocates memory for players and their respective penguins,
- * and initializes relevant data such as number of players, current player,
- * and the number of penguins per player. It establishes the foundation required
- * for conducting further game phases.
+ * This method prepares the game state for the beginning of the game by:
+ * - Assigning the team name.
+ * - Prompting the user with initialization questions.
+ * - Setting the current player to the initial player.
+ * - Allocating and initializing memory for players and their associated penguins.
  *
- * Postconditions:
- * - `gameState.num_of_players`: Set to 2 by default.
- * - `gameState.current_player`: Set to 0 as the starting player.
- * - `gameState.num_of_penguins_per_player`: Set to 1.
- * - Memory is allocated for `gameState.Players` and their penguins, and
- *   relevant fields like `current_score` and `id` are initialized.
+ * If memory allocation for penguin structures fails due to insufficient memory,
+ * it will terminate the program with an error code.
  */
 void init();
 
+/**
+ * Prompts the user to input the initial game settings, including the number
+ * of players and the number of penguins per player.
+ *
+ * This function collects critical information to initialize the game state.
+ * The user is repeatedly asked valid inputs for the number of players
+ * (between 2 and 9) and the number of penguins per player (between 1 and 9)
+ * until acceptable values are entered.
+ *
+ * The collected values are stored in the global gameState structure:
+ * - numOfPlayers: The total number of players in the game.
+ * - numOfPenguinsPerPlayer: The number of penguins each player controls.
+ */
 void askInitQuestions();
 
-#endif //PROJECT_GAMESTRUCTURE_H
+#endif // PROJECT_GAMESTRUCTURE_H
