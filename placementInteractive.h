@@ -15,19 +15,16 @@
 #include <stdlib.h>
 
 /**
- * @brief Handles the game's placement phase where players alternately place penguins on the board.
+ * @brief Manages the interactive placement mode where players place penguins on the board.
  *
- * This function starts the game by reading the board dimensions, initializing the current player,
- * and generating a random board. It then enters a loop where it repeatedly:
- * - Displays the current board state.
- * - Asks the current player for coordinates until a valid move is provided.
- * - Places the penguin according to the player's input.
- * - Collects fish from the placed penguin.
- * - Checks if the current player can place another penguin.
- * - Switches to the next player.
+ * This function initiates the interactive placement phase of the game, where players
+ * take turns placing their penguins on the board according to game rules. It handles
+ * board generation, coordinate input, placement validation, and updates game state
+ * details such as player turns and penguin placement. The function continues looping
+ * until all penguins are placed or no valid moves are available for players.
  *
- * The loop continues until no valid moves are left or all penguins are placed.
- * @param gameState A pointer to the GameState structure containing the board dimensions.
+ * @param gameState A pointer to the GameState structure containing the current game state,
+ *                  including the board, players, and relevant game parameters.
  */
 void placementInteractiveMode(struct GameState *gameState);
 
@@ -56,29 +53,29 @@ bool canPlayerPlacePenguin(struct GameState *gameState);
 bool isEveryPenguinsPlaced(struct GameState *gameState);
 
 /**
- * @brief Checks if the penguin placement at the current coordinates is valid.
+ * @brief Validates if the current player's penguin placement is allowed on the board.
  *
- * Validates whether the current player's penguin can be placed on the board
- * at its current position. A placement is considered valid when the field
- * has exactly one fish and no other penguins are already occupying that field.
+ * This function checks whether the tile at the current player's intended placement
+ * coordinates is a valid location for placing a penguin. Validity is determined based
+ * on the rules that the tile must contain exactly one fish and no other penguins.
  *
- * @param gameState A pointer to the GameState structure containing information
- *                  about the board, players, and their positions.
- * @return Returns 1 if the placement is valid; otherwise, returns 0.
+ * @param gameState A pointer to the GameState structure containing the current state of the game,
+ *                  including the board, players, and game parameters.
+ * @return Returns true if the placement is valid (i.e., the tile contains exactly one fish),
+ *         and false otherwise.
  */
 bool isPlacementValid(struct GameState *gameState);
 
 /**
- * @brief Places a penguin for the current player on the game board.
+ * @brief Places a penguin for the current player on the specified board location.
  *
- * This function registers the placement of a penguin by the current player. It updates
- * the game board and player data to reflect the player's action and then proceeds to
- * adjust the penguin's position by invoking a helper function. This function assumes
- * that the game state contains the relevant information for the current board, players,
- * and penguins.
+ * Updates the game state by placing the current player's penguin on the selected
+ * and validated board coordinates. After placing the penguin, it adjusts the penguin's
+ * position in the game state and provides feedback about the placement. This function
+ * is typically called only after validating the placement location and the player's turn.
  *
- * @param gameState A pointer to the GameState structure containing the current state
- *                  of the game, including the board layout, players, and penguin positions.
+ * @param gameState A pointer to the GameState structure containing the current game state,
+ *                  including the board, players, and other game parameters.
  */
 void placePenguin(struct GameState *gameState);
 
