@@ -7,6 +7,14 @@
 #include "playerActions.h"
 
 
+void execute_player_move(struct GameState *gameState, int currentX, int currentY, int lastX, int lastY) {
+    gameState->Players[gameState->currentPlayer].x = currentX;
+    gameState->Players[gameState->currentPlayer].y = currentY;
+    gameState->Board[currentX][currentY].idPlayer = gameState->currentPlayer + 1;
+    gameState->Board[lastX][lastY].idPlayer = 0;
+    collectFish(gameState);
+    printf("Succesfule move was done!\n");
+}
 void autonomousMovement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]) {
     FILE *inputFile = openInputFileAndHandleError(inputFilePath);
     fclose(inputFile);
@@ -25,14 +33,6 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     writeBoardToFile(outputFile, gameState);
 
     fclose(outputFile);
-}
-void execute_player_move(struct GameState *gameState, int currentX, int currentY, int lastX, int lastY) {
-    gameState->Players[gameState->currentPlayer].x = currentX;
-    gameState->Players[gameState->currentPlayer].y = currentY;
-    gameState->Board[currentX][currentY].idPlayer = gameState->currentPlayer + 1;
-    gameState->Board[lastX][lastY].idPlayer = 0;
-    collectFish(gameState);
-    printf("Succesfule move was done!\n");
 }
 void movePenguinAutomaticli(struct GameState *gameState) {
     for (int x = 0; x < gameState->xBoardSize; ++x) {
