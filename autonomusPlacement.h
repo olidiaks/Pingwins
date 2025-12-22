@@ -21,25 +21,27 @@
 void countPenguins(struct GameState *gameState, int numOfPengiuns);
 
 /**
- * Handles the autonomous placement of penguins in the game.
- * Reads the game state from an input file, processes the input, and writes the updated state to an output file.
+ * Executes the autonomous placement phase in the game by reading the input file
+ * to initialize the game state, counting the penguins placed by the current player,
+ * and automatically placing remaining penguins on the board.
+ * The final board state is then written to the output file.
  *
- * @param gameState Pointer to the GameState structure representing the current state of the game.
- * @param inputFilePath Path to the input file containing the initial game data.
- * @param outputFilePath Path to the output file where the updated game state will be written.
- * @param nameOfUs Name of the current team executing the function.
- * @param num_of_penguins
+ * @param gameState Pointer to the GameState structure that holds the current state of the game.
+ * @param inputFilePath File path of the input file containing the initial game configuration.
+ * @param outputFilePath File path where the final game state will be written.
+ * @param nameOfUs The name of the current team performing the autonomous placement.
+ * @param num_of_penguins Array representing the number of penguins to be placed during this phase.
  */
 void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[],
                          char num_of_penguins[]);
 
 /**
- * Automatically places a penguin for the current player in the game.
- * This function randomly selects a position on the board and ensures the placement
- * is valid, following the game's rules for coordinate and placement validity.
+ * Places a penguin automatically for the current player on the board.
+ * The penguin is placed on the first available tile with exactly one fish.
+ * Updates the player's position and collects fish from the selected tile.
+ * If no suitable position is found, the game will terminate with an error.
  *
- * @param gameState Pointer to the GameState structure containing the current game state,
- * including the board, players, and gameplay-related parameters.
+ * @param gameState Pointer to the GameState structure representing the current state of the game.
  */
 void placePenguinAutomatically(struct GameState *gameState);
 #endif //PROJECT_AUTONOMUS_PLACEMENT_H
