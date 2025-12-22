@@ -17,61 +17,95 @@
 #include <stdbool.h>
 
 /**
- * This function handles the game's movement phase where players take turns moving penguins.
- * It continues looping until no more valid moves are available for any player.
- * For the current player, it processes moves until they have successfully moved or no more moves are available.
- * Each move involves displaying the board, prompting the player for coordinates, validating the move,
- * executing the move, and collecting any fish.
- * After the current player completes their moves, the turn passes to the next player.
- * @param gameState A pointer to the GameState structure containing the board dimensions.
+ * This function manages the interactive phase of the movement stage in the game.
+ * It iteratively handles the process of moving players' penguins until no valid
+ * moves are available for any player. For each turn, it ensures that the
+ * current player has an opportunity to select and move one of their penguins
+ * to a valid position on the board.
+ *
+ * During each player's turn, the function displays the game board and relevant
+ * movement-phase information. It provides prompts for the player to select a
+ * penguin and input the desired coordinates for moving it. Validation is performed
+ * on the provided coordinates and moves, ensuring they adhere to game rules and
+ * the board's constraints. If a move is invalid, the function prompts the player
+ * again for correct input.
+ *
+ * After successfully moving a penguin, the function updates the game state,
+ * including collecting fish, and rotates the play to the next player. The
+ * movement phase ends when no penguins have valid moves remaining.
+ *
+ * @param gameState A pointer to the GameState structure containing the current
+ *                  state of the game, including the board, players, and penguin
+ *                  positions.
  */
 void movementPhaseInteractiveMode(struct GameState *gameState);
 
 /**
- * This function determines if there are any penguin moves available for any player in the game.
- * For each player's penguins, it checks if there are adjacent fields on the board containing fish.
- * A valid move exists if at least one adjacent field in any direction (left, top, bottom, right)
- * has one or more fish.
+ * This function checks if there are any valid moves available for penguins on the board.
+ * It iterates through all players and their penguins to determine if any penguin
+ * has the option to move to an adjacent field with fish. The function stops checking
+ * further when it finds the first penguin with a valid move.
  *
- * The function iterates through all players and their penguins, examining the board dimensions
- * and the fish count in each adjacent field to validate the availability of a move.
- *
- * @param gameState A pointer to the GameState structure containing the board state, players,
- *                  and their respective penguins.
- * @return Returns true if at least one valid move is available; otherwise, returns false.
+ * @param gameState A pointer to the GameState structure containing the current
+ *                  state of the game, including the board, players, and penguin
+ *                  positions.
+ * @return A boolean-like integer value where 1 indicates that at least one penguin
+ *         has a valid move available, and 0 indicates that no valid moves remain
+ *         for any penguin.
  */
 bool isThereAnyPenguinMoveAvailable(struct GameState *gameState);
 
 /**
- * Checks if the current player is able to move any of their penguins.
- * A penguin can move if there are adjacent fields containing any fish.
- * The function iterates through all the penguins of the current player and
- * determines if at least one penguin has possible moves available.
+ * Determines if the current player is able to move any of their penguins to a
+ * valid position on the board. For each penguin belonging to the current player,
+ * it checks the adjacent tiles on the game board to see if there are available
+ * moves that follow the rules of the game.
  *
- * @param gameState A pointer to the GameState structure containing the current game's state,
- *                  including the board, players, and current player's data.
- * @return A boolean value indicating whether the current player can move any of their penguins.
- *         Returns true if at least one penguin has valid moves available, otherwise false.
+ * This function plays a critical role in managing game flow by verifying whether
+ * a player's turn can continue based on their ability to move at least one of
+ * their penguins to a new, valid position.
+ *
+ * @param gameState A pointer to the GameState structure containing the current
+ *                  state of the game, including information about the board,
+ *                  players, and penguin positions.
+ * @return A boolean value: true if the current player can move at least one of
+ *         their penguins to a valid position, false otherwise.
  */
 bool isPlayerAbleToMoveAnyPenguin(struct GameState *gameState);
 
 /**
- * This function moves the currently selected penguin for the active player
- * during their turn in the game's movement phase. It performs the necessary
- * updates to the penguin's position on the game board and logs the action.
+ * Handles the movement of a penguin in the game by updating its position on the
+ * board and reflecting those changes in the game state. This function removes
+ * the penguin from its current location, updates its position to the new coordinates,
+ * and displays feedback on the action.
  *
- * @param gameState A pointer to the GameState structure that maintains the
- *                  current state of the game, including player information,
- *                  board configuration, and penguin positions.
+ * The function uses the current player and their active penguin to determine
+ * which piece to move. After updating the position, the game board's state along
+ * with the player's penguin details are updated accordingly.
+ *
+ * @param gameState A pointer to the GameState structure containing the current
+ *                  state of the game. This includes the board, players, and
+ *                  information about their penguins.
  */
 void movePenguin(struct GameState *gameState);
 
 /**
- * Prompts the current player to select which penguin they want to move.
- * Ensures the selected penguin is valid and has at least one possible move available.
- * If the player's input is invalid or the selected penguin cannot move, the function retries until valid input is provided.
- * Updates the game state to reflect the selected penguin for the current player.
- * @param gameState A pointer to the GameState structure that contains the current board, players, and game setup details.
+ * This function prompts the current player to select a penguin to move during
+ * their turn in the movement phase. It ensures that the selected penguin is valid
+ * and able to perform at least one permissible move based on the current game state.
+ *
+ * The function queries the user for input, allowing them to specify which penguin
+ * they wish to move by its numeric identifier. Validation is performed to ensure
+ * the input corresponds to an existing penguin within the player's control. If the
+ * selected penguin cannot move (i.e., no valid moves available), the function prompts
+ * the user to choose another penguin.
+ *
+ * Iterative prompts ensure that only a valid, movable penguin is selected before
+ * proceeding. The function updates the game state by recording the selected penguin
+ * in the player's `currentPenguin` field within the `GameState` structure.
+ *
+ * @param gameState A pointer to the GameState structure containing information
+ *                  about the current state of the board, players, and penguins.
  */
 void askWhichPenguinMove(struct GameState *gameState);
 
