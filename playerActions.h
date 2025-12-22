@@ -14,55 +14,52 @@
 #include "GameState.h"
 
 /**
- * @brief Collects fish from the current position of the active player's penguin.
+ * @brief Collects fish for the current player based on their position on the board.
  *
- * This function updates the game state by adding the amount of fish from the
- * current position of the active player's penguin to their score. The corresponding
- * field on the board is reset to indicate that the fish have been collected. A message
- * is printed to indicate the action for the current player.
+ * This function adds the number of fish present on the tile where the current player's penguin
+ * is located to the player's total score. It then resets the number of fish on that tile to zero
+ * and displays a message indicating the fish collection event.
  *
- * @param gameState A pointer to the GameState structure that contains the current
- *                  game board, players' data, and game state information.
+ * @param gameState A pointer to the GameState structure that holds information about the board,
+ *                  the current player, and player data such as positions and scores.
  */
 void collectFish(struct GameState *gameState);
 
 /**
- * @brief Changes the current player in the game.
+ * @brief Switches the game to the next player's turn.
  *
- * This function updates the current player in the game state to the next player
- * in a round-robin fashion. It ensures that the turn rotates among all players
- * and prints the updated current player's information.
+ * This function updates the current player index in the game state to the next player in the
+ * turn order. The player index wraps around to the first player after the last player, ensuring
+ * cyclic turn management. It also displays a message indicating the new current player.
  *
- * @param gameState A pointer to the GameState structure containing the current player
- *                  and the number of players in the game.
+ * @param gameState A pointer to the GameState structure that holds information about the
+ *                  current player, total number of players, and other game-related data.
  */
 void changeCurrentPlayer(struct GameState *gameState);
 
 /**
- * @brief Handles input for coordinates during the game.
+ * @brief Prompts the player to enter coordinates and updates the current player's position.
  *
- * This function prompts the user to input coordinates for a specific action
- * (e.g., placing or moving a penguin). It validates the input, converts the
- * alphanumeric coordinates to numerical indices, and updates the current player's
- * position in the game state. The calculated coordinates are applied to the active
- * player's data within the GameState structure.
+ * This function interacts with the player to input coordinates for a desired action, such as
+ * placing or moving a penguin. It validates the provided coordinates and updates the current
+ * player's x and y positions in the GameState structure accordingly. If the input is invalid,
+ * the player's position is set to -1 for both x and y, signaling an error state.
  *
- * @param gameState A pointer to the GameState structure containing the current
- *                  game state, including the board and player data.
+ * @param gameState A pointer to the GameState structure containing the game board, players,
+ *                  and relevant game data.
  */
 void askCoordinates(struct GameState *gameState);
 
 /**
- * @brief Validates if the coordinates of the current player's penguin are within the game board boundaries.
+ * @brief Checks if the current player's coordinates are within the bounds of the game board.
  *
- * This function verifies that the x and y coordinates of the current penguin
- * are greater than zero and less than the dimensions of the game board. It ensures
- * that the coordinates are located within the playable area.
+ * This function validates whether the current player's x and y coordinates are within the
+ * dimensions of the game board. It ensures the coordinates are non-negative and less than
+ * the respective board size limits.
  *
- * @param gameState A pointer to the GameState structure that contains the current
- *                  game board, players' data, and game state information.
- * @return True if the coordinates are valid, i.e., within the boundaries of the game board;
- *         otherwise, false.
+ * @param gameState A pointer to the GameState structure that contains the board dimensions,
+ *                  player data, and current player information.
+ * @return True if the coordinates are valid, i.e., within the board's bounds; false otherwise.
  */
 bool isCoordinateValid(struct GameState *gameState);
 
@@ -93,17 +90,17 @@ void changePenguinPosition(struct GameState *gameState);
 void changeCurrentPenguin(struct GameState *gameState);
 
 /**
- * @brief Validates if the current player's desired move is valid.
+ * @brief Validates whether a player's attempted penguin movement is legal based on the game rules.
  *
- * This function checks whether the move made by the current player adheres to the rules
- * of the game. Valid moves must be in a straight horizontal or vertical line and cannot
- * pass over or end on tiles that have no fish. The function uses the current game state
- * to determine the validity of the move.
+ * This function checks if the requested movement for the current player's selected penguin adheres
+ * to the game rules. It ensures that:
+ * - The movement is either horizontal or vertical, not diagonal.
+ * - The destination tile contains fish and is free of other penguins.
+ * - The path to the destination tile is clear and does not cross any empty tiles.
  *
- * @param gameState A pointer to the GameState structure containing the current state
- *                  of the game, including the board, players' data, and active player's
- *                  information.
- * @return A boolean value indicating whether the move is valid (true) or invalid (false).
+ * @param gameState A pointer to the GameState structure that contains the current state of the game,
+ *                  including the board, player data, and penguin positions.
+ * @return true if the move is valid, false otherwise.
  */
 bool isMoveValid(struct GameState *gameState);
 
@@ -117,6 +114,6 @@ bool isMoveValid(struct GameState *gameState);
  * @param x A pointer to the first integer.
  * @param y A pointer to the second integer.
  */
-void swapSmallerBiggerNumbers(int *x, int *y);
+void swapSmallerWithBiggerNumbers(int *x, int *y);
 
 #endif //PROJECT_PLAYERACTIONS_H
