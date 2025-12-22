@@ -12,15 +12,15 @@
 
 
 /**
- * @brief Reads and validates the dimensions of the game board.
+ * @brief Reads and validates the dimensions of the game board from user input.
  *
- * This function prompts the user to input the dimensions of the game board
- * and ensures the input consists of two valid integers. It repeatedly asks
- * for valid input until correct values are provided. The validity of the
- * dimensions is determined by the isBoardDimensionsValid function.
+ * This function prompts the user to input the dimensions (number of rows and columns)
+ * for the game board. It verifies that the provided dimensions are positive integers
+ * using the isBoardDimensionsValid function. If the input is invalid, the function
+ * displays an error message and prompts the user again until valid input is provided.
  *
- * The dimensions are stored in the global GameState structure.
- * @param gameState A pointer to the GameState structure containing the board dimensions.
+ * @param gameState A pointer to the GameState structure where the board dimensions
+ * will be stored.
  */
 void readBoardDimensions(struct GameState *gameState);
 
@@ -36,31 +36,28 @@ void readBoardDimensions(struct GameState *gameState);
 bool isBoardDimensionsValid(struct GameState *gameState);
 
 /**
- * @brief Generates a random game board and initializes each field.
+ * @brief Generates a random game board and initializes its fields.
  *
- * This function dynamically allocates memory for the game board
- * based on the dimensions specified in the GameState structure
- * (xBoardSize and yBoardSize). It then initializes each field
- * on the board with a random number of fish and sets the player ID to -1
- * (indicating no player is present in that field).
+ * This function allocates memory and populates the game board represented by a 2D array
+ * of Field structures. Each field on the board is initialized with default values
+ * and a random amount of fish (1, 2, or 3) based on defined probabilities.
+ * If memory allocation fails at any point, the program exits with an error message.
  *
- * @param gameState Pointer to the GameState structure that holds the
- *        board dimensions and other game-related information. The function
- *        modifies the GameState to include the newly generated board.
+ * @param gameState A pointer to the GameState structure containing the board size
+ * (xBoardSize and yBoardSize) and where the generated board will be stored.
  */
 void generateBoard(struct GameState* gameState);
 
 /**
- * @brief Generates a random game board and initializes each field.
+ * @brief Initializes the game board with void fields.
  *
- * This function dynamically allocates memory for the game board
- * based on the dimensions specified in the GameState structure
- * (xBoardSize and yBoardSize). It then initializes each field
- * in a way to indicate clear, empty field.
+ * Allocates memory for a 2D game board based on the specified dimensions in the
+ * GameState structure. Each field on the board is initialized with default values,
+ * representing an empty state: no player, no penguin, and zero fish. If memory allocation
+ * fails at any stage, the program will terminate, reporting an error.
  *
- * @param gameState Pointer to the GameState structure that holds the
- *        board dimensions and other game-related information. The function
- *        modifies the GameState to include the newly generated board.
+ * @param gameState A pointer to the GameState structure containing the board dimensions
+ * (xBoardSize and yBoardSize) and a pointer to the allocated board where it will be stored.
  */
 void generateVoidBoard(struct GameState* gameState);
 
