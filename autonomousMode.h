@@ -14,6 +14,21 @@
 
 #include "GameState.h"
 
+/**
+ * Writes the current board state and player information to a specified file.
+ *
+ * The function outputs the board dimensions, the state of each field on the board
+ * (including the amount of fish and player-related data), and player information
+ * such as names, IDs, and scores. The data is written in a structured format
+ * that can later be parsed to recreate the game state.
+ *
+ * @param outputFile A pointer to the file where the board state will be written.
+ *                   Must be a valid file pointer.
+ * @param gameState  A pointer to the GameState structure containing the board,
+ *                   players, and other relevant game information to be written to the file.
+ */
+void writeBoardToFile(FILE *outputFile, struct GameState *gameState);
+
 
 
 /**

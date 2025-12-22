@@ -6,34 +6,6 @@
 
 #include "playerActions.h"
 
-void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
-    if (outputFile == NULL) {
-        fprintf(stderr, "Error: Invalid file pointer or game state.\n");
-        return;
-    }
-
-    fprintf(outputFile, "%d %d\n", gameState->xBoardSize, gameState->yBoardSize);
-
-    for (int i = 0; i < gameState->xBoardSize; i++) {
-        for (int j = 0; j < gameState->yBoardSize; j++) {
-            struct Field currentField = gameState->Board[i][j];
-
-            fprintf(outputFile, "%d%d ", currentField.amountOfFish, currentField.idPlayer);
-        }
-
-        fprintf(outputFile, "\n");
-    }
-
-    printf("Enumerating players, plr count: %d\n", gameState->numOfPlayers);
-    for (int k = 0; k < 9; k++) {
-
-        int displayID = k + 1;
-        if (gameState->Players[k].name != NULL) {
-            fprintf(outputFile, "%s %d %d\n", gameState->Players[k].name, displayID,
-                    gameState->Players[k].currentScore);
-        }
-    }
-}
 
 void autonomousMovement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]) {
     FILE *inputFile = openInputFileAndHandleError(inputFilePath);
