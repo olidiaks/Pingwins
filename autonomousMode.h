@@ -11,57 +11,61 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include "boardGeneration.h"
+#include "loadValidator.h"
+#include "main.h"
 
 #include "GameState.h"
 
 /**
- * Writes the current board state and player information to a specified file.
+ * Writes the current game state, including board configuration and player details, to an output file.
  *
- * The function outputs the board dimensions, the state of each field on the board
- * (including the amount of fish and player-related data), and player information
- * such as names, IDs, and scores. The data is written in a structured format
- * that can later be parsed to recreate the game state.
+ * The function processes the game board dimensions, the board fields (amount of fish and player ID),
+ * and enumerates player details such as their name, score, and identifier. The output is formatted
+ * into the specified file, preserving the structure needed for subsequent processing or review.
  *
- * @param outputFile A pointer to the file where the board state will be written.
- *                   Must be a valid file pointer.
- * @param gameState  A pointer to the GameState structure containing the board,
- *                   players, and other relevant game information to be written to the file.
+ * If the output file pointer is null, an error message is printed to `stderr`, and the function returns
+ * without attempting to write.
+ *
+ * @param outputFile A pointer to the file where the game state will be written. The file must already
+ *                   be open and writable.
+ * @param gameState A pointer to the GameState structure that contains the game data to be written.
+ *                  This includes board dimensions, board state, and player information.
  */
 void writeBoardToFile(FILE *outputFile, struct GameState *gameState);
 
 
-
 /**
- * Opens an output file in write mode, checks for errors, and handles them appropriately.
+ * Opens an output file at the specified file path for writing. If the file cannot be opened,
+ * the function displays an error message and terminates the program.
  *
- * If the file cannot be opened (e.g., due to an incorrect path or insufficient
- * permissions), the function will print an error message and terminate the program
- * with an exit code of 3.
+ * This function attempts to create or open the specified file in write mode. If any issue occurs
+ * (e.g., incorrect path or insufficient permissions), an error message is printed, and the program exits
+ * with an error code. The returned file pointer allows subsequent writing operations to the file.
  *
- * @param filePath The name or path of the output file to be opened.
- * @return A pointer to the opened output file.
- * @throws Exits the program on error with exit code 3, and prints an error message.
+ * @param filePath A pointer to a character string representing the full path of the output file to open.
+ *                 The path should be valid and writable by the program.
+ * @return A pointer to the opened FILE object. If the function cannot open the file, the
+ *         program exits before returning.
  */
 FILE *openOutputFileAndHandleError(char *filePath);
 
 /**
- * Opens an input file in read mode, validates its content for correctness, and handles errors appropriately.
+ * Opens an input file and performs a series of validation checks to ensure its correctness.
  *
- * This function ensures that the input file:
- * 1. Exists and can be successfully opened.
- * 2. Has a valid header with the correct dimensions.
- * 3. Has matching dimensions for the reported size.
- * 4. Maintains rectangular consistency in its structure.
- * 5. Abides by the zero placement constraint.
+ * The function attempts to open the provided file path for reading. If the file cannot be opened,
+ * an error message is printed, and the program exits with an error code. After opening the file,
+ * a sequence of validation checks is performed to verify the file's integrity and ensure compliance
+ * with the expected structure and constraints.
  *
- * If any of these checks fail, the function will print an error message and terminate the program
- * with an appropriate exit code:
- * - Exit code 3: Failed to open the file.
- * - Exit code 2: File structure or content validation issues.
+ * If any of the validation checks fail, appropriate error messages are printed to `stderr`,
+ * and the program exits with an error code. Successful validation results in the return
+ * of the opened file pointer.
  *
- * @param filePath The path to the input file to be opened and validated.
- * @return A pointer to the opened and validated input file.
- * @throws Exits the program with an error code and prints an appropriate error message upon failure.
+ * @param filePath The path to the input file to be opened and validated. This should point to
+ *                 a valid, readable file.
+ * @return A pointer to the opened file, ensuring it has passed all validation checks.
+ *         If the validation fails or the file cannot be opened, the program terminates.
  */
 FILE *openInputFileAndHandleError(char *filePath);
 

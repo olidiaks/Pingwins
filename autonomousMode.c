@@ -4,9 +4,35 @@
 
 #include "autonomousMode.h"
 
-#include "boardGeneration.h"
-#include "loadValidator.h"
-#include "main.h"
+
+void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
+    if (outputFile == NULL) {
+        fprintf(stderr, "Error: Invalid file pointer or game state.\n");
+        return;
+    }
+
+    fprintf(outputFile, "%d %d\n", gameState->xBoardSize, gameState->yBoardSize);
+
+    for (int i = 0; i < gameState->xBoardSize; i++) {
+        for (int j = 0; j < gameState->yBoardSize; j++) {
+            struct Field currentField = gameState->Board[i][j];
+
+            fprintf(outputFile, "%d%d ", currentField.amountOfFish, currentField.idPlayer);
+        }
+
+        fprintf(outputFile, "\n");
+    }
+
+    printf("Enumerating players, plr count: %d\n", gameState->numOfPlayers);
+    for (int k = 0; k < 9; k++) {
+
+        int displayID = k + 1;
+        if (gameState->Players[k].name != NULL) {
+            fprintf(outputFile, "%s %d %d\n", gameState->Players[k].name, displayID,
+                    gameState->Players[k].currentScore);
+        }
+    }
+}
 
 FILE *openOutputFileAndHandleError(char *filePath) {
     printf("%s\n", filePath);
@@ -16,7 +42,7 @@ FILE *openOutputFileAndHandleError(char *filePath) {
                "permission for access.\n");
         exit(3);
     }
-    //printf("The output file created as %s\n", filePath);
+    // printf("The output file created as %s\n", filePath);
     return output_file;
 }
 
@@ -94,6 +120,9 @@ char readFile(FILE *givenFile, struct GameState *gameState) {
     }
 }
 
+
+
+//TODO: Merge with read files.
 bool loadPlayers(struct GameState *game_state, FILE *input_file) {
     char buffer[256];
     bool isUsOnList = false;
@@ -128,7 +157,8 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
 
         int fscanfStatus = fscanf(input_file, "%ms %d %d", &name, &id, &score);
 
-        if (fscanfStatus == EOF) break;
+        if (fscanfStatus == EOF)
+            break;
 
         if (fscanfStatus != 3) {
             printf("Error: Invalid player format.\n");
@@ -175,34 +205,4 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
 
     printf("Successfully loaded %d players.\n", game_state->numOfPlayers);
     return true;
-}
-
-
-void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
-    if (outputFile == NULL) {
-        fprintf(stderr, "Error: Invalid file pointer or game state.\n");
-        return;
-    }
-
-    fprintf(outputFile, "%d %d\n", gameState->xBoardSize, gameState->yBoardSize);
-
-    for (int i = 0; i < gameState->xBoardSize; i++) {
-        for (int j = 0; j < gameState->yBoardSize; j++) {
-            struct Field currentField = gameState->Board[i][j];
-
-            fprintf(outputFile, "%d%d ", currentField.amountOfFish, currentField.idPlayer);
-        }
-
-        fprintf(outputFile, "\n");
-    }
-
-    printf("Enumerating players, plr count: %d\n", gameState->numOfPlayers);
-    for (int k = 0; k < 9; k++) {
-
-        int displayID = k + 1;
-        if (gameState->Players[k].name != NULL) {
-            fprintf(outputFile, "%s %d %d\n", gameState->Players[k].name, displayID,
-                    gameState->Players[k].currentScore);
-        }
-    }
 }
