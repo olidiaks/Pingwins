@@ -121,4 +121,29 @@ void init();
  */
 void askInitQuestions();
 
+/**
+ * Creates a deep copy of the given game state.
+ *
+ * This function duplicates the entire structure of the game state, including all nested fields,
+ * players, penguins, and the game board. It ensures that changes made to the cloned game state
+ * do not affect the original game state and vice versa.
+ *
+ * Parameters:
+ * - gameState: A pointer to the `GameState` structure to be cloned. The input must be a valid
+ *              and fully initialized `GameState` instance.
+ *
+ * Returns:
+ * - A pointer to a new `GameState` structure that is a complete deep copy of the input game state.
+ *   Memory for the new structure and its associated sub-structures is dynamically allocated.
+ *   The caller is responsible for freeing this memory when it is no longer needed.
+ *
+ * Notes:
+ * - The function dynamically allocates memory for players, the game board, and penguins.
+ *   Ensure that proper memory management is done to deallocate the resources when no longer
+ *   in use to prevent memory leaks.
+ * - The structure returned by this function is independent of the original, and modifications
+ *   to one will not affect the other.
+ */
+struct GameState *deepCloneGameState(struct GameState *gameState);
+
 #endif // PROJECT_GAMESTRUCTURE_H
