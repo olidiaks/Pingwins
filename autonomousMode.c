@@ -75,7 +75,6 @@ FILE *openInputFileAndHandleError(char *filePath) {
         printf("Error opening output file\nCritical placement error.\n");
         exit(2);
     }
-
     return inputFile;
 }
 
