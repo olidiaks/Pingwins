@@ -4,6 +4,8 @@
 
 #include "autonomusMovement.h"
 
+#include <limits.h>
+
 #include "moveGen.h"
 #include "playerActions.h"
 #include <math.h>
@@ -64,60 +66,61 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     fclose(outputFile);
 }
 
-void calculateBestMove(struct GameState *gameState, int depth) {
-    int bestScore = -INFINITY;
-    //struct Move bestMove = // change to struct Move
-    //cloneGameState(gameState);
-    //makeMoveSilent(altGameState);
-    //alphaBeta(altGameState,1,0,0,false);
-    // if (score > bestScore) {
-    //     bestScore = score;
-    //     bestMove[0] =
-    // }
-    //freeGameState();
-    //return bestMove;
+struct Move calculateBestMove(struct GameState *gameState, int depth) {
+    struct Move bestMove;
+    for (int i = 0;i < isMoveValidExtended(gameState, gameState->currentPlayer,gameState->Players[gameState->currentPlayer].currentPenguin,0,0);i++) {
+        struct GameState *gameStateCopy = deepCloneGameState(gameState);
+        movePenguin(gameStateCopy);
+        int score = evaluateBoard(gameStateCopy);
+        alphaBeta(gameStateCopy,depth,INT_MAX,INT_MIN,false);
+        if (score > bestMove.moveValue) {
+            bestMove.moveValue = score;
+        }
+        //freeGameState();
+    }
+    return bestMove;
 
 }
 
 void alphaBeta(struct GameState *game_state, int depth, int alpha, int beta, bool isMax) {
     float maxEval;
     float minEval;
-    if (depth == 0 || ) {
-        return evaluateBoard();
-    }
-    else {
-        generateAllLegalMoves();
-        if (isMax) { //opponent turn
-            isMax = true;
-            maxEval = -INFINITY;
-            //for loop going by every possible move generated above
-                //clone state
-                //make a move
-                alphaBeta(game_state, depth +1, alpha, beta, false);
-                //delete clone
-                //update maxEval if the move is better
-                // update alpha max(alpha,score)
-                if (beta <= alpha) {
-                    break;
-            }
-            return maxEval;
-        }
-        else { //our turn
-            isMax = false;
-            minEval = HUGE_VAL;
-            //for loop going by every possible move generated above
-                //clone state
-                //make a move
-                alphaBeta(game_state, depth +1, alpha, beta, true);
-                //delete clone
-                //update maxEval if the move is better
-                // update beta min(beta,score)
-                if (beta <= alpha) {
-                    break;
-                }
-            return minEval;
-        }
-
-    }
+    // if (depth == 0 || ) {
+    //     return evaluateBoard();
+    // }
+    // else {
+    //     generateAllLegalMoves();
+    //     if (isMax) { //opponent turn
+    //         isMax = true;
+    //         maxEval = INT_MIN;
+    //         //for loop going by every possible move generated above
+    //             //clone state
+    //             //make a move
+    //             alphaBeta(game_state, depth +1, alpha, beta, false);
+    //             //delete clone
+    //             //update maxEval if the move is better
+    //             // update alpha max(alpha,score)
+    //             if (beta <= alpha) {
+    //                 break;
+    //         }
+    //         return maxEval;
+    //     }
+    //     else { //our turn
+    //         isMax = false;
+    //         minEval = INT_MAX;
+    //         //for loop going by every possible move generated above
+    //             //clone state
+    //             //make a move
+    //             alphaBeta(game_state, depth +1, alpha, beta, true);
+    //             //delete clone
+    //             //update maxEval if the move is better
+    //             // update beta min(beta,score)
+    //             if (beta <= alpha) {
+    //                 break;
+    //             }
+    //         return minEval;
+    //     }
+    //
+    // }
 
 }
