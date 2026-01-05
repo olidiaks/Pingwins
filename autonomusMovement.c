@@ -57,9 +57,11 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     inputFile = fopen(inputFilePath, "r");
     loadPlayers(gameState, inputFile);
     fclose(inputFile);
-
-    //movePenguinAutomatically(gameState);
-    // apply bot movement and evaluation
+    //printf("closed file\n");
+    struct Move bestMove = calculateBestMove(gameState,20);
+    gameState->Players[gameState->currentPlayer].x= bestMove.toX;
+    gameState->Players[gameState->currentPlayer].y= bestMove.toY;
+    movePenguin(gameState);
 
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
     writeBoardToFile(outputFile, gameState);
