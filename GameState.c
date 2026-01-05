@@ -33,7 +33,6 @@ void askInitQuestions() {
     }
     gameState.numOfPlayers = numOfPlayers;
 
-
     printf("How many penguins should each player have?: (from 1 to 9)\n");
     while (!scanf("%d", &gameState.numOfPenguinsPerPlayer) || gameState.numOfPenguinsPerPlayer < 1 ||
            gameState.numOfPenguinsPerPlayer > 9) {
