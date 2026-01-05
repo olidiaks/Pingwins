@@ -35,8 +35,31 @@ void askInitQuestions() {
 
 
     printf("How many penguins should each player have?: (from 1 to 9)\n");
-    while (!scanf("%d", &gameState.numOfPenguinsPerPlayer) || gameState.numOfPenguinsPerPlayer < 1 || gameState.
-           numOfPenguinsPerPlayer > 9) {
+    while (!scanf("%d", &gameState.numOfPenguinsPerPlayer) || gameState.numOfPenguinsPerPlayer < 1 ||
+           gameState.numOfPenguinsPerPlayer > 9) {
         printf("Please enter a number between 1 and 9.\n");
     }
+}
+
+struct GameState *deepCloneGameState(struct GameState *gameState) {
+    struct GameState copyOfGameState;
+    copyOfGameState.teamName = gameState->teamName;
+    copyOfGameState.currentPlayer = gameState->currentPlayer;
+    copyOfGameState.numOfPlayers = gameState->numOfPlayers;
+    copyOfGameState.numOfPenguinsPerPlayer = gameState->numOfPenguinsPerPlayer;
+    copyOfGameState.xBoardSize = gameState->xBoardSize;
+    copyOfGameState.yBoardSize = gameState->yBoardSize;
+    copyOfGameState.Board = malloc(gameState->xBoardSize * sizeof(struct Field *));
+    for (int x = 0; x < gameState->xBoardSize; x++) {
+        copyOfGameState.Board[x] = malloc(gameState->yBoardSize * sizeof(struct Field));
+        for (int y = 0; y < gameState->yBoardSize; y++) {
+            struct Field *copyTile = &gameState->Board[x][y];
+            struct Field *oldTile = &gameState->Board[x][y];
+            copyTile->amountOfFish = oldTile->amountOfFish;
+            copyTile->idPlayer = oldTile->idPlayer;
+            copyTile->idPenguin = oldTile->idPenguin;
+        }
+    }
+
+    return &copyOfGameState;
 }
