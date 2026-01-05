@@ -121,7 +121,6 @@ char readFile(FILE *givenFile, struct GameState *gameState) {
 }
 
 
-// TODO: Merge with read files.
 bool loadPlayers(struct GameState *game_state, FILE *input_file) {
     char buffer[256];
     bool isUsOnList = false;
