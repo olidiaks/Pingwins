@@ -100,8 +100,15 @@ char readFile(FILE *givenFile, struct GameState *gameState) {
             int colIndex = 0;
 
             while (token != NULL && colIndex < cols) {
-                gameState->Board[counter - 1][colIndex].amountOfFish = atoi(token) / 10;
-                gameState->Board[counter - 1][colIndex].idPlayer = atoi(token) % 10;
+                int amountOfFish = atoi(token) / 10;
+                gameState->Board[counter - 1][colIndex].amountOfFish = amountOfFish;
+                int idPlayer = atoi(token) % 10;
+                gameState->Board[counter - 1][colIndex].idPlayer = idPlayer;
+
+                struct Player *player = &gameState->Players[idPlayer];
+                struct Penguin *penguin = &player->penguins[player->currentPenguin];
+                penguin->x = counter - 1;
+                penguin->y = colIndex;
 
                 colIndex++;
                 token = strtok(NULL, delimiters);
@@ -173,6 +180,7 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
         int idx = id - 1;
         game_state->Players[idx].name = name;
         game_state->Players[idx].currentScore = score;
+        game_state->Players[idx].currentPenguin = 0;
         occupiedIDs[idx] = 1;
         game_state->numOfPlayers++;
 
@@ -196,6 +204,7 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
 
         game_state->Players[availIdx].name = strdup(game_state->teamName);
         game_state->Players[availIdx].currentScore = 0;
+        game_state->Players[availIdx].currentPenguin = 0;
         game_state->currentPlayer = availIdx;
         game_state->numOfPlayers++;
     }
