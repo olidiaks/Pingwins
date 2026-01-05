@@ -7,7 +7,7 @@
 #include "playerActions.h"
 
 
-void execute_player_move(struct GameState *gameState, int currentX, int currentY, int lastX, int lastY) {
+void executePlayerMove(struct GameState *gameState, int currentX, int currentY, int lastX, int lastY) {
     gameState->Players[gameState->currentPlayer].x = currentX;
     gameState->Players[gameState->currentPlayer].y = currentY;
     gameState->Board[currentX][currentY].idPlayer = gameState->currentPlayer + 1;
@@ -34,24 +34,24 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
 
     fclose(outputFile);
 }
-void movePenguinAutomaticli(struct GameState *gameState) {
+void movePenguinAutomatically(struct GameState *gameState) {
     for (int x = 0; x < gameState->xBoardSize; ++x) {
         for (int y = 0; y < gameState->yBoardSize; ++y) {
             if (gameState->Board[x][y].idPlayer == gameState->currentPlayer + 1) {
                 if (x > 0 && gameState->Board[x - 1][y].amountOfFish > 0) {
-                    execute_player_move(gameState, x - 1, y, x, y);
+                    executePlayerMove(gameState, x - 1, y, x, y);
                     return;
                 }
                 if (x < gameState->xBoardSize - 1 && gameState->Board[x + 1][y].amountOfFish > 0) {
-                    execute_player_move(gameState, x + 1, y, x, y);
+                    executePlayerMove(gameState, x + 1, y, x, y);
                     return;
                 }
                 if (y > 0 && gameState->Board[x][y - 1].amountOfFish > 0) {
-                    execute_player_move(gameState, x, y - 1, x, y);
+                    executePlayerMove(gameState, x, y - 1, x, y);
                     return;
                 }
                 if (y < gameState->yBoardSize - 1 && gameState->Board[x][y + 1].amountOfFish > 0) {
-                    execute_player_move(gameState, x, y + 1, x, y);
+                    executePlayerMove(gameState, x, y + 1, x, y);
                     return;
                 }
             }

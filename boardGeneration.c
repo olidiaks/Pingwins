@@ -37,15 +37,15 @@ void generateBoard(struct GameState *gameState) {
 
                     const int ceil = 100;
                     int randNum = rand() % ceil;
-                    const int step3 = 10;
-                    const int step2 = 30;
-                    const int step1 = ceil;
+                    const int chanceFor3Fish = 10;
+                    const int chanceFor2Fish = 30;
+                    const int chanceFor1Fish = ceil;
 
-                    if (randNum < step3) {
+                    if (randNum < chanceFor3Fish) {
                         gameState->Board[x][y].amountOfFish = 3;
-                    } else if (randNum < step2) {
+                    } else if (randNum < chanceFor2Fish) {
                         gameState->Board[x][y].amountOfFish = 2;
-                    } else if (randNum < step1) {
+                    } else if (randNum < chanceFor1Fish) {
                         gameState->Board[x][y].amountOfFish = 1;
                     }
                 }
