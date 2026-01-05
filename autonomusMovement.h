@@ -68,6 +68,6 @@ void movePenguinAutomatically(struct GameState *gameState);
 struct Move calculateBestMove(struct GameState *gameState, int depth);
 
 //needs comment
-void alphaBeta(struct GameState *game_state, int depth, int alpha, int beta, bool isMax);
+int alphaBeta(struct GameState *game_state, int depth, int alpha, int beta, bool isMax);
 
 #endif // PROJECT_AUTONOMUSMOVEMENT_H

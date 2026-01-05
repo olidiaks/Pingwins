@@ -68,7 +68,7 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
 
 struct Move calculateBestMove(struct GameState *gameState, int depth) {
     struct Move bestMove;
-    for (int i = 0;i < isMoveValidExtended(gameState, gameState->currentPlayer,gameState->Players[gameState->currentPlayer].currentPenguin,0,0);i++) {
+    for (int i = 0;i < isMoveValidExtended(gameState, gameState->currentPlayer,gameState->Players[gameState->currentPlayer].currentPenguin,0,0);i++) { //all possible moves
         struct GameState *gameStateCopy = deepCloneGameState(gameState);
         movePenguin(gameStateCopy);
         int score = evaluateBoard(gameStateCopy);
@@ -76,51 +76,60 @@ struct Move calculateBestMove(struct GameState *gameState, int depth) {
         if (score > bestMove.moveValue) {
             bestMove.moveValue = score;
         }
-        //freeGameState();
+        freeGameState(gameStateCopy);
     }
     return bestMove;
 
 }
 
-void alphaBeta(struct GameState *game_state, int depth, int alpha, int beta, bool isMax) {
+int alphaBeta(struct GameState *game_state, int depth, int alpha, int beta, bool isMax) {
     float maxEval;
     float minEval;
-    // if (depth == 0 || ) {
-    //     return evaluateBoard();
-    // }
-    // else {
-    //     generateAllLegalMoves();
-    //     if (isMax) { //opponent turn
-    //         isMax = true;
-    //         maxEval = INT_MIN;
-    //         //for loop going by every possible move generated above
-    //             //clone state
-    //             //make a move
-    //             alphaBeta(game_state, depth +1, alpha, beta, false);
-    //             //delete clone
-    //             //update maxEval if the move is better
-    //             // update alpha max(alpha,score)
-    //             if (beta <= alpha) {
-    //                 break;
-    //         }
-    //         return maxEval;
-    //     }
-    //     else { //our turn
-    //         isMax = false;
-    //         minEval = INT_MAX;
-    //         //for loop going by every possible move generated above
-    //             //clone state
-    //             //make a move
-    //             alphaBeta(game_state, depth +1, alpha, beta, true);
-    //             //delete clone
-    //             //update maxEval if the move is better
-    //             // update beta min(beta,score)
-    //             if (beta <= alpha) {
-    //                 break;
-    //             }
-    //         return minEval;
-    //     }
-    //
-    // }
-
+    if (depth == 0 || isAnyMoveForCurrentPenguinAvailable(game_state)) {
+        return evaluateBoard(game_state);
+    }
+    else {
+        //generateAllLegalMoves();
+        if (isMax) { //opponent turn
+            isMax = true;
+            maxEval = INT_MIN;
+            for (int i = 0;i < isMoveValidExtended(gameState, gameState.currentPlayer,gameState.Players[gameState.currentPlayer].currentPenguin,0,0);i++) {
+                struct GameState *gameStateCopy = deepCloneGameState(game_state);
+                movePenguin(gameStateCopy);
+                alphaBeta(gameStateCopy, depth +1, alpha, beta, false);
+                if (maxEval > evaluateBoard(gameStateCopy)) {
+                    maxEval = evaluateBoard(gameStateCopy);
+                }
+                freeGameState(gameStateCopy);
+                if (alpha > maxEval) {
+                    alpha = maxEval;
+                }
+                if (beta <= alpha) {
+                    break;
+                }
+            }
+            return maxEval;
+        }
+        else {
+            //our turn
+            isMax = false;
+            minEval = INT_MAX;
+            for (int i = 0;i < isMoveValidExtended(gameState, gameState.currentPlayer,gameState->Players[gameState->currentPlayer].currentPenguin,0,0);i++) {
+                struct GameState *gameStateCopy = deepCloneGameState(game_state);
+                movePenguin(gameStateCopy);
+                alphaBeta(game_state, depth +1, alpha, beta, true);
+                if (minEval < evaluateBoard(gameStateCopy)) {
+                    minEval = evaluateBoard(gameStateCopy);
+                }
+                freeGameState(gameStateCopy);
+                if (beta < minEval) {
+                    beta = minEval;
+                }
+                if (beta <= alpha) {
+                    break;
+                }
+                return minEval;
+            }
+        }
+    }
 }
