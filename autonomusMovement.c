@@ -49,12 +49,13 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     FILE *inputFile = openInputFileAndHandleError(inputFilePath);
     fclose(inputFile);
 
-    inputFile = fopen(inputFilePath, "r");
-    loadPlayers(gameState, inputFile);
-    fclose(inputFile);
 
     inputFile = fopen(inputFilePath, "r");
     readFile(inputFile, gameState);
+    fclose(inputFile);
+
+    inputFile = fopen(inputFilePath, "r");
+    loadPlayers(gameState, inputFile);
     fclose(inputFile);
 
     struct Move bestMove = calculateBestMove(gameState, 20);

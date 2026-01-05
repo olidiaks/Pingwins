@@ -105,9 +105,13 @@ char readFile(FILE *givenFile, struct GameState *gameState) {
                 int idPlayer = atoi(token) % 10;
                 gameState->Board[counter - 1][colIndex].idPlayer = idPlayer;
 
-                gameState->Players[idPlayer].penguins[gameState->Players[idPlayer].currentPenguin].x = counter - 1;
-                gameState->Players[idPlayer].penguins[gameState->Players[idPlayer].currentPenguin].y = colIndex;
-                gameState->Players[idPlayer].currentPenguin++;
+                // if (gameState->Players[idPlayer].currentPenguin >= gameState->numOfPenguinsPerPlayer) {
+                //     break;
+                // }
+                //
+                // gameState->Players[idPlayer].penguins[gameState->Players[idPlayer].currentPenguin].x = counter - 1;
+                // gameState->Players[idPlayer].penguins[gameState->Players[idPlayer].currentPenguin].y = colIndex;
+                // gameState->Players[idPlayer].currentPenguin++;
                 colIndex++;
                 token = strtok(NULL, delimiters);
             }
@@ -179,7 +183,7 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
         game_state->Players[idx].name = name;
         game_state->Players[idx].currentScore = score;
         game_state->Players[idx].currentPenguin = 0;
-        game_state->Players[idx].penguins = malloc(game_state->numOfPenguinsPerPlayer * sizeof(struct Penguin));
+        game_state->Players[idx].penguins = malloc(game_state->numOfPenguinsPerPlayer * sizeof(struct Penguin) * 10);
         if (game_state->Players[idx].penguins == NULL) {
             printf("Not enough memory.\nFailed to allocate memory for penguins.\n");
             exit(3);
