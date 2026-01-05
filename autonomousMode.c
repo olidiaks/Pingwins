@@ -181,6 +181,11 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
         game_state->Players[idx].name = name;
         game_state->Players[idx].currentScore = score;
         game_state->Players[idx].currentPenguin = 0;
+        game_state->Players[idx].penguins = malloc(game_state->numOfPenguinsPerPlayer * sizeof(struct Penguin));
+        if (game_state->Players[idx].penguins == NULL) {
+            printf("Not enough memory.\nFailed to allocate memory for penguins.\n");
+            exit(3);
+        }
         occupiedIDs[idx] = 1;
         game_state->numOfPlayers++;
 
