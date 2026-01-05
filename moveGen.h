@@ -19,8 +19,12 @@ struct Move {
     int moveValue;
 };
 
+int isTileFree(struct GameState *gs, int x, int y);
+
+int isMoveValidExtended(struct GameState *gs, int playerId, int penguinIndex, int x, int y);
+
 int evaluateBoard(struct GameState *gs);
 
-Move* generateAllLegalMoves(struct GameState *gs, int *count);
+//struct Move* generateAllLegalMoves(struct GameState *gs, int *count, int playerId); // count = table len
 
 #endif //PROJECT_MOVEGEN_H
