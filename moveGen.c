@@ -61,7 +61,7 @@ int evaluateBoard(struct GameState *gs) {
                 int penguinPositionX = gs->Players[i].penguins[penguinIndex].x;
                 int penguinPositionY = gs->Players[i].penguins[penguinIndex].y;
 
-                ownPossibleMoves += isMoveValidExtended(gs, i, penguinIndex, penguinPositionX, penguinPositionY);
+                ownPossibleMoves += getAllPossibleMoves(gs, i, penguinIndex, penguinPositionX, penguinPositionY);
             }
 
             continue;
@@ -76,7 +76,7 @@ int evaluateBoard(struct GameState *gs) {
             int penguinPositionX = gs->Players[i].penguins[penguinIndex].x;
             int penguinPositionY = gs->Players[i].penguins[penguinIndex].y;
 
-            opponentMoves += isMoveValidExtended(gs, i, penguinIndex, penguinPositionX, penguinPositionY);
+            opponentMoves += getAllPossibleMoves(gs, i, penguinIndex, penguinPositionX, penguinPositionY);
         }
 
         int opponentScore = (opponentFish * WEIGHT_FISH) + (ownPossibleMoves * WEIGHT_MOBILITY);
@@ -134,7 +134,7 @@ struct Move* generateAllLegalMoves(struct GameState *gs, int *count, int playerI
         }
     }
 
-    struct Move *moveTable = malloc((*count) * sizeof(Move));
+    struct Move *moveTable = malloc((*count) * sizeof(struct Move));
     if (moveTable == NULL) {
         fprintf(stderr, "Memory allocation failed.\n");
         exit(3);
