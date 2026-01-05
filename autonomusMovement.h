@@ -62,6 +62,13 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
  *                  current game data, including the board, players, and
  *                  the active player information.
  */
-void movePenguinAutomaticli(struct GameState *gameState);
+void movePenguinAutomatically(struct GameState *gameState);
+
+//needs comment
+void calculateBestMove(struct GameState *gameState, int depth);
+
+//needs comment
+void alphaBeta(struct GameState *game_state, int depth, int alpha, int beta, bool isMax)
+
 
 #endif // PROJECT_AUTONOMUSMOVEMENT_H
