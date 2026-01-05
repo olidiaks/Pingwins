@@ -8,6 +8,7 @@
 #include "GameState.h"
 
 struct Move {
+    int playerId;
     int penguinIdx;
 
     int toX;
@@ -21,10 +22,12 @@ struct Move {
 
 int isTileFree(struct GameState *gs, int x, int y);
 
-int isMoveValidExtended(struct GameState *gs, int playerId, int penguinIndex, int x, int y);
+int getAllPossibleMoves(struct GameState *gs, int playerId, int penguinIndex, int x, int y);
 
 int evaluateBoard(struct GameState *gs);
 
-//struct Move* generateAllLegalMoves(struct GameState *gs, int *count, int playerId); // count = table len
+struct Move registerMove(struct GameState *gs, int plrId, int penguinIndex, int x, int y);
+
+struct Move* generateAllLegalMoves(struct GameState *gs, int *count, int playerId);
 
 #endif //PROJECT_MOVEGEN_H
