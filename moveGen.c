@@ -79,7 +79,7 @@ int evaluateBoard(struct GameState *gs) {
             opponentMoves += getAllPossibleMoves(gs, i, penguinIndex, penguinPositionX, penguinPositionY);
         }
 
-        int opponentScore = (opponentFish * WEIGHT_FISH) + (ownPossibleMoves * WEIGHT_MOBILITY);
+        int opponentScore = (opponentFish * WEIGHT_FISH) + (opponentMoves * WEIGHT_MOBILITY);
         if (opponentScore > biggestOpponentScore)
             biggestOpponentScore = opponentScore;
         //mostOpponentPossibleMoves = opponentMoves > mostOpponentPossibleMoves && opponentMoves || mostOpponentPossibleMoves;
@@ -158,7 +158,7 @@ struct Move* generateAllLegalMoves(struct GameState *gs, int *count, int playerI
 
                 if (isTileFree(gs, newX, newY)) {
 
-                    moveTable[moveIdx] = registerMove(gs, playerId, moveIdx, newX, newY);
+                    moveTable[j] = registerMove(gs, playerId, j, newX, newY);
                     moveIdx++;
                 } else {
                     break;
