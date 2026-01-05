@@ -43,7 +43,7 @@ bool isPlayerAbleToMoveAnyPenguin(struct GameState *gameState) {
 }
 
 void movePenguin(struct GameState *gameState) {
-    remove_penguin_from_current_location(gameState);
+    removePenguinFromCurrentLocation(gameState);
     changePenguinPosition(gameState);
     int currentPlayer = gameState->currentPlayer;
     int currentPenguin = gameState->Players[currentPlayer].currentPenguin;

@@ -124,7 +124,7 @@ char readFile(FILE *givenFile, struct GameState *gameState) {
 // TODO: Merge with read files.
 bool loadPlayers(struct GameState *game_state, FILE *input_file) {
     char buffer[256];
-    bool isUsOnList = false;
+    bool isTeamNameOnList = false;
     int linesToSkip = 0;
     int n = 0;
 
@@ -180,11 +180,11 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
 
         if (strcmp(name, game_state->teamName) == 0) {
             game_state->currentPlayer = idx;
-            isUsOnList = true;
+            isTeamNameOnList = true;
         }
     }
 
-    if (!isUsOnList) {
+    if (!isTeamNameOnList) {
         int availIdx = -1;
 
         for (int i = 0; i < 9; i++) {

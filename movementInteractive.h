@@ -145,6 +145,6 @@ bool isAnyMoveForCurrentPenguinAvailable(struct GameState *gameState);
  * @param gameState A pointer to the GameState structure containing the current game state,
  *                  including the board, players, and their penguins.
  */
-void remove_penguin_from_current_location(struct GameState *gameState);
+void removePenguinFromCurrentLocation(struct GameState *gameState);
 
 #endif //PROJECT_MOVEMENT_H

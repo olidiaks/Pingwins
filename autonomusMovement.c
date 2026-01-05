@@ -15,25 +15,7 @@ void executePlayerMove(struct GameState *gameState, int currentX, int currentY, 
     collectFish(gameState);
     printf("Succesfule move was done!\n");
 }
-void autonomousMovement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]) {
-    FILE *inputFile = openInputFileAndHandleError(inputFilePath);
-    fclose(inputFile);
 
-    inputFile = fopen(inputFilePath, "r");
-    readFile(inputFile, gameState);
-    fclose(inputFile);
-
-    inputFile = fopen(inputFilePath, "r");
-    loadPlayers(gameState, inputFile);
-    fclose(inputFile);
-
-    movePenguinAutomaticli(gameState);
-
-    FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
-    writeBoardToFile(outputFile, gameState);
-
-    fclose(outputFile);
-}
 void movePenguinAutomatically(struct GameState *gameState) {
     for (int x = 0; x < gameState->xBoardSize; ++x) {
         for (int y = 0; y < gameState->yBoardSize; ++y) {
@@ -59,4 +41,24 @@ void movePenguinAutomatically(struct GameState *gameState) {
     }
     printf("Cannot make any move.\n");
     exit(1);
+}
+
+void autonomousMovement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]) {
+    FILE *inputFile = openInputFileAndHandleError(inputFilePath);
+    fclose(inputFile);
+
+    inputFile = fopen(inputFilePath, "r");
+    readFile(inputFile, gameState);
+    fclose(inputFile);
+
+    inputFile = fopen(inputFilePath, "r");
+    loadPlayers(gameState, inputFile);
+    fclose(inputFile);
+
+    movePenguinAutomatically(gameState);
+
+    FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
+    writeBoardToFile(outputFile, gameState);
+
+    fclose(outputFile);
 }

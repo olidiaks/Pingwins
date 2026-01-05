@@ -12,7 +12,7 @@ void placementInteractiveMode(struct GameState *gameState) {
     {
         showBoard(gameState);
         printGameInfo(gameState);
-        printf("Fish %d\n", gameState->Board[2][0].amountOfFish);
+        //printf("Fish %d\n", gameState->Board[2][0].amountOfFish);
         askCoordinates(gameState);
         while (!(isCoordinateValid(gameState) && isPlacementValid(gameState))){
             printf("Given coordinates are invalid!\nPlease notice that you may only place a penguin on a tile with a singular fish.\n");

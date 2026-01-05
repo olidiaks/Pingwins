@@ -22,6 +22,22 @@ bool isBoardDimensionsValid(struct GameState *gameState) {
     return gameState->xBoardSize > 0 && gameState->yBoardSize > 0;
 }
 
+void generateFish(struct GameState *gameState, int x, int y) {
+    const int ceil = 100;
+    int randNum = rand() % ceil;
+    const int chanceFor3Fish = 10;
+    const int chanceFor2Fish = 30;
+    const int chanceFor1Fish = ceil;
+
+    if (randNum < chanceFor3Fish) {
+        gameState->Board[x][y].amountOfFish = 3;
+    } else if (randNum < chanceFor2Fish) {
+        gameState->Board[x][y].amountOfFish = 2;
+    } else if (randNum < chanceFor1Fish) {
+        gameState->Board[x][y].amountOfFish = 1;
+    }
+}
+
 void generateBoard(struct GameState *gameState) {
     printf("Generating random board...\n");
     gameState->Board = malloc(gameState->xBoardSize * sizeof(struct Field));
@@ -34,20 +50,7 @@ void generateBoard(struct GameState *gameState) {
                 for (int y = 0; y < gameState->yBoardSize; y++) {
                     gameState->Board[x][y].idPlayer = -1;
                     gameState->Board[x][y].idPenguin = -1;
-
-                    const int ceil = 100;
-                    int randNum = rand() % ceil;
-                    const int chanceFor3Fish = 10;
-                    const int chanceFor2Fish = 30;
-                    const int chanceFor1Fish = ceil;
-
-                    if (randNum < chanceFor3Fish) {
-                        gameState->Board[x][y].amountOfFish = 3;
-                    } else if (randNum < chanceFor2Fish) {
-                        gameState->Board[x][y].amountOfFish = 2;
-                    } else if (randNum < chanceFor1Fish) {
-                        gameState->Board[x][y].amountOfFish = 1;
-                    }
+                    generateFish(gameState, x, y);
                 }
             } else {
                 fprintf(stderr, "Error: Failed to allocate memory for board row %d.\n", x);

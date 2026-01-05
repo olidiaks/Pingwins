@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     char *name = gameState.teamName;
 
     switch (argc) {
-        case 1: interactive_mode(&gameState);
+        case 1: interactiveMode(&gameState);
             break;
         case 2:
             printf("%s", name);
