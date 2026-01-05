@@ -45,10 +45,10 @@ void movePenguinAutomatically(struct GameState *gameState) {
     printf("Cannot make any move.\n");
     exit(1);
 }
+
 void autonomousMovement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[]) {
     FILE *inputFile = openInputFileAndHandleError(inputFilePath);
     fclose(inputFile);
-
 
     inputFile = fopen(inputFilePath, "r");
     readFile(inputFile, gameState);
@@ -56,11 +56,14 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
 
     inputFile = fopen(inputFilePath, "r");
     loadPlayers(gameState, inputFile);
-    fclose(inputFile);
+    fclose(inputFile)
 
-    struct Move bestMove = calculateBestMove(gameState, 20);
-    gameState->Players[gameState->currentPlayer].x = bestMove.toX;
-    gameState->Players[gameState->currentPlayer].y = bestMove.toY;
+    struct Move bestMove = calculateBestMove(gameState,20);
+    printf("x\n");
+    gameState->Players[gameState->currentPlayer].x= bestMove.toX;
+    printf("x\n");
+    gameState->Players[gameState->currentPlayer].y= bestMove.toY;
+    printf("x\n");
     movePenguin(gameState);
 
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
@@ -68,7 +71,6 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
 
     fclose(outputFile);
 }
-
 
 struct Move calculateBestMove(struct GameState *gameState, int depth) {
     struct Move bestMove;
