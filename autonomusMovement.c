@@ -82,19 +82,19 @@ struct Move calculateBestMove(struct GameState *gameState, int depth) {
 
 }
 
-int alphaBeta(struct GameState *game_state, int depth, int alpha, int beta, bool isMax) {
+int alphaBeta(struct GameState *gameState, int depth, int alpha, int beta, bool isMax) {
     float maxEval;
     float minEval;
-    if (depth == 0 || isAnyMoveForCurrentPenguinAvailable(game_state)) {
-        return evaluateBoard(game_state);
+    if (depth == 0 || isAnyMoveForCurrentPenguinAvailable(gameState)) {
+        return evaluateBoard(gameState);
     }
     else {
         //generateAllLegalMoves();
         if (isMax) { //opponent turn
             isMax = true;
             maxEval = INT_MIN;
-            for (int i = 0;i < getAllPossibleMoves(gameState, gameState.currentPlayer,gameState.Players[gameState.currentPlayer].currentPenguin,0,0);i++) {
-                struct GameState *gameStateCopy = deepCloneGameState(game_state);
+            for (int i = 0;i < getAllPossibleMoves(gameState, gameState->currentPlayer,gameState->Players[gameState->currentPlayer].currentPenguin,0,0);i++) {
+                struct GameState *gameStateCopy = deepCloneGameState(gameState);
                 movePenguin(gameStateCopy);
                 alphaBeta(gameStateCopy, depth +1, alpha, beta, false);
                 if (maxEval > evaluateBoard(gameStateCopy)) {
@@ -114,10 +114,10 @@ int alphaBeta(struct GameState *game_state, int depth, int alpha, int beta, bool
             //our turn
             isMax = false;
             minEval = INT_MAX;
-            for (int i = 0;i < getAllPossibleMoves(gameState, gameState.currentPlayer,gameState.Players[gameState.currentPlayer].currentPenguin,0,0);i++) {
-                struct GameState *gameStateCopy = deepCloneGameState(game_state);
+            for (int i = 0;i < getAllPossibleMoves(gameState, gameState->currentPlayer,gameState->Players[gameState->currentPlayer].currentPenguin,0,0);i++) {
+                struct GameState *gameStateCopy = deepCloneGameState(gameState);
                 movePenguin(gameStateCopy);
-                alphaBeta(game_state, depth +1, alpha, beta, true);
+                alphaBeta(gameState, depth +1, alpha, beta, true);
                 if (minEval < evaluateBoard(gameStateCopy)) {
                     minEval = evaluateBoard(gameStateCopy);
                 }
