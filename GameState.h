@@ -147,14 +147,16 @@ void askInitQuestions();
 struct GameState *deepCloneGameState(struct GameState *gameState);
 
 /**
- * Frees all dynamically allocated memory associated with the given game state.
+ * Frees all allocated memory associated with the given GameState.
  *
- * This function deallocates the memory for the game board fields, penguin arrays for each player,
- * and the player array within the provided GameState structure.
+ * This function deallocates the memory for the game board, all players, and their associated penguins.
+ * It should be called when the GameState is no longer needed to ensure proper cleanup of resources
+ * and prevent memory leaks.
  *
- * @param gameState A pointer to the GameState structure to be deallocated. It is the caller's
- * responsibility to ensure that the pointer is valid and initialized before calling this function.
+ * @param gameState A pointer to the GameState object to be freed. The structure must have been
+ *                  previously allocated and properly initialized.
+ * @return void
  */
-struct GameState *freeGameState(struct GameState *gameState);
+void freeGameState(struct GameState *gameState);
 
 #endif // PROJECT_GAMESTRUCTURE_H
