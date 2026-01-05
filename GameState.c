@@ -41,6 +41,18 @@ void askInitQuestions() {
     }
 }
 
+void freeGameState(struct GameState *gameState) {
+    for (int x = 0; x < gameState->xBoardSize; x++) {
+        free(&gameState->Board[x]);
+    }
+    free(&gameState->Board);
+
+    for (int i = 0; i < gameState->numOfPlayers; i++) {
+        free(&gameState->Players[i].penguins);
+    }
+    free(&gameState->Players);
+}
+
 struct GameState *deepCloneGameState(struct GameState *gameState) {
     struct GameState copyOfGameState;
     copyOfGameState.teamName = gameState->teamName;
