@@ -8,7 +8,6 @@
 #include "playerActions.h"
 #include <math.h>
 
-
 void executePlayerMove(struct GameState *gameState, int currentX, int currentY, int lastX, int lastY) {
     gameState->Players[gameState->currentPlayer].x = currentX;
     gameState->Players[gameState->currentPlayer].y = currentY;
