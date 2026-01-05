@@ -5,7 +5,7 @@
 #include "interactiveMode.h"
 
 
-void interactive_mode(struct GameState *gameState) {
+void interactiveMode(struct GameState *gameState) {
     init();
     placementInteractiveMode(gameState);
     if (isEveryPenguinsPlaced(gameState)) {

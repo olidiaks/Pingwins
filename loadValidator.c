@@ -18,21 +18,21 @@ bool checkHeader(FILE *file, int *rows, int *cols) {
         return false;
     }
 
-    int r, c;
-    int count = sscanf(buffer, "%d %d", &r, &c);
+    int row, col;
+    int count = sscanf(buffer, "%d %d", &row, &col);
 
     if (count != 2) {
         fprintf(stderr, "Error: Header format invalid. Expected 2 numbers, found %d.\n", count);
         return false;
     }
 
-    if (r <= 0 || c <= 0) {
-        fprintf(stderr, "Error: Dimensions must be positive. Found %d x %d.\n", r, c);
+    if (row <= 0 || col <= 0) {
+        fprintf(stderr, "Error: Dimensions must be positive. Found %d x %d.\n", row, col);
         return false;
     }
 
-    *rows = r;
-    *cols = c;
+    *rows = row;
+    *cols = col;
     return true;
 }
 

@@ -53,7 +53,7 @@ bool isCoordinateValid(struct GameState *gameState) {
     return ((0 <= x) && (x < gameState->xBoardSize) && (0 <= y) && (y < gameState->yBoardSize));
 }
 
-void swapSmallerWithBiggerNumbers(int *x, int *y) {
+void swapNumberValues(int *x, int *y) {
     if (*x > *y) {
         int temp = *x;
         *x = *y;
@@ -83,7 +83,7 @@ bool isMoveValid(struct GameState *gameState) {
     }
 
     if (curX == moveX) {
-        swapSmallerWithBiggerNumbers(&moveY, &curY);
+        swapNumberValues(&moveY, &curY);
         for (int y = moveY + 1; y < curY; y++) {
             if (gameState->Board[moveX][y].amountOfFish == 0) {
                 printf(
@@ -94,7 +94,7 @@ bool isMoveValid(struct GameState *gameState) {
     }
 
     if (curY == moveY) {
-        swapSmallerWithBiggerNumbers(&moveX, &curX);
+        swapNumberValues(&moveX, &curX);
         for (int x = moveX + 1; x < curX; x++) {
             if (gameState->Board[x][moveY].amountOfFish == 0) {
                 printf(

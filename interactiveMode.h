@@ -24,6 +24,6 @@
  *        current state of the game, including player data, board configuration,
  *        and game settings.
  */
-void interactive_mode(struct GameState *gameState);
+void interactiveMode(struct GameState *gameState);
 
 #endif //PROJECT_INTERACTIVE_MODE_H

@@ -114,6 +114,6 @@ bool isMoveValid(struct GameState *gameState);
  * @param x A pointer to the first integer.
  * @param y A pointer to the second integer.
  */
-void swapSmallerWithBiggerNumbers(int *x, int *y);
+void swapNumberValues(int *x, int *y);
 
 #endif //PROJECT_PLAYERACTIONS_H

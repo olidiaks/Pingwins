@@ -24,7 +24,7 @@
  * @param lastX     The x-coordinate of the player's previous position on the board.
  * @param lastY     The y-coordinate of the player's previous position on the board.
  */
-void execute_player_move(struct GameState *gameState, int currentX, int currentY, int lastX, int lastY);
+void executePlayerMove(struct GameState *gameState, int currentX, int currentY, int lastX, int lastY);
 
 
 /**

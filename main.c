@@ -14,19 +14,19 @@ int main(int argc, char *argv[]) {
     srand(time(&tt));
 
     gameState.teamName = "Pingwiniarze";
-    char *nameOfUs = gameState.teamName;
+    char *name = gameState.teamName;
 
     switch (argc) {
-        case 1: interactive_mode(&gameState);
+        case 1: interactiveMode(&gameState);
             break;
         case 2:
-            printf("%s", nameOfUs);
+            printf("%s", name);
             break;
         case 4:
-            autonomousMovement(&gameState, argv[2], argv[3], nameOfUs);
+            autonomousMovement(&gameState, argv[2], argv[3], name);
             break;
         case 5:
-            autonomousPlacement(&gameState, argv[3], argv[4], nameOfUs, argv[2]);
+            autonomousPlacement(&gameState, argv[3], argv[4], name, argv[2]);
             break;
         default: printf("Too many arguments!\nAmount of given arguments: %d\n", argc);
             exit(5);

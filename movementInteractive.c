@@ -43,7 +43,7 @@ bool isPlayerAbleToMoveAnyPenguin(struct GameState *gameState) {
 }
 
 void movePenguin(struct GameState *gameState) {
-    remove_penguin_from_current_location(gameState);
+    removePenguinFromCurrentLocation(gameState);
     changePenguinPosition(gameState);
     int currentPlayer = gameState->currentPlayer;
     int currentPenguin = gameState->Players[currentPlayer].currentPenguin;
@@ -85,7 +85,7 @@ bool isAnyMoveForCurrentPenguinAvailable(struct GameState *gameState) {
     return checkAdjacentFishAvailability(gameState, x, y);
 }
 
-void remove_penguin_from_current_location(struct GameState *gameState) {
+void removePenguinFromCurrentLocation(struct GameState *gameState) {
     int currentPlayer = gameState->currentPlayer;
     int currentPenguin = gameState->Players[currentPlayer].currentPenguin;
     int x = gameState->Players[currentPlayer].penguins[currentPenguin].x;
