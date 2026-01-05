@@ -60,6 +60,23 @@ struct GameState *deepCloneGameState(struct GameState *gameState) {
             copyTile->idPenguin = oldTile->idPenguin;
         }
     }
+    copyOfGameState.Players = malloc(gameState->numOfPlayers * sizeof(struct Player));
+    for (int i = 0; i < gameState->numOfPlayers; i++) {
+        struct Player *copyPlayer = &copyOfGameState.Players[i];
+        struct Player *oldPlayer = &gameState->Players[i];
+        copyPlayer->currentScore = oldPlayer->currentScore;
+        copyPlayer->currentPenguin = oldPlayer->currentPenguin;
+        copyPlayer->x = oldPlayer->x;
+        copyPlayer->y = oldPlayer->y;
+        copyPlayer->penguins = malloc(gameState->numOfPenguinsPerPlayer * sizeof(struct Penguin));
+        copyPlayer->name = oldPlayer->name;
+        for (int j = 0; j < gameState->numOfPenguinsPerPlayer; j++) {
+            struct Penguin *copyPenguin = &copyOfGameState.Players[i].penguins[j];
+            struct Penguin *oldPenguin = &gameState->Players[i].penguins[j];
+            copyPenguin->x = oldPenguin->x;
+            copyPenguin->y = oldPenguin->y;
+        }
+    }
 
     return &copyOfGameState;
 }
