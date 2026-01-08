@@ -33,7 +33,7 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
     fclose(inputFile);
 
     inputFile = fopen(inputFilePath, "r");
-    readFile(inputFile, gameState);
+    loadBoard(inputFile, gameState);
     fclose(inputFile);
 
     inputFile = fopen(inputFilePath, "r");

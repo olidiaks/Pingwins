@@ -70,43 +70,43 @@ FILE *openOutputFileAndHandleError(char *filePath);
 FILE *openInputFileAndHandleError(char *filePath);
 
 /**
- * Reads and processes game board data from a file to populate the game state.
+ * Loads the board configuration and dimensions from an input file and updates the given game state.
  *
- * The method reads a file containing information about the map dimensions
- * (number of rows and columns) and the distribution of fish on the board.
- * It initializes the game board and updates the relevant fields in the
- * provided game state structure. If the file contains improperly formatted
- * data or exceeds the expected dimensions, the behavior may be undefined.
- * The board is represented as a 2D array of `Field` structures within
- * the game state.
+ * This function reads the board dimensions from the first line of the file and initializes the game
+ * state's board with the specified dimensions. It then populates each cell of the board based on
+ * subsequent lines in the file, where each cell contains the amount of fish and the player ID.
  *
- * @param givenFile A pointer to the file to be read. The file should contain
- *                  the map dimensions on the first line, followed by rows of
- *                  space-separated integers specifying the number of fish in
- *                  each cell.
- * @param gameState A GameState structure that holds the state of the game,
- *                  including the board dimensions and fields. The structure
- *                  will be modified to reflect the data read from the file.
- * @return A character status indicating the result of the file processing.
- *         The specific meaning of the returned character depends on the
- *         implementation.
+ * The function assumes that the input file is organized in the following format:
+ * - The first line specifies the number of rows and columns of the board, separated by a space.
+ * - Each subsequent line corresponds to a row of the board where each cell's value is represented
+ *   as a number. The number is split into two parts: the number of fish (tens place) and the player ID (units place).
+ *
+ * Debug output displaying the internal board state is printed to the console for verification.
+ * The board is allocated and initialized using the `generateVoidBoard` function.
+ *
+ * @param givenFile A pointer to the input file to be read. The file must be open and readable.
+ * @param gameState A pointer to the GameState structure where the parsed board data and dimensions
+ *                  will be stored. The board is initialized within this structure.
+ *
+ * @return A character indicating the status of the operation (implementation-dependent).
  */
-char readFile(FILE *givenFile, struct GameState *gameState);
+char loadBoard(FILE *givenFile, struct GameState *gameState);
 
 /**
- * Loads player data from the provided input file into the given game state.
+ * Loads player data from the provided input file into the game state structure.
  *
- * This function initializes the players in the game state, reading their data
- * (name, ID, and score) from the input file. If any errors occur during the
- * process (e.g., invalid format, out-of-bounds player ID, or memory allocation
- * failure), the function will print an appropriate error message and terminate
- * the program with a specific exit code.
+ * This function parses the input file to initialize player configuration in the game. It reads
+ * player names, identifiers, and scores, and allocates memory for each player's data including
+ * their penguins. When the specified team name is missing from the file, it adds a placeholder
+ * entry for the team. The function also ensures that the input data conforms to the expected
+ * format and handles errors such as invalid player IDs or memory allocation failures.
  *
- * @param game_state A pointer to the GameState structure where the player data
- *                   will be stored.
- * @param input_file A pointer to the file containing player data to be loaded.
- * @return True if all players are successfully loaded; otherwise, exits the
- *         program with an error message.
+ * @param game_state A pointer to the GameState structure where the player data will be loaded.
+ *                   This structure must be pre-initialized before calling the function.
+ * @param input_file A pointer to a file stream, already opened for reading, that contains the
+ *                   player data to be parsed. The file must follow the defined format.
+ * @return true if the player data was successfully loaded and all necessary allocations were
+ *         made; the program exits on critical errors like memory allocation failures.
  */
 bool loadPlayers(struct GameState *game_state, FILE *input_file);
 

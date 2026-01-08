@@ -78,7 +78,7 @@ FILE *openInputFileAndHandleError(char *filePath) {
     return inputFile;
 }
 
-char readFile(FILE *givenFile, struct GameState *gameState) {
+char loadBoard(FILE *givenFile, struct GameState *gameState) {
     char line[8192];
     int counter = 0;
     int rows = 0, cols = 0;
