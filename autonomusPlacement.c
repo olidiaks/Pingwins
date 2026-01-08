@@ -40,6 +40,8 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
     loadPlayers(gameState, inputFile);
     fclose(inputFile);
 
+    loadPenguins(gameState);
+
     countPenguins(gameState, num_of_penguins_int);
 
     placePenguinAutomatically(gameState);
