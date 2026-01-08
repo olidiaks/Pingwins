@@ -31,14 +31,16 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
 
     FILE *inputFile = openInputFileAndHandleError(inputFilePath);
     fclose(inputFile);
+
     inputFile = fopen(inputFilePath, "r");
-    readFile(inputFile, gameState);
+    loadBoard(inputFile, gameState);
     fclose(inputFile);
 
     inputFile = fopen(inputFilePath, "r");
     loadPlayers(gameState, inputFile);
-
     fclose(inputFile);
+
+    loadPenguins(gameState);
 
     countPenguins(gameState, num_of_penguins_int);
 

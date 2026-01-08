@@ -78,7 +78,7 @@ FILE *openInputFileAndHandleError(char *filePath) {
     return inputFile;
 }
 
-char readFile(FILE *givenFile, struct GameState *gameState) {
+void loadBoard(FILE *givenFile, struct GameState *gameState) {
     char line[8192];
     int counter = 0;
     int rows = 0, cols = 0;
@@ -100,9 +100,18 @@ char readFile(FILE *givenFile, struct GameState *gameState) {
             int colIndex = 0;
 
             while (token != NULL && colIndex < cols) {
-                gameState->Board[counter - 1][colIndex].amountOfFish = atoi(token) / 10;
-                gameState->Board[counter - 1][colIndex].idPlayer = atoi(token) % 10;
+                int amountOfFish = atoi(token) / 10;
+                gameState->Board[counter - 1][colIndex].amountOfFish = amountOfFish;
+                int idPlayer = atoi(token) % 10;
+                gameState->Board[counter - 1][colIndex].idPlayer = idPlayer;
 
+                // if (gameState->Players[idPlayer].currentPenguin >= gameState->numOfPenguinsPerPlayer) {
+                //     break;
+                // }
+                //
+                // gameState->Players[idPlayer].penguins[gameState->Players[idPlayer].currentPenguin].x = counter - 1;
+                // gameState->Players[idPlayer].penguins[gameState->Players[idPlayer].currentPenguin].y = colIndex;
+                // gameState->Players[idPlayer].currentPenguin++;
                 colIndex++;
                 token = strtok(NULL, delimiters);
             }
@@ -120,7 +129,7 @@ char readFile(FILE *givenFile, struct GameState *gameState) {
 }
 
 
-bool loadPlayers(struct GameState *game_state, FILE *input_file) {
+void loadPlayers(struct GameState *game_state, FILE *input_file) {
     char buffer[256];
     bool isTeamNameOnList = false;
     int linesToSkip = 0;
@@ -173,6 +182,13 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
         int idx = id - 1;
         game_state->Players[idx].name = name;
         game_state->Players[idx].currentScore = score;
+        game_state->Players[idx].currentPenguin = 0;
+        game_state->Players[idx].penguins = malloc(game_state->numOfPenguinsPerPlayer * sizeof(struct Penguin) * 10);
+        if (game_state->Players[idx].penguins == NULL) {
+            printf("Not enough memory.\nFailed to allocate memory for penguins.\n");
+            exit(3);
+        }
+
         occupiedIDs[idx] = 1;
         game_state->numOfPlayers++;
 
@@ -196,10 +212,30 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
 
         game_state->Players[availIdx].name = strdup(game_state->teamName);
         game_state->Players[availIdx].currentScore = 0;
+        game_state->Players[availIdx].currentPenguin = 0;
+        game_state->Players[availIdx].penguins = malloc(game_state->numOfPenguinsPerPlayer * sizeof(struct Penguin));
+        if (game_state->Players[availIdx].penguins == NULL) {
+            printf("Not enough memory.\nFailed to allocate memory for penguins.\n");
+            exit(3);
+        }
         game_state->currentPlayer = availIdx;
         game_state->numOfPlayers++;
     }
 
     printf("Successfully loaded %d players.\n", game_state->numOfPlayers);
-    return true;
+}
+void loadPenguins(struct GameState *game_state) {
+    for (int x = 0; x < game_state->xBoardSize; ++x) {
+        for (int y = 0; y < game_state->yBoardSize; ++y) {
+            int id_player = game_state->Board[x][y].idPlayer;
+            if (id_player) {
+                int *current_penguin = &game_state->Players[id_player - 1].currentPenguin;
+                game_state->Board[x][y].idPenguin = *current_penguin;
+                struct Penguin *penguin = &game_state->Players[id_player - 1].penguins[*current_penguin];
+                penguin->x = x;
+                penguin->y = y;
+                (*current_penguin)++;
+            }
+        }
+    }
 }

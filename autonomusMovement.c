@@ -51,12 +51,14 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     fclose(inputFile);
 
     inputFile = fopen(inputFilePath, "r");
-    readFile(inputFile, gameState);
+    loadBoard(inputFile, gameState);
     fclose(inputFile);
 
     inputFile = fopen(inputFilePath, "r");
     loadPlayers(gameState, inputFile);
     fclose(inputFile);
+
+    loadPenguins(gameState);
 
     struct Move bestMove = calculateBestMove(gameState,20);
     printf("x\n");
@@ -65,6 +67,7 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     gameState->Players[gameState->currentPlayer].y= bestMove.toY;
     printf("x\n");
     movePenguin(gameState);
+
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
     writeBoardToFile(outputFile, gameState);
 
