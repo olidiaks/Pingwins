@@ -88,8 +88,8 @@ bool isAnyMoveForCurrentPenguinAvailable(struct GameState *gameState) {
 void removePenguinFromCurrentLocation(struct GameState *gameState) {
     int currentPlayer = gameState->currentPlayer;
     int currentPenguin = gameState->Players[currentPlayer].currentPenguin;
-    int x = gameState->Players[currentPlayer].penguins[currentPenguin].x;
-    int y = gameState->Players[currentPlayer].penguins[currentPenguin].y;
+    int x = gameState->Players[currentPlayer-1].penguins[currentPenguin].x;
+    int y = gameState->Players[currentPlayer-1].penguins[currentPenguin].y;
     gameState->Board[x][y].idPlayer = -1;
     gameState->Board[x][y].idPenguin = -1;
 }
