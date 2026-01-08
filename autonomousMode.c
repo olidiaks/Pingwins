@@ -78,7 +78,7 @@ FILE *openInputFileAndHandleError(char *filePath) {
     return inputFile;
 }
 
-char loadBoard(FILE *givenFile, struct GameState *gameState) {
+void loadBoard(FILE *givenFile, struct GameState *gameState) {
     char line[8192];
     int counter = 0;
     int rows = 0, cols = 0;
@@ -129,7 +129,7 @@ char loadBoard(FILE *givenFile, struct GameState *gameState) {
 }
 
 
-bool loadPlayers(struct GameState *game_state, FILE *input_file) {
+void loadPlayers(struct GameState *game_state, FILE *input_file) {
     char buffer[256];
     bool isTeamNameOnList = false;
     int linesToSkip = 0;
@@ -223,5 +223,4 @@ bool loadPlayers(struct GameState *game_state, FILE *input_file) {
     }
 
     printf("Successfully loaded %d players.\n", game_state->numOfPlayers);
-    return true;
 }

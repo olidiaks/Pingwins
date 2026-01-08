@@ -88,9 +88,8 @@ FILE *openInputFileAndHandleError(char *filePath);
  * @param gameState A pointer to the GameState structure where the parsed board data and dimensions
  *                  will be stored. The board is initialized within this structure.
  *
- * @return A character indicating the status of the operation (implementation-dependent).
  */
-char loadBoard(FILE *givenFile, struct GameState *gameState);
+void loadBoard(FILE *givenFile, struct GameState *gameState);
 
 /**
  * Loads player data from the provided input file into the game state structure.
@@ -105,9 +104,7 @@ char loadBoard(FILE *givenFile, struct GameState *gameState);
  *                   This structure must be pre-initialized before calling the function.
  * @param input_file A pointer to a file stream, already opened for reading, that contains the
  *                   player data to be parsed. The file must follow the defined format.
- * @return true if the player data was successfully loaded and all necessary allocations were
- *         made; the program exits on critical errors like memory allocation failures.
  */
-bool loadPlayers(struct GameState *game_state, FILE *input_file);
+void loadPlayers(struct GameState *game_state, FILE *input_file);
 
 #endif //PROJECT_AUTONOMOUS_MODE_H
