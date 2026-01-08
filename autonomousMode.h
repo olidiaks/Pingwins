@@ -107,4 +107,19 @@ void loadBoard(FILE *givenFile, struct GameState *gameState);
  */
 void loadPlayers(struct GameState *game_state, FILE *input_file);
 
+/**
+ * Assigns penguins to their respective positions on the game board and updates their coordinates.
+ *
+ * This function iterates through the entire board to identify fields occupied by players.
+ * For each field with a player's ID, it assigns a penguin to that field by updating
+ * the `idPenguin` in the board structure. Additionally, the function updates the
+ * corresponding penguin's `x` and `y` coordinates in the player's penguin array and
+ * increments the `currentPenguin` counter for that player.
+ *
+ * @param game_state A pointer to the GameState structure representing the current state of the game.
+ *                   This contains the board configuration, player data, and penguin information
+ *                   necessary for assigning positions.
+ */
+void loadPenguins(struct GameState *game_state);
+
 #endif //PROJECT_AUTONOMOUS_MODE_H

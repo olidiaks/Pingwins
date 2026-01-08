@@ -224,3 +224,18 @@ void loadPlayers(struct GameState *game_state, FILE *input_file) {
 
     printf("Successfully loaded %d players.\n", game_state->numOfPlayers);
 }
+void loadPenguins(struct GameState *game_state) {
+    for (int x = 0; x < game_state->xBoardSize; ++x) {
+        for (int y = 0; y < game_state->yBoardSize; ++y) {
+            int id_player = game_state->Board[x][y].idPlayer;
+            if (id_player) {
+                int *current_penguin = &game_state->Players[id_player - 1].currentPenguin;
+                game_state->Board[x][y].idPenguin = *current_penguin;
+                struct Penguin *penguin = &game_state->Players[id_player - 1].penguins[*current_penguin];
+                penguin->x = x;
+                penguin->y = y;
+                (*current_penguin)++;
+            }
+        }
+    }
+}
