@@ -56,11 +56,13 @@ void placePenguinAutomatically(struct GameState *gameState) {
     int bestScore = 0;
     for (int i = 0; i < gameState->xBoardSize; ++i) {
         for (int j = 0; j < gameState->yBoardSize; ++j) {
-            int score = scorePlacement(gameState, i, j);
-            if (score > bestScore) {
-                bestScore = score;
-                x = i;
-                y = j;
+            if (gameState->Board[i][j].amountOfFish == 1) {
+                int score = scorePlacement(gameState, i, j);
+                if (score > bestScore) {
+                    bestScore = score;
+                    x = i;
+                    y = j;
+                }
             }
         }
     }
