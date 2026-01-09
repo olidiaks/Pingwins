@@ -122,4 +122,18 @@ void loadPlayers(struct GameState *game_state, FILE *input_file);
  */
 void loadPenguins(struct GameState *game_state);
 
+
+/**
+ * Validates consistency in the number of penguins assigned to each player within the game state.
+ *
+ * The function checks whether all players in the game have the same number of penguins. If a mismatch
+ * in the penguin count is detected among the players, an error message is printed, and the program
+ * terminates with an exit code of 2. If the penguin counts are consistent, the number of penguins
+ * per player is updated in the GameState structure.
+ *
+ * @param game_state A pointer to the GameState structure containing details about the game board,
+ *                   players, and penguins. The structure is used to read player data and store the
+ *                   validated penguin count.
+ */
+void validatePenguinCountConsistency(struct GameState *game_state);
 #endif //PROJECT_AUTONOMOUS_MODE_H

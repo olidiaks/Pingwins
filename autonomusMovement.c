@@ -60,6 +60,8 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
 
     loadPenguins(gameState);
 
+    validatePenguinCountConsistency(gameState);
+
     struct Move bestMove = calculateBestMove(gameState,20);
     printf("x\n");
     gameState->Players[gameState->currentPlayer].x= bestMove.toX;

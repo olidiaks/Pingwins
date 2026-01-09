@@ -17,7 +17,7 @@ void writeBoardToFile(FILE *outputFile, struct GameState *gameState) {
         for (int j = 0; j < gameState->yBoardSize; j++) {
             struct Field currentField = gameState->Board[i][j];
 
-            fprintf(outputFile, "%d%d ", currentField.amountOfFish, currentField.idPlayer);
+            fprintf(outputFile, "%d%d ", currentField.amountOfFish, currentField.idPlayer + 1);
         }
 
         fprintf(outputFile, "\n");
@@ -103,15 +103,7 @@ void loadBoard(FILE *givenFile, struct GameState *gameState) {
                 int amountOfFish = atoi(token) / 10;
                 gameState->Board[counter - 1][colIndex].amountOfFish = amountOfFish;
                 int idPlayer = atoi(token) % 10;
-                gameState->Board[counter - 1][colIndex].idPlayer = idPlayer;
-
-                // if (gameState->Players[idPlayer].currentPenguin >= gameState->numOfPenguinsPerPlayer) {
-                //     break;
-                // }
-                //
-                // gameState->Players[idPlayer].penguins[gameState->Players[idPlayer].currentPenguin].x = counter - 1;
-                // gameState->Players[idPlayer].penguins[gameState->Players[idPlayer].currentPenguin].y = colIndex;
-                // gameState->Players[idPlayer].currentPenguin++;
+                gameState->Board[counter - 1][colIndex].idPlayer = idPlayer - 1;
                 colIndex++;
                 token = strtok(NULL, delimiters);
             }
@@ -183,11 +175,6 @@ void loadPlayers(struct GameState *game_state, FILE *input_file) {
         game_state->Players[idx].name = name;
         game_state->Players[idx].currentScore = score;
         game_state->Players[idx].currentPenguin = 0;
-        game_state->Players[idx].penguins = malloc(game_state->numOfPenguinsPerPlayer * sizeof(struct Penguin) * 10);
-        if (game_state->Players[idx].penguins == NULL) {
-            printf("Not enough memory.\nFailed to allocate memory for penguins.\n");
-            exit(3);
-        }
 
         occupiedIDs[idx] = 1;
         game_state->numOfPlayers++;
@@ -208,32 +195,48 @@ void loadPlayers(struct GameState *game_state, FILE *input_file) {
             }
         }
 
-        assert(availIdx != -1);
+        if (availIdx != -1) {
+            printf("All id's are oqupied so there is not place for us. Too many players\n");
+            exit(2);
+        }
 
         game_state->Players[availIdx].name = strdup(game_state->teamName);
         game_state->Players[availIdx].currentScore = 0;
         game_state->Players[availIdx].currentPenguin = 0;
-        game_state->Players[availIdx].penguins = malloc(game_state->numOfPenguinsPerPlayer * sizeof(struct Penguin));
-        if (game_state->Players[availIdx].penguins == NULL) {
-            printf("Not enough memory.\nFailed to allocate memory for penguins.\n");
-            exit(3);
-        }
         game_state->currentPlayer = availIdx;
         game_state->numOfPlayers++;
     }
 
     printf("Successfully loaded %d players.\n", game_state->numOfPlayers);
 }
+
+void validatePenguinCountConsistency(struct GameState *game_state) {
+    int num_of_penguins = game_state->Players[0].currentPenguin;
+    for (int i = 1; i < game_state->numOfPlayers; ++i) {
+        if (num_of_penguins != game_state->Players[i].currentPenguin) {
+            printf("Number of penguins for each player must be the same.\n");
+            exit(2);
+        }
+    }
+    game_state->numOfPenguinsPerPlayer = num_of_penguins;
+}
+
 void loadPenguins(struct GameState *game_state) {
     for (int x = 0; x < game_state->xBoardSize; ++x) {
         for (int y = 0; y < game_state->yBoardSize; ++y) {
             int id_player = game_state->Board[x][y].idPlayer;
-            if (id_player) {
-                int *current_penguin = &game_state->Players[id_player - 1].currentPenguin;
+            if (id_player != -1) {
+                int *current_penguin = &game_state->Players[id_player].currentPenguin;
+                struct Penguin *penguin = realloc(game_state->Players[id_player].penguins,
+                                                  sizeof(struct Penguin) * (*current_penguin + 1));
+                if (penguin == NULL) {
+                    fprintf(stderr, "Not enough memory to load penguins.\n");
+                    exit(3);
+                }
                 game_state->Board[x][y].idPenguin = *current_penguin;
-                struct Penguin *penguin = &game_state->Players[id_player - 1].penguins[*current_penguin];
                 penguin->x = x;
                 penguin->y = y;
+                game_state->Players[id_player].penguins = penguin;
                 (*current_penguin)++;
             }
         }
