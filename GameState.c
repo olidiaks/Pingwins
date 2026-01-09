@@ -82,8 +82,8 @@ struct GameState *deepCloneGameState(struct GameState *gameState) {
         copyPlayer->penguins = malloc(gameState->numOfPenguinsPerPlayer * sizeof(struct Penguin));
         copyPlayer->name = oldPlayer->name;
         for (int j = 0; j < gameState->numOfPenguinsPerPlayer; j++) {
-            struct Penguin *copyPenguin = &copyOfGameState.Players[i].penguins[j];
-            struct Penguin *oldPenguin = &gameState->Players[i].penguins[j];
+            struct Penguin *copyPenguin = &copyPlayer->penguins[j];
+            struct Penguin *oldPenguin = &oldPlayer->penguins[j];
             copyPenguin->x = oldPenguin->x;
             copyPenguin->y = oldPenguin->y;
         }

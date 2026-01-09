@@ -59,16 +59,15 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     fclose(inputFile);
 
     loadPenguins(gameState);
-    showBoard(gameState);
 
     validatePenguinCountConsistency(gameState);
 
     struct Move bestMove = calculateBestMove(gameState,20);
-    //printf("x\n");
+    printf("x\n");
     gameState->Players[gameState->currentPlayer].x= bestMove.toX;
-    //printf("x\n");
+    printf("x\n");
     gameState->Players[gameState->currentPlayer].y= bestMove.toY;
-    //printf("x\n");
+    printf("x\n");
     movePenguin(gameState);
 
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
@@ -79,29 +78,13 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
 
 struct Move calculateBestMove(struct GameState *gameState, int depth) {
     struct Move bestMove;
-
-    bestMove.fromX = gameState->Players[gameState->currentPlayer].penguins[gameState->Players[gameState->currentPlayer].currentPenguin].x;
-    bestMove.fromY = gameState->Players[gameState->currentPlayer].penguins[gameState->Players[gameState->currentPlayer].currentPenguin].y;
-    bestMove.playerId = gameState->currentPlayer;
-    bestMove.moveValue = 0;
-    bestMove.penguinIdx = -1;
-
-    int curPlayer = gameState->currentPlayer;
-    int curPenguin = gameState->Players[curPlayer].currentPenguin;
-    int x = gameState->Players[curPlayer].x;
-    int y = gameState->Players[curPlayer].y;
-
-    for (int i = 0;i < countPossibleMoves(gameState, curPlayer, curPenguin,x,y);i++) { //all possible moves
+    for (int i = 0;i < getAllPossibleMoves(gameState, gameState->currentPlayer,gameState->Players[gameState->currentPlayer].currentPenguin,0,0);i++) { //all possible moves
         struct GameState *gameStateCopy = deepCloneGameState(gameState);
-        struct Move *allMoves = generateAllLegalMoves(gameStateCopy,0,curPlayer);
-        gameStateCopy->Players[curPlayer].x = allMoves[i].toX;
-        gameStateCopy->Players[curPlayer].x = allMoves[i].toY;
         movePenguin(gameStateCopy);
         int score = evaluateBoard(gameStateCopy);
         alphaBeta(gameStateCopy,depth,INT_MAX,INT_MIN,false);
         if (score > bestMove.moveValue) {
             bestMove.moveValue = score;
-            //bestMove.penguinIdx = ;
         }
         freeGameState(gameStateCopy);
     }
@@ -112,10 +95,6 @@ struct Move calculateBestMove(struct GameState *gameState, int depth) {
 int alphaBeta(struct GameState *gameState, int depth, int alpha, int beta, bool isMax) {
     float maxEval;
     float minEval;
-    int curPlayer = gameState->currentPlayer;
-    int curPenguin = gameState->Players[curPlayer].currentPenguin;
-    int x = gameState->Players[curPlayer].x;
-    int y = gameState->Players[curPlayer].y;
     if (depth == 0 || isAnyMoveForCurrentPenguinAvailable(gameState)) {
         return evaluateBoard(gameState);
     }
@@ -124,10 +103,10 @@ int alphaBeta(struct GameState *gameState, int depth, int alpha, int beta, bool 
         if (isMax) { //opponent turn
             isMax = true;
             maxEval = INT_MIN;
-            for (int i = 0;i < countPossibleMoves(gameState, curPlayer, curPenguin,x,y);i++) {
+            for (int i = 0;i < getAllPossibleMoves(gameState, gameState->currentPlayer,gameState->Players[gameState->currentPlayer].currentPenguin,0,0);i++) {
                 struct GameState *gameStateCopy = deepCloneGameState(gameState);
                 movePenguin(gameStateCopy);
-                alphaBeta(gameStateCopy, depth -1, alpha, beta, false);
+                alphaBeta(gameStateCopy, depth +1, alpha, beta, false);
                 if (maxEval > evaluateBoard(gameStateCopy)) {
                     maxEval = evaluateBoard(gameStateCopy);
                 }
@@ -145,10 +124,10 @@ int alphaBeta(struct GameState *gameState, int depth, int alpha, int beta, bool 
             //our turn
             isMax = false;
             minEval = INT_MAX;
-            for (int i = 0;i < countPossibleMoves(gameState, curPlayer, curPenguin,x,y);i++) {
+            for (int i = 0;i < getAllPossibleMoves(gameState, gameState->currentPlayer,gameState->Players[gameState->currentPlayer].currentPenguin,0,0);i++) {
                 struct GameState *gameStateCopy = deepCloneGameState(gameState);
                 movePenguin(gameStateCopy);
-                alphaBeta(gameState, depth -1, alpha, beta, true);
+                alphaBeta(gameState, depth +1, alpha, beta, true);
                 if (minEval < evaluateBoard(gameStateCopy)) {
                     minEval = evaluateBoard(gameStateCopy);
                 }
