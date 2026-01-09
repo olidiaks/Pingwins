@@ -44,4 +44,7 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
  * @param gameState Pointer to the GameState structure representing the current state of the game.
  */
 void placePenguinAutomatically(struct GameState *gameState);
+
+int scorePlacement(struct GameState *game_state, int x, int y);
+
 #endif //PROJECT_AUTONOMUS_PLACEMENT_H

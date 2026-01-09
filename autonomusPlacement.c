@@ -51,7 +51,6 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
     fclose(outputFile);
 }
 
-
 void placePenguinAutomatically(struct GameState *gameState) {
     for (int i = 0; i < gameState->xBoardSize; ++i) {
         for (int j = 0; j < gameState->yBoardSize; ++j) {
@@ -67,4 +66,15 @@ void placePenguinAutomatically(struct GameState *gameState) {
     }
     printf("Impossible to place penguin.\n");
     exit(1);
+}
+
+int scorePlacement(struct GameState *game_state, int x, int y) {
+    if (0 <= x && x < game_state->xBoardSize && 0 <= y && y < game_state->yBoardSize &&
+        !game_state->Board[x][y].amountOfFish) {
+        return 0;
+    }
+
+    return scorePlacement(game_state, x - 1, y) + scorePlacement(game_state, x + 1, y) +
+           scorePlacement(game_state, x, y - 1) + scorePlacement(game_state, x, y + 1) +
+           game_state->Board[x][y].amountOfFish;
 }
