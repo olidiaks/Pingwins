@@ -11,7 +11,7 @@ int isTileFree(struct GameState *gs, int x, int y) {
     return (gs->Board[x][y].amountOfFish > 0 && gs->Board[x][y].idPenguin == -1);
 }
 
-int getAllPossibleMoves(struct GameState *gs, int x, int y) {
+int countPossibleMoves(struct GameState *gs, int playerId, int penguinIndex, int x, int y) {
 
     int mapBorderX = gs->xBoardSize;
     int mapBorderY = gs->yBoardSize;
@@ -61,7 +61,7 @@ int evaluateBoard(struct GameState *gs) {
                 int penguinPositionX = gs->Players[i].penguins[penguinIndex].x;
                 int penguinPositionY = gs->Players[i].penguins[penguinIndex].y;
 
-                ownPossibleMoves += getAllPossibleMoves(gs, penguinPositionX, penguinPositionY);
+                ownPossibleMoves += countPossibleMoves(gs, i, penguinIndex, penguinPositionX, penguinPositionY);
             }
 
             continue;
@@ -76,7 +76,7 @@ int evaluateBoard(struct GameState *gs) {
             int penguinPositionX = gs->Players[i].penguins[penguinIndex].x;
             int penguinPositionY = gs->Players[i].penguins[penguinIndex].y;
 
-            opponentMoves += getAllPossibleMoves(gs, penguinPositionX, penguinPositionY);
+            opponentMoves += countPossibleMoves(gs, i, penguinIndex, penguinPositionX, penguinPositionY);
         }
 
         int opponentScore = (opponentFish * WEIGHT_FISH) + (opponentMoves * WEIGHT_MOBILITY);
