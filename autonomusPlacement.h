@@ -11,6 +11,8 @@
 #include <string.h>
 #include "autonomousMode.h"
 
+typedef enum { NONE, UP, DOWN, LEFT, RIGHT } Direction;
+
 /**
  * Counts the number of penguins placed on the board for the current player
  * and verifies if the desired number of penguins has been placed.
@@ -45,6 +47,6 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
  */
 void placePenguinAutomatically(struct GameState *gameState);
 
-int scorePlacement(struct GameState *game_state, int x, int y);
+int scorePlacement(struct GameState *game_state, int x, int y, Direction direction);
 
 #endif //PROJECT_AUTONOMUS_PLACEMENT_H

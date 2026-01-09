@@ -57,7 +57,7 @@ void placePenguinAutomatically(struct GameState *gameState) {
     for (int x = 0; x < gameState->xBoardSize; ++x) {
         for (int y = 0; y < gameState->yBoardSize; ++y) {
             if (gameState->Board[x][y].amountOfFish == 1) {
-                int score = scorePlacement(gameState, x, y);
+                int score = scorePlacement(gameState, x, y, NONE);
                 if (score > bestScore) {
                     bestScore = score;
                     bestX = x;
@@ -79,13 +79,30 @@ void placePenguinAutomatically(struct GameState *gameState) {
     }
 }
 
-int scorePlacement(struct GameState *game_state, int x, int y) {
+int scorePlacement(struct GameState *game_state, int x, int y, Direction direction) {
     if (0 <= x && x < game_state->xBoardSize && 0 <= y && y < game_state->yBoardSize &&
         !game_state->Board[x][y].amountOfFish) {
         return 0;
     }
 
-    return scorePlacement(game_state, x - 1, y) + scorePlacement(game_state, x + 1, y) +
-           scorePlacement(game_state, x, y - 1) + scorePlacement(game_state, x, y + 1) +
-           game_state->Board[x][y].amountOfFish;
+    switch (direction) {
+        case LEFT:
+            return scorePlacement(game_state, x - 1, y, LEFT) + scorePlacement(game_state, x, y - 1, DOWN) +
+                   scorePlacement(game_state, x, y + 1, UP) + game_state->Board[x][y].amountOfFish;
+
+        case DOWN:
+            return scorePlacement(game_state, x - 1, y, LEFT) + scorePlacement(game_state, x + 1, y, RIGHT) +
+                   scorePlacement(game_state, x, y - 1, DOWN) + game_state->Board[x][y].amountOfFish;
+        case UP:
+            scorePlacement(game_state, x - 1, y, LEFT) + scorePlacement(game_state, x + 1, y, RIGHT) +
+                    scorePlacement(game_state, x, y + 1, UP) + game_state->Board[x][y].amountOfFish;
+        case RIGHT:
+            scorePlacement(game_state, x + 1, y, RIGHT) + scorePlacement(game_state, x, y - 1, DOWN) +
+                    scorePlacement(game_state, x, y + 1, UP) + game_state->Board[x][y].amountOfFish;
+        case NONE:
+        default:
+            return scorePlacement(game_state, x - 1, y, LEFT) + scorePlacement(game_state, x + 1, y, RIGHT) +
+                   scorePlacement(game_state, x, y - 1, DOWN) + scorePlacement(game_state, x, y + 1, UP) +
+                   game_state->Board[x][y].amountOfFish;
+    }
 }
