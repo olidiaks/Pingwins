@@ -52,20 +52,29 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
 }
 
 void placePenguinAutomatically(struct GameState *gameState) {
+    int x, y;
+    int bestScore = 0;
     for (int i = 0; i < gameState->xBoardSize; ++i) {
         for (int j = 0; j < gameState->yBoardSize; ++j) {
-            if (gameState->Board[i][j].amountOfFish == 1) {
-                int current_player = gameState->currentPlayer;
-                gameState->Players[current_player].x = i;
-                gameState->Players[current_player].y = j;
-                gameState->Board[i][j].idPlayer = current_player + 1;
-                collectFish(gameState);
-                return;
+            int score = scorePlacement(gameState, i, j);
+            if (score > bestScore) {
+                bestScore = score;
+                x = i;
+                y = j;
             }
         }
     }
-    printf("Impossible to place penguin.\n");
-    exit(1);
+
+    if (bestScore > 0) {
+        int current_player = gameState->currentPlayer;
+        gameState->Players[current_player].x = x;
+        gameState->Players[current_player].y = y;
+        gameState->Board[x][y].idPlayer = current_player + 1;
+        collectFish(gameState);
+    } else {
+        printf("Didn't found any penguin to place.\n");
+        exit(1);
+    }
 }
 
 int scorePlacement(struct GameState *game_state, int x, int y) {
