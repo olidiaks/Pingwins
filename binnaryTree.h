@@ -96,6 +96,6 @@ void freeTree(struct Node *root);
  *
  * @param root Pointer to the root node of the binary tree to be traversed.
  */
-void inorderTraversal(struct Node* root);
+void inorderTraversal(struct Node *root);
 
 #endif // PROJECT_BINNARYTREE_H
