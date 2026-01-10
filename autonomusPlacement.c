@@ -58,7 +58,7 @@ void placePenguinAutomatically(struct GameState *gameState) {
         for (int y = 0; y < gameState->yBoardSize; ++y) {
             if (gameState->Board[x][y].amountOfFish == 1) {
                 struct Node *binaryTreeForMoves = insertNode(NULL, &gameState->Board[x][y]);
-                int score = scorePlacement(gameState, x, y, binaryTreeForMoves, 5);
+                int score = scorePlacement(gameState, x, y, binaryTreeForMoves, 10);
                 freeTree(binaryTreeForMoves);
                 if (score > bestScore) {
                     bestScore = score;
