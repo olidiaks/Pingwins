@@ -22,7 +22,7 @@ struct Move {
 
 int isTileFree(struct GameState *gs, int x, int y);
 
-int getAllPossibleMoves(struct GameState *gs, int x, int y);
+int countPossibleMoves(struct GameState *gs, int playerId, int penguinIndex, int x, int y);
 
 int evaluateBoard(struct GameState *gs);
 

@@ -30,5 +30,8 @@ add_executable(project
         loadValidator.h
         moveGen.c
         moveGen.h
+        debug.c
+        debug.h)
+        moveGen.h
         binnaryTree.c
         binnaryTree.h)
