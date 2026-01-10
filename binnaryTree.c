@@ -53,3 +53,10 @@ void initTree(struct BinaryTree *tree) {
     tree->root = NULL;
     pthread_rwlock_init(&tree->lock, NULL);
 }
+
+void insert(struct BinaryTree *tree, void *value) {
+    pthread_rwlock_wrlock(&tree->lock);
+    tree->root = insertRecursive(tree->root, value);
+    printf("Writer Thread %ld: Inserted %p\n", (long) pthread_self(), value);
+    pthread_rwlock_unlock(&tree->lock);
+}
