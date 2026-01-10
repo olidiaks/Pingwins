@@ -123,3 +123,26 @@ int scorePlacement(struct GameState *game_state, int x, int y, struct Node *bina
            scorePlacement(game_state, x, y - 1, binaryTree, depth - 1) +
            scorePlacement(game_state, x, y + 1, binaryTree, depth - 1) + amountOfFish;
 }
+void *findBestMoveWorker(void *arg) {
+    struct ThreadData *data = (struct ThreadData *) arg;
+    data->bestScore = 0;
+    data->x = -1;
+    data->y = -1;
+
+    for (int x = data->startX; x < data->endX; ++x) {
+        for (int y = 0; y < data->gameState->yBoardSize; ++y) {
+            if (data->gameState->Board[x][y].amountOfFish == 1) {
+                struct Node *binaryTreeForMoves = insertNode(NULL, &data->gameState->Board[x][y]);
+                int score = scorePlacement(data->gameState, x, y, binaryTreeForMoves, 10);
+                freeTree(binaryTreeForMoves);
+                if (score > data->bestScore) {
+                    data->bestScore = score;
+                    data->x = x;
+                    data->y = y;
+                }
+            }
+        }
+    }
+    printf("Thread: %d finished.\tScore: %d\n", data->threadId, data->bestScore);
+    pthread_exit(NULL);
+}

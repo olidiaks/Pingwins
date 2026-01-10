@@ -63,4 +63,25 @@ void placePenguinAutomatically(struct GameState *gameState);
  */
 int scorePlacement(struct GameState *game_state, int x, int y, struct Node *binaryTree, int depth);
 
+/**
+ * @struct ThreadData
+ * @brief Arguments and result storage for worker threads in the penguin placement algorithm.
+ *
+ * This structure is used to pass the game state and the specific range of board rows
+ * (from startX to endX) that a thread is responsible for analyzing. It also serves
+ * as the container for the results (best move coordinates and score) found by that
+ * specific thread, allowing the main thread to aggregate results later.
+ */
+struct ThreadData {
+    struct GameState *gameState;
+    int startX;
+    int endX;
+    int x;
+    int y;
+    int bestScore;
+    int threadId;
+};
+
+void *findBestMoveWorker(void *arg);
+
 #endif //PROJECT_AUTONOMUS_PLACEMENT_H
