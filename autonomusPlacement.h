@@ -5,11 +5,12 @@
 #ifndef PROJECT_AUTONOMUS_PLACEMENT_H
 #define PROJECT_AUTONOMUS_PLACEMENT_H
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 #include "autonomousMode.h"
+#include "binnaryTree.h"
 
 typedef enum { NONE, UP, DOWN, LEFT, RIGHT } Direction;
 
@@ -47,6 +48,6 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
  */
 void placePenguinAutomatically(struct GameState *gameState);
 
-int scorePlacement(struct GameState *game_state, int x, int y, Direction direction);
+int scorePlacement(struct GameState *game_state, int x, int y, struct Node *binaryTree);
 
 #endif //PROJECT_AUTONOMUS_PLACEMENT_H
