@@ -52,24 +52,43 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
 }
 
 void placePenguinAutomatically(struct GameState *gameState) {
-    int bestX, bestY;
-    int bestScore = 0;
-    for (int x = 0; x < gameState->xBoardSize; ++x) {
-        for (int y = 0; y < gameState->yBoardSize; ++y) {
-            if (gameState->Board[x][y].amountOfFish == 1) {
-                struct Node *binaryTreeForMoves = insertNode(NULL, &gameState->Board[x][y]);
-                int score = scorePlacement(gameState, x, y, binaryTreeForMoves, 10);
-                freeTree(binaryTreeForMoves);
-                if (score > bestScore) {
-                    bestScore = score;
-                    bestX = x;
-                    bestY = y;
-                }
-            }
+    pthread_t threads[NUM_THREADS];
+    struct ThreadData threadData[NUM_THREADS];
+
+    int rowsPerThread = gameState->xBoardSize / NUM_THREADS;
+
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        threadData[i].gameState = gameState;
+        threadData[i].startX = i * rowsPerThread;
+        threadData[i].threadId = i;
+
+        if (i == NUM_THREADS - 1) {
+            threadData[i].endX = gameState->xBoardSize;
+        } else {
+            threadData[i].endX = (i + 1) * rowsPerThread;
+        }
+        if (pthread_create(&threads[i], NULL, findBestMoveWorker, (void *) &threadData[i])) {
+            printf("Error: unable to create thread, %d\n", i);
+            exit(3);
         }
     }
 
-    if (bestScore > 0) {
+    int bestScore = 0;
+    int bestX = -1;
+    int bestY = -1;
+
+
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        pthread_join(threads[i], NULL);
+
+        if (threadData[i].bestScore > bestScore) {
+            bestScore = threadData[i].bestScore;
+            bestX = threadData[i].x;
+            bestY = threadData[i].y;
+        }
+    }
+
+    if (bestScore != -1) {
         int current_player = gameState->currentPlayer;
         gameState->Players[current_player].x = bestX;
         gameState->Players[current_player].y = bestY;
