@@ -7,6 +7,18 @@
 
 #include <stddef.h>
 
+/**
+ * @brief Represents a node in a binary tree.
+ *
+ * This structure is used as the fundamental building block for a binary tree.
+ * Each node contains a pointer to an integer value, as well as pointers to
+ * its left and right child nodes. The left and right pointers allow the
+ * formation of a binary tree structure by linking multiple nodes.
+ *
+ * The data pointer must point to a valid integer. The child pointers
+ * may be NULL to indicate that the node does not have children in that
+ * direction.
+ */
 struct Node {
     int *data;
     struct Node *left;
