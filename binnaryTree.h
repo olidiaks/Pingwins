@@ -73,4 +73,17 @@ int *searchNode(struct Node *root, int *value);
  */
 struct Node *createNode(int *value);
 
+/**
+ * @brief Frees all memory associated with a binary tree.
+ *
+ * This function deallocates the memory used by a binary tree, starting from
+ * the specified root node and traversing recursively to its children. Each
+ * node in the tree is freed, including its data and child pointers.
+ *
+ * @param root A pointer to the root node of the binary tree to be freed.
+ *             If the root is NULL, the function does nothing.
+ */
+void freeTree(struct Node *root);
+
+
 #endif // PROJECT_BINNARYTREE_H

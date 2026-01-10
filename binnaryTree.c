@@ -35,3 +35,11 @@ int *searchNode(struct Node *root, int *value) {
         return root->data;
     return searchNode(value < root->data ? root->left : root->right, value);
 }
+
+void freeTree(struct Node *root) {
+    if (!root)
+        return;
+    freeTree(root->left);
+    freeTree(root->right);
+    free(root);
+}
