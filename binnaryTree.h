@@ -40,7 +40,24 @@ struct Node {
  */
 struct Node *insertNode(struct Node *root, int *value);
 
-void searchNode(struct Node *treeBranch, int *value);
+/**
+ * @brief Searches for a node in a binary tree containing the specified value.
+ *
+ * This function traverses a binary search tree starting from the root, looking
+ * for a node that contains the given value. The search follows the properties
+ * of a binary search tree: if the target value is less than the current node's
+ * value, the function continues the search to the left child, while if the
+ * value is greater, the search moves to the right child.
+ *
+ * @param root A pointer to the root node of the binary tree.
+ *             If NULL, the tree is empty, and the search will return NULL.
+ * @param value A pointer to the integer value being searched for in the tree.
+ *              The value serves as the key for traversal and lookup.
+ *
+ * @return A pointer to the data in the node that matches the provided value
+ *         or NULL if no such node exists in the tree.
+ */
+int *searchNode(struct Node *root, int *value);
 
 /**
  * @brief Creates a new node for a binary tree.
