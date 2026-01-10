@@ -7,14 +7,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node *insertNode(struct Node *root, void *value) {
+struct Node *insertRecursive(struct Node *root, void *value) {
     if (!root)
         return createNode(value);
 
     if (value < root->data) {
-        root->left = insertNode(root->left, value);
+        root->left = insertRecursive(root->left, value);
     } else if (value > root->data) {
-        root->right = insertNode(root->right, value);
+        root->right = insertRecursive(root->right, value);
     }
 
     return root;
@@ -30,10 +30,10 @@ struct Node *createNode(void *value) {
     node->right = NULL;
     return node;
 }
-void *searchNode(struct Node *root, void *value) {
+void *searchRecursive(struct Node *root, void *value) {
     if (!root || root->data == value)
         return root->data;
-    return searchNode(value < root->data ? root->left : root->right, value);
+    return searchRecursive(value < root->data ? root->left : root->right, value);
 }
 
 void freeTree(struct Node *root) {

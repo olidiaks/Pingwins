@@ -55,7 +55,7 @@ struct BinaryTree {
  * @param value Pointer to the value to be inserted into the binary tree. This must not be NULL.
  * @return Pointer to the root node of the binary tree after the value has been inserted.
  */
-struct Node *insertNode(struct Node *root, void *value);
+struct Node *insertRecursive(struct Node *root, void *value);
 
 /**
  * @brief Searches for a node in a binary tree containing the specified value.
@@ -74,7 +74,7 @@ struct Node *insertNode(struct Node *root, void *value);
  * @return A pointer to the data in the node that matches the provided value
  *         or NULL if no such node exists in the tree.
  */
-void *searchNode(struct Node *root, void *value);
+void *searchRecursive(struct Node *root, void *value);
 
 /**
  * @brief Creates a new node for a binary tree.
