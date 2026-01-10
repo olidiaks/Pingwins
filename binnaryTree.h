@@ -25,6 +25,19 @@ struct Node {
     struct Node *right;
 };
 
+/**
+ * @brief Inserts a new value into a binary tree.
+ *
+ * This function inserts a new value into the binary tree, maintaining the
+ * properties of a binary search tree. If the root is NULL, a new node is
+ * created and returned. Otherwise, the function recursively determines the
+ * correct position for the new value and inserts it into the appropriate
+ * subtree.
+ *
+ * @param root Pointer to the root node of the binary tree. It may be NULL if the tree is empty.
+ * @param value Pointer to the integer value to be inserted into the binary tree. This must not be NULL.
+ * @return Pointer to the root node of the binary tree after the value has been inserted.
+ */
 struct Node *insertNode(struct Node *root, int *value);
 
 void searchNode(struct Node *treeBranch, int *value);
