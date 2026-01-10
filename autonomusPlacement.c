@@ -58,7 +58,7 @@ void placePenguinAutomatically(struct GameState *gameState) {
         for (int y = 0; y < gameState->yBoardSize; ++y) {
             if (gameState->Board[x][y].amountOfFish == 1) {
                 struct Node *binaryTreeForMoves = insertNode(NULL, &gameState->Board[x][y]);
-                int score = scorePlacement(gameState, x, y, binaryTreeForMoves);
+                int score = scorePlacement(gameState, x, y, binaryTreeForMoves, 5);
                 freeTree(binaryTreeForMoves);
                 if (score > bestScore) {
                     bestScore = score;
@@ -81,18 +81,23 @@ void placePenguinAutomatically(struct GameState *gameState) {
     }
 }
 
-int scorePlacement(struct GameState *game_state, int x, int y, struct Node *binaryTree) {
-    if (x <= 0 || y <= 0 || x > game_state->xBoardSize || y > game_state->yBoardSize)
+int scorePlacement(struct GameState *game_state, int x, int y, struct Node *binaryTree, int depth) {
+    if (depth == 0) {
+        return 0;
+    }
+
+    if (x < 0 || y < 0 || x >= game_state->xBoardSize || y >= game_state->yBoardSize)
         return 0;
 
-    struct Field *field = &game_state->Board[x][y];
-    if (!field->amountOfFish)
+    int amountOfFish = game_state->Board[x][y].amountOfFish;
+    if (amountOfFish == 0)
         return 0;
 
-    if (insertNode(binaryTree, field) != binaryTree)
+    if (insertNode(binaryTree, &game_state->Board[x][y]) != binaryTree)
         return 0;
 
-    return scorePlacement(game_state, x - 1, y, binaryTree) + scorePlacement(game_state, x + 1, y, binaryTree) +
-           scorePlacement(game_state, x, y - 1, binaryTree) + scorePlacement(game_state, x, y + 1, binaryTree) +
-           field->amountOfFish;
+    return scorePlacement(game_state, x - 1, y, binaryTree, depth - 1) +
+           scorePlacement(game_state, x + 1, y, binaryTree, depth - 1) +
+           scorePlacement(game_state, x, y - 1, binaryTree, depth - 1) +
+           scorePlacement(game_state, x, y + 1, binaryTree, depth - 1) + amountOfFish;
 }

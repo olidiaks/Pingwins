@@ -48,6 +48,6 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
  */
 void placePenguinAutomatically(struct GameState *gameState);
 
-int scorePlacement(struct GameState *game_state, int x, int y, struct Node *binaryTree);
+int scorePlacement(struct GameState *game_state, int x, int y, struct Node *binaryTree, int depth);
 
 #endif //PROJECT_AUTONOMUS_PLACEMENT_H
