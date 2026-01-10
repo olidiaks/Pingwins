@@ -120,18 +120,21 @@ void freeTree(struct Node *root);
 void inorderTraversal(struct Node *root);
 
 /**
- * @brief Initializes a binary tree structure.
+ * @brief Initializes a binary tree with a given value.
  *
- * This function sets up a binary tree by initializing its root to NULL
- * and preparing a read-write lock for managing concurrent access.
+ * This function sets up the root of a binary tree by creating a new node
+ * with the specified value. Additionally, it initializes a read-write lock
+ * to ensure thread-safe operations on the tree.
  *
- * After initialization, the tree will be empty and ready to use.
- * The lock ensures thread safety for operations involving the tree.
+ * The provided tree should be properly allocated before calling this function.
+ * The value parameter is assigned to the root node of the tree.
  *
  * @param tree A pointer to the BinaryTree structure to be initialized.
- *             This pointer must not be NULL.
+ * @param value A pointer to the data which will be assigned as the root node's value.
+ *
+ * @note The BinaryTree's lock must be initialized only once during the tree's lifetime.
  */
-void initTree(struct BinaryTree *tree);
+void initTree(struct BinaryTree *tree, void *value);
 
 /**
  * @brief Inserts a value into a binary tree.

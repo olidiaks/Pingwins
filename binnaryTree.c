@@ -49,8 +49,8 @@ void inorderTraversal(struct Node *root) {
     printf("%p ->", root->data);
     inorderTraversal(root->right);
 }
-void initTree(struct BinaryTree *tree) {
-    tree->root = NULL;
+void initTree(struct BinaryTree *tree, void *value) {
+    tree->root = createNode(value);
     pthread_rwlock_init(&tree->lock, NULL);
 }
 
