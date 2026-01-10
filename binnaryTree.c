@@ -4,8 +4,6 @@
 
 #include "binnaryTree.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 
 struct Node *insertRecursive(struct Node *root, void *value) {
     if (!root)

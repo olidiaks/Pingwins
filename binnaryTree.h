@@ -5,7 +5,11 @@
 #ifndef PROJECT_BINNARYTREE_H
 #define PROJECT_BINNARYTREE_H
 
+#include <pthread.h>
 #include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /**
  * @brief Represents a node in a binary tree.
