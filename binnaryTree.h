@@ -26,6 +26,23 @@ struct Node {
 };
 
 /**
+ * @brief Represents a thread-safe binary tree container.
+ *
+ * This structure serves as the main handler for the binary tree. It maintains
+ * a pointer to the root node and includes a synchronization primitive to
+ * allow safe concurrent access.
+ *
+ * The inclusion of a read-write lock (pthread_rwlock_t) suggests that this
+ * tree is designed to support multiple simultaneous readers (e.g., for lookups
+ * or traversals) while ensuring exclusive access for writers (e.g., for insertions
+ * or deletions).
+ */
+struct BinaryTree {
+    struct Node *root;
+    pthread_rwlock_t lock;
+};
+
+/**
  * @brief Inserts a new value into a binary tree.
  *
  * This function inserts a new value into the binary tree, maintaining the
