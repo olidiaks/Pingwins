@@ -43,3 +43,11 @@ void freeTree(struct Node *root) {
     freeTree(root->right);
     free(root);
 }
+
+void inorderTraversal(struct Node *root) {
+    if (!root)
+        return;
+    inorderTraversal(root->left);
+    printf("%d ->", *root->data);
+    inorderTraversal(root->right);
+}

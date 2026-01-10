@@ -85,5 +85,17 @@ struct Node *createNode(int *value);
  */
 void freeTree(struct Node *root);
 
+/**
+ * @brief Performs an in-order traversal of a binary tree.
+ *
+ * This function recursively traverses the binary tree in in-order:
+ * visiting the left subtree, the current node, and then the right subtree.
+ * During the traversal, the value of each node is printed in sequence.
+ *
+ * If the root node is NULL, the function returns without performing any operation.
+ *
+ * @param root Pointer to the root node of the binary tree to be traversed.
+ */
+void inorderTraversal(struct Node* root);
 
 #endif // PROJECT_BINNARYTREE_H
