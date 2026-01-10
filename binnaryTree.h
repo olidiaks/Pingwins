@@ -150,4 +150,21 @@ void initTree(struct BinaryTree *tree);
  */
 void insert(struct BinaryTree *tree, void *value);
 
+/**
+ * @brief Searches for a value in a binary tree in a thread-safe manner.
+ *
+ * This function performs a search operation on a binary tree to locate a specific value.
+ * It uses a read-write lock to ensure mutual exclusion and safe access in multi-threaded
+ * environments while allowing multiple readers at the same time. The function delegates
+ * the recursive lookup to an internal helper function.
+ *
+ * @param tree Pointer to the BinaryTree structure representing the binary tree to be searched.
+ *             The binary tree must be initialized and must not be NULL.
+ * @param value Pointer to the value being searched for in the binary tree.
+ *              The value must be comparable with the `data` values in the nodes.
+ * @return A pointer to the found value if it exists in the tree, or NULL if the value
+ *         does not exist in the tree.
+ */
+void *search(struct BinaryTree *tree, void *value);
+
 #endif // PROJECT_BINNARYTREE_H

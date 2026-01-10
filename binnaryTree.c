@@ -60,3 +60,13 @@ void insert(struct BinaryTree *tree, void *value) {
     printf("Writer Thread %ld: Inserted %p\n", (long) pthread_self(), value);
     pthread_rwlock_unlock(&tree->lock);
 }
+void *search(struct BinaryTree *tree, void *value) {
+    pthread_rwlock_rdlock(&tree->lock);
+    struct Node *result = searchRecursive(tree->root, value);
+    if (result)
+        printf("Reader Thread %ld: Found %p\n", (long) pthread_self(), result);
+    else
+        printf("Reader Thread %ld: Not found\n", (long) pthread_self());
+    pthread_rwlock_unlock(&tree->lock);
+    return result;
+}
