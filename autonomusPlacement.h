@@ -15,8 +15,6 @@
 #include "autonomousMode.h"
 #include "binnaryTree.h"
 
-typedef enum { NONE, UP, DOWN, LEFT, RIGHT } Direction;
-
 /**
  * Counts the number of penguins placed on the board for the current player
  * and verifies if the desired number of penguins has been placed.
