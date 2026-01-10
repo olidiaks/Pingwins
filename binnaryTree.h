@@ -35,7 +35,7 @@ struct Node {
  * subtree.
  *
  * @param root Pointer to the root node of the binary tree. It may be NULL if the tree is empty.
- * @param value Pointer to the integer value to be inserted into the binary tree. This must not be NULL.
+ * @param value Pointer to the value to be inserted into the binary tree. This must not be NULL.
  * @return Pointer to the root node of the binary tree after the value has been inserted.
  */
 struct Node *insertNode(struct Node *root, void *value);
@@ -51,7 +51,7 @@ struct Node *insertNode(struct Node *root, void *value);
  *
  * @param root A pointer to the root node of the binary tree.
  *             If NULL, the tree is empty, and the search will return NULL.
- * @param value A pointer to the integer value being searched for in the tree.
+ * @param value A pointer to the value being searched for in the tree.
  *              The value serves as the key for traversal and lookup.
  *
  * @return A pointer to the data in the node that matches the provided value
@@ -68,7 +68,7 @@ void *searchNode(struct Node *root, void *value);
  * fails, the function will print an error message and terminate
  * the program.
  *
- * @param value Pointer to the integer value to be assigned to the node.
+ * @param value Pointer to the value to be assigned to the node.
  * @return Pointer to the newly created Node structure.
  */
 struct Node *createNode(void *value);
