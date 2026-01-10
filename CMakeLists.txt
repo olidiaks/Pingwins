@@ -31,7 +31,7 @@ add_executable(project
         moveGen.c
         moveGen.h
         debug.c
-        debug.h)
+        debug.h
         moveGen.h
         binnaryTree.c
         binnaryTree.h)
