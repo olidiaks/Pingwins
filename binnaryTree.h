@@ -115,4 +115,6 @@ void freeTree(struct Node *root);
  */
 void inorderTraversal(struct Node *root);
 
+void initTree(struct BinaryTree *tree);
+
 #endif // PROJECT_BINNARYTREE_H
