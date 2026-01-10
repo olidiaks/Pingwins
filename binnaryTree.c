@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node *insertNode(struct Node *root, int *value) {
+struct Node *insertNode(struct Node *root, void *value) {
     if (!root)
         return createNode(value);
 
@@ -19,7 +19,7 @@ struct Node *insertNode(struct Node *root, int *value) {
 
     return root;
 }
-struct Node *createNode(int *value) {
+struct Node *createNode(void *value) {
     struct Node *node = malloc(sizeof(struct Node));
     if (!node) {
         printf("Memory allocation failed for next binary tree node.\n");
@@ -30,7 +30,7 @@ struct Node *createNode(int *value) {
     node->right = NULL;
     return node;
 }
-int *searchNode(struct Node *root, int *value) {
+void *searchNode(struct Node *root, void *value) {
     if (!root || root->data == value)
         return root->data;
     return searchNode(value < root->data ? root->left : root->right, value);
@@ -48,6 +48,6 @@ void inorderTraversal(struct Node *root) {
     if (!root)
         return;
     inorderTraversal(root->left);
-    printf("%d ->", *root->data);
+    printf("%p ->", root->data);
     inorderTraversal(root->right);
 }

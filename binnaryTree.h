@@ -20,7 +20,7 @@
  * direction.
  */
 struct Node {
-    int *data;
+    void *data;
     struct Node *left;
     struct Node *right;
 };
@@ -38,7 +38,7 @@ struct Node {
  * @param value Pointer to the integer value to be inserted into the binary tree. This must not be NULL.
  * @return Pointer to the root node of the binary tree after the value has been inserted.
  */
-struct Node *insertNode(struct Node *root, int *value);
+struct Node *insertNode(struct Node *root, void *value);
 
 /**
  * @brief Searches for a node in a binary tree containing the specified value.
@@ -57,7 +57,7 @@ struct Node *insertNode(struct Node *root, int *value);
  * @return A pointer to the data in the node that matches the provided value
  *         or NULL if no such node exists in the tree.
  */
-int *searchNode(struct Node *root, int *value);
+void *searchNode(struct Node *root, void *value);
 
 /**
  * @brief Creates a new node for a binary tree.
@@ -71,7 +71,7 @@ int *searchNode(struct Node *root, int *value);
  * @param value Pointer to the integer value to be assigned to the node.
  * @return Pointer to the newly created Node structure.
  */
-struct Node *createNode(int *value);
+struct Node *createNode(void *value);
 
 /**
  * @brief Frees all memory associated with a binary tree.
