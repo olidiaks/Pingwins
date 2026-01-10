@@ -39,15 +39,28 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
                          char num_of_penguins[]);
 
 /**
- * Places a penguin automatically for the current player on the board.
- * The penguin is placed on the first available tile with exactly one fish.
- * Updates the player's position and collects fish from the selected tile.
- * If no suitable position is found, the game will terminate with an error.
+ * Automatically places a penguin on the board for the current player by selecting
+ * the optimal location based on a scoring function. The method evaluates all eligible
+ * positions and places the penguin at the position that yields the highest score.
+ * If no valid placement is found, the program terminates.
  *
- * @param gameState Pointer to the GameState structure representing the current state of the game.
+ * @param gameState Pointer to the GameState structure representing the current state of the game,
+ * including the board, players, and placement configuration.
  */
 void placePenguinAutomatically(struct GameState *gameState);
 
+/**
+ * Evaluates the score for placing a penguin at a specified position on the board,
+ * considering the number of accessible fish and depth of possible moves.
+ *
+ * @param game_state Pointer to the GameState structure representing the current game state.
+ * @param x The x-coordinate of the position to evaluate for the penguin placement.
+ * @param y The y-coordinate of the position to evaluate for the penguin placement.
+ * @param binaryTree Pointer to a binary tree structure used to store visited positions.
+ * @param depth The maximum depth to search for additional moves from the given position.
+ * @return The total score for placing a penguin at the specified position based on
+ *         the number of accessible fish within the given depth.
+ */
 int scorePlacement(struct GameState *game_state, int x, int y, struct Node *binaryTree, int depth);
 
 #endif //PROJECT_AUTONOMUS_PLACEMENT_H
