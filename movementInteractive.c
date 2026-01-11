@@ -45,6 +45,7 @@ bool isPlayerAbleToMoveAnyPenguin(struct GameState *gameState) {
 void movePenguin(struct GameState *gameState) {
     removePenguinFromCurrentLocation(gameState);
     changePenguinPosition(gameState);
+    collectFish(gameState);
     int currentPlayer = gameState->currentPlayer;
     int currentPenguin = gameState->Players[currentPlayer].currentPenguin;
     printf("Player %d's %d penguin has been moved.\n", currentPlayer + 1, currentPenguin + 1);
