@@ -5,13 +5,13 @@
 #ifndef PROJECT_AUTONOMUS_PLACEMENT_H
 #define PROJECT_AUTONOMUS_PLACEMENT_H
 
-
 #include <limits.h>
 #include <pthread.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "autonomousMode.h"
 #include "binnaryTree.h"
 
