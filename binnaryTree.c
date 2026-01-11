@@ -31,7 +31,9 @@ struct Node *createNode(void *value) {
     return node;
 }
 void *searchNode(struct Node *root, void *value) {
-    if (!root || root->data == value)
+    if (!root)
+        return NULL;
+    if (root->data == value)
         return root->data;
     return searchNode(value < root->data ? root->left : root->right, value);
 }
