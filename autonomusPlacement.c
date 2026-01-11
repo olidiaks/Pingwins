@@ -8,7 +8,7 @@
 #include "placementInteractive.h"
 
 void countPenguins(struct GameState *gameState, int numOfPengiuns) {
-    int playerId = gameState->currentPlayer + 1;
+    int playerId = gameState->currentPlayer;
     int counter = 0;
 
     for (int x = 0; x < gameState->xBoardSize; ++x) {
