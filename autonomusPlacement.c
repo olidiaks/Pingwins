@@ -115,7 +115,7 @@ int scorePlacement(struct GameState *game_state, int x, int y, struct Node *bina
     }
 
     if (x < 0 || y < 0 || x >= game_state->xBoardSize || y >= game_state->yBoardSize)
-        return depth;
+        return -depth;
 
     int amountOfFish = game_state->Board[x][y].amountOfFish;
 
