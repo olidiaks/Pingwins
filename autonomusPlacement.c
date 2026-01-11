@@ -76,7 +76,7 @@ void placePenguinAutomatically(struct GameState *gameState) {
         }
     }
 
-    int bestScore = 0;
+    int bestScore = INT_MIN;
     int bestX = -1;
     int bestY = -1;
 
@@ -91,7 +91,7 @@ void placePenguinAutomatically(struct GameState *gameState) {
         }
     }
 
-    if (bestScore > 0) {
+    if (bestScore > INT_MIN) {
         int current_player = gameState->currentPlayer;
         gameState->Players[current_player].x = bestX;
         gameState->Players[current_player].y = bestY;
@@ -112,11 +112,11 @@ int scorePlacement(struct GameState *game_state, int x, int y, struct Node *bina
     }
 
     if (x < 0 || y < 0 || x >= game_state->xBoardSize || y >= game_state->yBoardSize)
-        return 0;
+        return -depth;
 
     int amountOfFish = game_state->Board[x][y].amountOfFish;
     if (amountOfFish == 0)
-        return 0;
+        return -depth;
 
     struct Field *value = &game_state->Board[x][y];
     if (searchNode(binaryTree, value) == value)
@@ -131,7 +131,7 @@ int scorePlacement(struct GameState *game_state, int x, int y, struct Node *bina
 }
 void *findBestMoveWorker(void *arg) {
     struct ThreadData *data = (struct ThreadData *) arg;
-    data->bestScore = 0;
+    data->bestScore = INT_MIN;
     data->x = -1;
     data->y = -1;
 
@@ -139,7 +139,7 @@ void *findBestMoveWorker(void *arg) {
         for (int y = 0; y < data->gameState->yBoardSize; ++y) {
             if (data->gameState->Board[x][y].amountOfFish == 1) {
                 struct Node *binaryTreeForMoves = insertNode(NULL, 0);
-                int score = scorePlacement(data->gameState, x, y, binaryTreeForMoves, 5000);
+                int score = scorePlacement(data->gameState, x, y, binaryTreeForMoves, 50);
                 freeTree(binaryTreeForMoves);
                 if (score > data->bestScore) {
                     data->bestScore = score;
