@@ -19,26 +19,26 @@ void showBoard(struct GameState *gameState) {
             vertMul = x / 26 + 1;
 
             if (x == -1 && y == -1) {
-                printf("\t|\t");
+                printf("         |");
             } else if (x == -1) {
-                printf("%c%d\t|\t", horChr, horMul);
+                printf("  %c%d   |", horChr, horMul);
             } else if (y == -1) {
-                printf("%c%d\t|\t", vertChr, vertMul);
+                printf("|   %c%d   |", vertChr, vertMul);
             } else {
                 int id_player = gameState->Board[x][y].idPlayer;
                 if (id_player != -1) {
                     int id_penguin = gameState->Board[x][y].idPenguin;
-                    printf("P%dp%d\t|\t", id_player + 1, id_penguin + 1);
+                    printf(" P%d p%d |", id_player + 1, id_penguin + 1);
                 } else {
-                    printf("%d\t|\t", gameState->Board[x][y].amountOfFish);
+                    printf("   %d   |", gameState->Board[x][y].amountOfFish);
                 }
             }
         }
-        printf("\n\t");
-        for (int x = 0; x < gameState->yBoardSize; x++) {
-            printf("================");
+        printf("\n");
+        for (int x = 0; x <= gameState->yBoardSize; x++) {
+            printf("––––––––");
         }
-        printf("=\n");
+        printf("––\n");
     }
 }
 
