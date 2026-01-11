@@ -83,6 +83,16 @@ struct ThreadData {
     int threadId;
 };
 
+/**
+ * Worker thread function to evaluate the best possible move for a penguin within
+ * the assigned range of rows. Each thread operates on a subset of the game board
+ * to compute the most optimal placement of a penguin based on predefined scoring
+ * criteria.
+ *
+ * @param arg Pointer to a ThreadData structure containing the game state and
+ *            metadata about the thread's assigned row range, as well as storage
+ *            for the thread's computed best move and score.
+ */
 void *findBestMoveWorker(void *arg);
 
 #endif //PROJECT_AUTONOMUS_PLACEMENT_H
