@@ -195,7 +195,7 @@ void loadPlayers(struct GameState *game_state, FILE *input_file) {
             }
         }
 
-        if (availIdx != -1) {
+        if (availIdx == -1) {
             printf("All id's are oqupied so there is not place for us. Too many players\n");
             exit(2);
         }
