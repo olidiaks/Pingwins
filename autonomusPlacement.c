@@ -149,6 +149,6 @@ void *findBestMoveWorker(void *arg) {
             }
         }
     }
-    printf("Thread: %d finished.\tScore: %d\n", data->threadId, data->bestScore);
+    printf("Thread: %d finished.\tScore: %d\tX: %d\tY: %d\n", data->threadId, data->bestScore, data->x, data->y);
     pthread_exit(NULL);
 }
