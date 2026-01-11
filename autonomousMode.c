@@ -214,8 +214,8 @@ void validatePenguinCountConsistency(struct GameState *game_state) {
     int *currentPenguin = &game_state->Players[0].currentPenguin;
     int numOfPenguins = *currentPenguin;
     *(currentPenguin) = 0;
-    for (int i = 1; i < game_state->numOfPlayers; ++i) {
-        int *currentPenguin = &game_state->Players[i].currentPenguin;
+    for (int i = 1; i < game_state->numOfPlayers; i++) {
+        currentPenguin = &game_state->Players[i].currentPenguin;
         if (numOfPenguins != *currentPenguin) {
             printf("Number of penguins for each player must be the same.\n");
             exit(2);
