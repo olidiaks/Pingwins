@@ -52,17 +52,20 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
 }
 
 void placePenguinAutomatically(struct GameState *gameState) {
-    pthread_t threads[NUM_THREADS];
-    struct ThreadData threadData[NUM_THREADS];
+    int numThreads = NUM_THREADS;
+    if (numThreads > gameState->xBoardSize)
+        numThreads = gameState->xBoardSize;
+    pthread_t threads[numThreads];
+    struct ThreadData threadData[numThreads];
 
-    int rowsPerThread = gameState->xBoardSize / NUM_THREADS;
+    int rowsPerThread = gameState->xBoardSize / numThreads;
 
-    for (int i = 0; i < NUM_THREADS; ++i) {
+    for (int i = 0; i < numThreads; ++i) {
         threadData[i].gameState = gameState;
         threadData[i].startX = i * rowsPerThread;
         threadData[i].threadId = i;
 
-        if (i == NUM_THREADS - 1) {
+        if (i == numThreads - 1) {
             threadData[i].endX = gameState->xBoardSize;
         } else {
             threadData[i].endX = (i + 1) * rowsPerThread;
@@ -78,7 +81,7 @@ void placePenguinAutomatically(struct GameState *gameState) {
     int bestY = -1;
 
 
-    for (int i = 0; i < NUM_THREADS; ++i) {
+    for (int i = 0; i < numThreads; ++i) {
         pthread_join(threads[i], NULL);
 
         if (threadData[i].bestScore > bestScore) {
@@ -88,7 +91,7 @@ void placePenguinAutomatically(struct GameState *gameState) {
         }
     }
 
-    if (bestScore != -1) {
+    if (bestScore > 0) {
         int current_player = gameState->currentPlayer;
         gameState->Players[current_player].x = bestX;
         gameState->Players[current_player].y = bestY;
