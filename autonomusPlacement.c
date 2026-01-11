@@ -98,7 +98,7 @@ void placePenguinAutomatically(struct GameState *gameState) {
         int current_player = gameState->currentPlayer;
         gameState->Players[current_player].x = bestX;
         gameState->Players[current_player].y = bestY;
-        gameState->Board[bestX][bestY].idPlayer = current_player + 1;
+        gameState->Board[bestX][bestY].idPlayer = current_player;
         collectFish(gameState);
         printf("Penguin has been placed successfully.\n"
                "X: %d\nY:%d\n",
