@@ -115,8 +115,11 @@ int scorePlacement(struct GameState *game_state, int x, int y, struct Node *bina
     if (amountOfFish == 0)
         return 0;
 
-    if (insertNode(binaryTree, &game_state->Board[x][y]) != binaryTree)
+    struct Field *value = &game_state->Board[x][y];
+    if (searchNode(binaryTree, value) == value)
         return 0;
+
+    insertNode(binaryTree, value);
 
     return scorePlacement(game_state, x - 1, y, binaryTree, depth - 1) +
            scorePlacement(game_state, x + 1, y, binaryTree, depth - 1) +
@@ -132,8 +135,8 @@ void *findBestMoveWorker(void *arg) {
     for (int x = data->startX; x < data->endX; ++x) {
         for (int y = 0; y < data->gameState->yBoardSize; ++y) {
             if (data->gameState->Board[x][y].amountOfFish == 1) {
-                struct Node *binaryTreeForMoves = insertNode(NULL, &data->gameState->Board[x][y]);
-                int score = scorePlacement(data->gameState, x, y, binaryTreeForMoves, 10);
+                struct Node *binaryTreeForMoves = insertNode(NULL, 0);
+                int score = scorePlacement(data->gameState, x, y, binaryTreeForMoves, 5000);
                 freeTree(binaryTreeForMoves);
                 if (score > data->bestScore) {
                     data->bestScore = score;
