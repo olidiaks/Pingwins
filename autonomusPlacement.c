@@ -52,7 +52,10 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
 }
 
 void placePenguinAutomatically(struct GameState *gameState) {
-    int numThreads = NUM_THREADS;
+    long numThreads = sysconf(_SC_NPROCESSORS_ONLN);
+    if (numThreads < 1)
+        numThreads = 1;
+    printf("Number of threads: %ld\n", numThreads);
     if (numThreads > gameState->xBoardSize)
         numThreads = gameState->xBoardSize;
     pthread_t threads[numThreads];

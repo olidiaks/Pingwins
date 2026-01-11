@@ -5,7 +5,6 @@
 #ifndef PROJECT_AUTONOMUS_PLACEMENT_H
 #define PROJECT_AUTONOMUS_PLACEMENT_H
 
-#define NUM_THREADS 24
 
 #include <limits.h>
 #include <pthread.h>
