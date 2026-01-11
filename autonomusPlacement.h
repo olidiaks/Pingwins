@@ -40,13 +40,12 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
                          char num_of_penguins[]);
 
 /**
- * Automatically places a penguin on the board for the current player by selecting
- * the optimal location based on a scoring function. The method evaluates all eligible
- * positions and places the penguin at the position that yields the highest score.
- * If no valid placement is found, the program terminates.
+ * Automatically places a penguin for the current player by finding
+ * the best position on the board using multithreading. The position
+ * is determined based on optimal game strategy.
  *
- * @param gameState Pointer to the GameState structure representing the current state of the game,
- * including the board, players, and placement configuration.
+ * @param gameState Pointer to the GameState structure representing
+ *                  the current state of the game.
  */
 void placePenguinAutomatically(struct GameState *gameState);
 
