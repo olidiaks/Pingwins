@@ -5,10 +5,12 @@
 #include "playerActions.h"
 
 void collectFish(struct GameState *gameState) {
-    int x = gameState->Players[gameState->currentPlayer].x;
-    int y = gameState->Players[gameState->currentPlayer].y;
-    gameState->Players[gameState->currentPlayer].currentScore += gameState->Board[x][y].amountOfFish;
-    gameState->Board[x][y].amountOfFish = 0;
+    struct Player *player = &gameState->Players[gameState->currentPlayer];
+    int x = player->x;
+    int y = player->y;
+    struct Field *field = &gameState->Board[x][y];
+    player->currentScore += field->amountOfFish;
+    field->amountOfFish = 0;
     printf("Player %d has collected fish.\n", gameState->currentPlayer + 1);
 }
 
