@@ -74,6 +74,8 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     //printf("x\n");
     movePenguin(gameState);
 
+    showBoard(gameState);
+
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
     writeBoardToFile(outputFile, gameState);
 
