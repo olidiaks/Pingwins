@@ -63,6 +63,8 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
 
     validatePenguinCountConsistency(gameState);
 
+    printf("Pointer to penguins: %p\n", gameState->Players[gameState->currentPlayer].penguins);
+
     struct Move bestMove = calculateBestMove(gameState,20);
     //printf("x\n");
     gameState->Players[gameState->currentPlayer].x= bestMove.toX;
@@ -70,6 +72,8 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     gameState->Players[gameState->currentPlayer].y= bestMove.toY;
     //printf("x\n");
     movePenguin(gameState);
+
+    showBoard(gameState);
 
     FILE *outputFile = openOutputFileAndHandleError(outputFilePath);
     writeBoardToFile(outputFile, gameState);

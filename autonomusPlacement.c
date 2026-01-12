@@ -8,7 +8,7 @@
 #include "placementInteractive.h"
 
 void countPenguins(struct GameState *gameState, int numOfPengiuns) {
-    int playerId = gameState->currentPlayer + 1;
+    int playerId = gameState->currentPlayer;
     int counter = 0;
 
     for (int x = 0; x < gameState->xBoardSize; ++x) {
@@ -52,57 +52,107 @@ void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char
 }
 
 void placePenguinAutomatically(struct GameState *gameState) {
-    int bestX, bestY;
-    int bestScore = 0;
-    for (int x = 0; x < gameState->xBoardSize; ++x) {
-        for (int y = 0; y < gameState->yBoardSize; ++y) {
-            if (gameState->Board[x][y].amountOfFish == 1) {
-                int score = scorePlacement(gameState, x, y, NONE);
-                if (score > bestScore) {
-                    bestScore = score;
-                    bestX = x;
-                    bestY = y;
-                }
-            }
+    long numThreads = sysconf(_SC_NPROCESSORS_ONLN);
+    if (numThreads < 1)
+        numThreads = 1;
+    printf("Number of threads: %ld\n", numThreads);
+    if (numThreads > gameState->xBoardSize)
+        numThreads = gameState->xBoardSize;
+    pthread_t threads[numThreads];
+    struct ThreadData threadData[numThreads];
+
+    int rowsPerThread = gameState->xBoardSize / numThreads;
+
+    for (int i = 0; i < numThreads; ++i) {
+        threadData[i].gameState = gameState;
+        threadData[i].startX = i * rowsPerThread;
+        threadData[i].threadId = i;
+
+        if (i == numThreads - 1) {
+            threadData[i].endX = gameState->xBoardSize;
+        } else {
+            threadData[i].endX = (i + 1) * rowsPerThread;
+        }
+        if (pthread_create(&threads[i], NULL, findBestMoveWorker, (void *) &threadData[i])) {
+            printf("Error: unable to create thread, %d\n", i);
+            exit(3);
         }
     }
 
-    if (bestScore > 0) {
+    int bestScore = INT_MIN;
+    int bestX = -1;
+    int bestY = -1;
+
+
+    for (int i = 0; i < numThreads; ++i) {
+        pthread_join(threads[i], NULL);
+
+        if (threadData[i].bestScore > bestScore) {
+            bestScore = threadData[i].bestScore;
+            bestX = threadData[i].x;
+            bestY = threadData[i].y;
+        }
+    }
+
+    if (bestScore > INT_MIN) {
         int current_player = gameState->currentPlayer;
         gameState->Players[current_player].x = bestX;
         gameState->Players[current_player].y = bestY;
-        gameState->Board[bestX][bestY].idPlayer = current_player + 1;
+        gameState->Board[bestX][bestY].idPlayer = current_player;
         collectFish(gameState);
+        printf("Penguin has been placed successfully.\n"
+               "X: %d\nY:%d\n",
+               bestX, bestY);
     } else {
         printf("Didn't found any penguin to place.\n");
         exit(1);
     }
 }
 
-int scorePlacement(struct GameState *game_state, int x, int y, Direction direction) {
-    if (0 <= x && x < game_state->xBoardSize && 0 <= y && y < game_state->yBoardSize &&
-        !game_state->Board[x][y].amountOfFish) {
+int scorePlacement(struct GameState *game_state, int x, int y, struct Node *binaryTree, int depth) {
+    if (depth == 0) {
         return 0;
     }
 
-    switch (direction) {
-        case LEFT:
-            return scorePlacement(game_state, x - 1, y, LEFT) + scorePlacement(game_state, x, y - 1, DOWN) +
-                   scorePlacement(game_state, x, y + 1, UP) + game_state->Board[x][y].amountOfFish;
+    if (x < 0 || y < 0 || x >= game_state->xBoardSize || y >= game_state->yBoardSize)
+        return -depth;
 
-        case DOWN:
-            return scorePlacement(game_state, x - 1, y, LEFT) + scorePlacement(game_state, x + 1, y, RIGHT) +
-                   scorePlacement(game_state, x, y - 1, DOWN) + game_state->Board[x][y].amountOfFish;
-        case UP:
-            scorePlacement(game_state, x - 1, y, LEFT) + scorePlacement(game_state, x + 1, y, RIGHT) +
-                    scorePlacement(game_state, x, y + 1, UP) + game_state->Board[x][y].amountOfFish;
-        case RIGHT:
-            scorePlacement(game_state, x + 1, y, RIGHT) + scorePlacement(game_state, x, y - 1, DOWN) +
-                    scorePlacement(game_state, x, y + 1, UP) + game_state->Board[x][y].amountOfFish;
-        case NONE:
-        default:
-            return scorePlacement(game_state, x - 1, y, LEFT) + scorePlacement(game_state, x + 1, y, RIGHT) +
-                   scorePlacement(game_state, x, y - 1, DOWN) + scorePlacement(game_state, x, y + 1, UP) +
-                   game_state->Board[x][y].amountOfFish;
+    int amountOfFish = game_state->Board[x][y].amountOfFish;
+
+    if (amountOfFish == 0)
+        return -depth;
+
+    struct Field *value = &game_state->Board[x][y];
+    if (searchNode(binaryTree, value) == value)
+        return 0;
+
+    insertNode(binaryTree, value);
+
+    return scorePlacement(game_state, x - 1, y, binaryTree, depth - 1) +
+           scorePlacement(game_state, x + 1, y, binaryTree, depth - 1) +
+           scorePlacement(game_state, x, y - 1, binaryTree, depth - 1) +
+           scorePlacement(game_state, x, y + 1, binaryTree, depth - 1) + amountOfFish;
+}
+void *findBestMoveWorker(void *arg) {
+    struct ThreadData *data = (struct ThreadData *) arg;
+    data->bestScore = INT_MIN;
+    data->x = -1;
+    data->y = -1;
+
+    for (int x = data->startX; x < data->endX; ++x) {
+        for (int y = 0; y < data->gameState->yBoardSize; ++y) {
+            if (data->gameState->Board[x][y].amountOfFish == 1) {
+                struct Node *binaryTreeForMoves = insertNode(NULL, 0);
+                int score = scorePlacement(data->gameState, x, y, binaryTreeForMoves, 70);
+                freeTree(binaryTreeForMoves);
+                if (score > data->bestScore) {
+                    data->bestScore = score;
+                    data->x = x;
+                    data->y = y;
+                }
+            }
+        }
     }
+    printf("Thread: %d finished.\tScore: %d\tX: %d\tY: %d\n", data->threadId, data->bestScore, data->x, data->y);
+    pthread_exit(NULL);
 }

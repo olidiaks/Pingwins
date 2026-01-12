@@ -195,7 +195,7 @@ void loadPlayers(struct GameState *game_state, FILE *input_file) {
             }
         }
 
-        if (availIdx != -1) {
+        if (availIdx == -1) {
             printf("All id's are oqupied so there is not place for us. Too many players\n");
             exit(2);
         }
@@ -214,8 +214,8 @@ void validatePenguinCountConsistency(struct GameState *game_state) {
     int *currentPenguin = &game_state->Players[0].currentPenguin;
     int numOfPenguins = *currentPenguin;
     *(currentPenguin) = 0;
-    for (int i = 1; i < game_state->numOfPlayers; ++i) {
-        int *currentPenguin = &game_state->Players[i].currentPenguin;
+    for (int i = 1; i < game_state->numOfPlayers; i++) {
+        currentPenguin = &game_state->Players[i].currentPenguin;
         if (numOfPenguins != *currentPenguin) {
             printf("Number of penguins for each player must be the same.\n");
             exit(2);
