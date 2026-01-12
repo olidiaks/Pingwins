@@ -242,16 +242,15 @@ void loadPenguins(struct GameState *game_state) {
             int id_player = game_state->Board[x][y].idPlayer;
             if (id_player != -1) {
                 int *current_penguin = &game_state->Players[id_player].currentPenguin;
-                struct Penguin *penguin = realloc(game_state->Players[id_player].penguins,
-                                                  sizeof(struct Penguin) * (*current_penguin + 1));
-                if (penguin == NULL) {
+                struct Penguin *penguinsArray = realloc(game_state->Players[id_player].penguins, sizeof(struct Penguin) * (*current_penguin + 1));
+                if (penguinsArray == NULL) {
                     fprintf(stderr, "Not enough memory to load penguins.\n");
                     exit(3);
                 }
+                game_state->Players[id_player].penguins = penguinsArray;
                 game_state->Board[x][y].idPenguin = *current_penguin;
-                penguin->x = x;
-                penguin->y = y;
-                game_state->Players[id_player].penguins = penguin;
+                penguinsArray[*current_penguin].x = x;
+                penguinsArray[*current_penguin].y = y;
                 (*current_penguin)++;
             }
         }
