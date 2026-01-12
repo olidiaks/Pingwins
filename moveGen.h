@@ -35,6 +35,7 @@ struct Move {
     int fromY;
 
     int moveValue;
+    int capturedFish;
 };
 
 /**

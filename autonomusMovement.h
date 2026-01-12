@@ -7,6 +7,7 @@
 
 #include "autonomousMode.h"
 #include  "GameState.h"
+#include "moveGen.h"
 
 /**
  * Executes a player's move on the game board and updates the game state.
@@ -64,23 +65,9 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
  */
 void movePenguinAutomatically(struct GameState *gameState);
 
-/**
- * Calculates the best possible move for the current player using a decision-making algorithm.
- *
- * This function evaluates all potential moves for the current player's currently selected penguin
- * and determines the most advantageous move based on the game state and a scoring heuristic.
- * It uses an iterative process to simulate moves, evaluates the resulting board states,
- * and makes use of the alpha-beta pruning algorithm to optimize decision-making.
- *
- * @param gameState A pointer to the GameState structure containing the
- *                  current state of the game, including player details, board configuration,
- *                  and other necessary game components.
- * @param depth     The maximum depth of recursion allowed for the alpha-beta pruning
- *                  algorithm, which influences the decision-making horizon.
- * @return          A Move structure representing the best move calculated for the current
- *                  player, including the coordinates of the move and associated score.
- */
-struct Move calculateBestMove(struct GameState *gameState, int depth);
+void makeMove(struct GameState *gs, struct Move *move);
+
+void unmakeMove(struct GameState *gs, struct Move *move);
 
 /**
  * Performs the Alpha-Beta pruning algorithm to evaluate the optimal value for the current game state.
@@ -104,6 +91,8 @@ struct Move calculateBestMove(struct GameState *gameState, int depth);
  * @return          The evaluation score of the board for the optimal move within the
  *                  specified depth and conditions.
  */
-int alphaBeta(struct GameState *gameState, int depth, int alpha, int beta, bool isMax);
+int alphaBeta(struct GameState *gs, int depth, int alpha, int beta, bool isMax);
+
+struct Move calculateBestMove(struct GameState *gameState, int depth);
 
 #endif // PROJECT_AUTONOMUSMOVEMENT_H

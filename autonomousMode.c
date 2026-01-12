@@ -118,6 +118,7 @@ void loadBoard(FILE *givenFile, struct GameState *gameState) {
         }
         printf("\n");
     }
+    printf("\n");
 }
 
 
@@ -170,15 +171,16 @@ void loadPlayers(struct GameState *game_state, FILE *input_file) {
             exit(2);
         }
 
-
         int idx = id - 1;
         game_state->Players[idx].name = name;
         game_state->Players[idx].currentScore = score;
         game_state->Players[idx].currentPenguin = 0;
 
         occupiedIDs[idx] = 1;
+        printf("Incrementing numPlrs: %d, -> %d\n", game_state->numOfPlayers, game_state->numOfPlayers + 1);
         game_state->numOfPlayers++;
 
+        printf("Comparing two strings: %s, %s\n", name, game_state->teamName);
         if (strcmp(name, game_state->teamName) == 0) {
             game_state->currentPlayer = idx;
             isTeamNameOnList = true;

@@ -65,13 +65,17 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
 
     printf("Pointer to penguins: %p\n", gameState->Players[gameState->currentPlayer].penguins);
 
-    struct Move bestMove = calculateBestMove(gameState,20);
+    struct Move bestMove = calculateBestMove(gameState,6);
+    printf("Best move: fromX %d, fromY: %d, toX: %d, toY: %d, as %d, penguin id %d\n", bestMove.fromX, bestMove.fromY, bestMove.toX, bestMove.toY, bestMove.playerId, bestMove.penguinIdx);
+
+    //gameState->Players[gameState->currentPlayer].currentPenguin = bestMove.penguinIdx;
     //printf("x\n");
-    gameState->Players[gameState->currentPlayer].x= bestMove.toX;
+    //gameState->Players[gameState->currentPlayer].x= bestMove.toX;
     //printf("x\n");
-    gameState->Players[gameState->currentPlayer].y= bestMove.toY;
+    //gameState->Players[gameState->currentPlayer].y= bestMove.toY;
     //printf("x\n");
-    movePenguin(gameState);
+    //movePenguin(gameState);
+    makeMove(gameState, &bestMove);
 
     showBoard(gameState);
 
@@ -81,90 +85,105 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     fclose(outputFile);
 }
 
-struct Move calculateBestMove(struct GameState *gameState, int depth) {
-    struct Move bestMove;
+void makeMove(struct GameState *gs, struct Move *move) {
 
-    bestMove.fromX = gameState->Players[gameState->currentPlayer].penguins[gameState->Players[gameState->currentPlayer].currentPenguin].x;
-    bestMove.fromY = gameState->Players[gameState->currentPlayer].penguins[gameState->Players[gameState->currentPlayer].currentPenguin].y;
-    bestMove.playerId = gameState->currentPlayer;
-    bestMove.moveValue = 0;
-    bestMove.penguinIdx = -1;
+    gs->Board[move->fromX][move->fromY].idPlayer = -1;
+    gs->Board[move->fromX][move->fromY].idPenguin = -1;
 
-    int curPlayer = gameState->currentPlayer;
-    int curPenguin = gameState->Players[curPlayer].currentPenguin;
-    int x = gameState->Players[curPlayer].x;
-    int y = gameState->Players[curPlayer].y;
+    gs->Board[move->toX][move->toY].idPlayer = move->playerId;
+    gs->Board[move->toX][move->toY].idPenguin = move->penguinIdx;
 
-    for (int i = 0;i < countPossibleMoves(gameState, curPlayer, curPenguin,x,y);i++) { //all possible moves
-        struct GameState *gameStateCopy = deepCloneGameState(gameState);
-        struct Move *allMoves = generateAllLegalMoves(gameStateCopy,0,curPlayer);
-        gameStateCopy->Players[curPlayer].x = allMoves[i].toX;
-        gameStateCopy->Players[curPlayer].x = allMoves[i].toY;
-        movePenguin(gameStateCopy);
-        int score = evaluateBoard(gameStateCopy);
-        alphaBeta(gameStateCopy,depth,INT_MAX,INT_MIN,false);
-        if (score > bestMove.moveValue) {
-            bestMove.moveValue = score;
-            //bestMove.penguinIdx = ;
-        }
-        freeGameState(gameStateCopy);
-    }
-    return bestMove;
+    gs->Players[move->playerId].penguins[move->penguinIdx].x = move->toX;
+    gs->Players[move->playerId].penguins[move->penguinIdx].y = move->toY;
 
+    gs->Players[move->playerId].currentScore += move->capturedFish;
+    gs->Board[move->toX][move->toY].amountOfFish = 0;
+
+    gs->currentPlayer = (gs->currentPlayer + 1) % gs->numOfPlayers;
 }
 
-int alphaBeta(struct GameState *gameState, int depth, int alpha, int beta, bool isMax) {
-    float maxEval;
-    float minEval;
-    int curPlayer = gameState->currentPlayer;
-    int curPenguin = gameState->Players[curPlayer].currentPenguin;
-    int x = gameState->Players[curPlayer].x;
-    int y = gameState->Players[curPlayer].y;
-    if (depth == 0 || isAnyMoveForCurrentPenguinAvailable(gameState)) {
-        return evaluateBoard(gameState);
+void unmakeMove(struct GameState *gs, struct Move *move) {
+
+    gs->currentPlayer = (gs->currentPlayer - 1 + gs->numOfPlayers) % gs->numOfPlayers;
+
+    gs->Board[move->toX][move->toY].amountOfFish = move->capturedFish;
+    gs->Players[move->playerId].currentScore -= move->capturedFish;
+
+    gs->Players[move->playerId].penguins[move->penguinIdx].x = move->fromX;
+    gs->Players[move->playerId].penguins[move->penguinIdx].y = move->fromY;
+
+    gs->Board[move->toX][move->toY].idPlayer = -1;
+    gs->Board[move->toX][move->toY].idPenguin = -1;
+
+    gs->Board[move->fromX][move->fromY].idPlayer = move->playerId;
+    gs->Board[move->fromX][move->fromY].idPenguin = move->penguinIdx;
+}
+
+int alphaBeta(struct GameState *gs, int depth, int alpha, int beta, bool isMax) {
+    if (depth == 0) return evaluateBoard(gs);
+
+    int moveCount = 0;
+    struct Move *moves = generateAllLegalMoves(gs, &moveCount, gs->currentPlayer);
+
+    if (moveCount == 0) {
+        free(moves);
+        return evaluateBoard(gs);
     }
-    else {
-        //generateAllLegalMoves();
-        if (isMax) { //opponent turn
-            isMax = true;
-            maxEval = INT_MIN;
-            for (int i = 0;i < countPossibleMoves(gameState, curPlayer, curPenguin,x,y);i++) {
-                struct GameState *gameStateCopy = deepCloneGameState(gameState);
-                movePenguin(gameStateCopy);
-                alphaBeta(gameStateCopy, depth -1, alpha, beta, false);
-                if (maxEval > evaluateBoard(gameStateCopy)) {
-                    maxEval = evaluateBoard(gameStateCopy);
-                }
-                freeGameState(gameStateCopy);
-                if (alpha > maxEval) {
-                    alpha = maxEval;
-                }
-                if (beta <= alpha) {
-                    break;
-                }
-            }
-            return maxEval;
+
+    int bestVal = isMax ? INT_MIN : INT_MAX;
+
+    for (int i = 0; i < moveCount; i++) {
+        makeMove(gs, &moves[i]);
+
+        // Recursive call
+        int val = alphaBeta(gs, depth - 1, alpha, beta, !isMax);
+
+        unmakeMove(gs, &moves[i]);
+
+        if (isMax) {
+            if (val > bestVal) bestVal = val;
+            if (val > alpha) alpha = val;
+        } else {
+            if (val < bestVal) bestVal = val;
+            if (val < beta) beta = val;
         }
-        else {
-            //our turn
-            isMax = false;
-            minEval = INT_MAX;
-            for (int i = 0;i < countPossibleMoves(gameState, curPlayer, curPenguin,x,y);i++) {
-                struct GameState *gameStateCopy = deepCloneGameState(gameState);
-                movePenguin(gameStateCopy);
-                alphaBeta(gameState, depth -1, alpha, beta, true);
-                if (minEval < evaluateBoard(gameStateCopy)) {
-                    minEval = evaluateBoard(gameStateCopy);
-                }
-                freeGameState(gameStateCopy);
-                if (beta < minEval) {
-                    beta = minEval;
-                }
-                if (beta <= alpha) {
-                    break;
-                }
-                return minEval;
-            }
+
+        if (beta <= alpha) break; // Pruning
+    }
+
+    free(moves);
+    return bestVal;
+}
+
+struct Move calculateBestMove(struct GameState *gameState, int depth) {
+    struct Move bestMove;
+    bestMove.moveValue = INT_MIN;
+
+    int moveCount = 0;
+    struct Move *moves = generateAllLegalMoves(gameState, &moveCount, gameState->currentPlayer);
+
+    if (moveCount == 0) {
+        printf("No moves available!\n");
+        exit(1);
+    }
+
+    // Root of Alpha-Beta
+    for (int i = 0; i < moveCount; i++) {
+        makeMove(gameState, &moves[i]);
+
+        // We just played (Max), so next is Min (false)
+        int score = alphaBeta(gameState, depth - 1, INT_MIN, INT_MAX, false);
+
+        unmakeMove(gameState, &moves[i]);
+
+        printf("Move %d -> (%d, %d) Score: %d\n", i, moves[i].toX, moves[i].toY, score);
+
+        if (score > bestMove.moveValue) {
+            bestMove = moves[i];
+            bestMove.moveValue = score;
         }
     }
+
+    free(moves);
+    return bestMove;
 }
