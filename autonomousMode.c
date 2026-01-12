@@ -92,6 +92,14 @@ void loadBoard(FILE *givenFile, struct GameState *gameState) {
 
                 generateVoidBoard(gameState);
                 printf("Map Dimensions found: %d rows, %d cols\n", rows, cols);
+
+                for (int r = 0; r < rows; r++) {
+                    for (int c = 0; c < cols; c++) {
+                        gameState->Board[r][c].idPenguin = -1;
+                        gameState->Board[r][c].idPlayer = -1;
+                    }
+                }
+
             }
         }
 
@@ -104,6 +112,7 @@ void loadBoard(FILE *givenFile, struct GameState *gameState) {
                 gameState->Board[counter - 1][colIndex].amountOfFish = amountOfFish;
                 int idPlayer = atoi(token) % 10;
                 gameState->Board[counter - 1][colIndex].idPlayer = idPlayer - 1;
+                gameState->Board[counter - 1][colIndex].idPenguin = -1;
                 colIndex++;
                 token = strtok(NULL, delimiters);
             }

@@ -109,7 +109,7 @@ struct Move registerMove(struct GameState *gs, int plrId, int penguinIndex, int 
 struct Move* generateAllLegalMoves(struct GameState *gs, int *count, int playerId) {
 
     *count = 0;
-    int actualPenguinCount = gs->Players[playerId].currentPenguin;
+    int actualPenguinCount = gs->numOfPenguinsPerPlayer;
 
     for (int j = 0; j < actualPenguinCount; j++) {
         int startX = gs->Players[playerId].penguins[j].x;
