@@ -117,7 +117,8 @@ int scorePlacement(struct GameState *game_state, int x, int y, struct Node *bina
         return 0;
     }
 
-    float distance = (1 - 1 / powf(powf(x - xStart, 2) + powf(y - yStart, 2), 1 / 2)) * 2;
+    float distance = -(1 - 1 / sqrtf(powf(x - xStart, 2) + powf(y - yStart, 2))) * 70;
+    printf("Distance: %f\n", distance);
 
     if (x < 0 || y < 0 || x >= game_state->xBoardSize || y >= game_state->yBoardSize)
         return -distance;
@@ -125,7 +126,7 @@ int scorePlacement(struct GameState *game_state, int x, int y, struct Node *bina
     int amountOfFish = game_state->Board[x][y].amountOfFish;
 
     if (game_state->Board[x][y].idPlayer != -1) {
-        return -distance *2;
+        return -distance * 2;
     }
 
     if (amountOfFish == 0)
