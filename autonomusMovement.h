@@ -8,6 +8,7 @@
 #include "autonomousMode.h"
 #include  "GameState.h"
 #include "moveGen.h"
+#include <time.h>
 
 /**
  * Executes a player's move on the game board and updates the game state.

@@ -135,7 +135,6 @@ int alphaBeta(struct GameState *gs, int depth, int alpha, int beta, bool isMax) 
     for (int i = 0; i < moveCount; i++) {
         makeMove(gs, &moves[i]);
 
-        // Recursive call
         int val = alphaBeta(gs, depth - 1, alpha, beta, !isMax);
 
         unmakeMove(gs, &moves[i]);
@@ -155,35 +154,69 @@ int alphaBeta(struct GameState *gs, int depth, int alpha, int beta, bool isMax) 
     return bestVal;
 }
 
-struct Move calculateBestMove(struct GameState *gameState, int depth) {
-    struct Move bestMove;
-    bestMove.moveValue = INT_MIN;
+struct Move calculateBestMove(struct GameState *gameState, int maxDepth) {
 
-    int moveCount = 0;
-    struct Move *moves = generateAllLegalMoves(gameState, &moveCount, gameState->currentPlayer);
+    double timeLimit = 2.5;
 
-    if (moveCount == 0) {
-        printf("No moves available!\n");
-        exit(1);
-    }
+    clock_t startTime = clock();
+    struct Move bestMoveGlobal;
+    bestMoveGlobal.moveValue = INT_MIN;
 
-    // Root of Alpha-Beta
-    for (int i = 0; i < moveCount; i++) {
-        makeMove(gameState, &moves[i]);
+    bool moveFound = false;
 
-        // We just played (Max), so next is Min (false)
-        int score = alphaBeta(gameState, depth - 1, INT_MIN, INT_MAX, false);
+    for (int depth = 1; depth <= 100; depth++) {
 
-        unmakeMove(gameState, &moves[i]);
+        double timeElapsedSoFar = (double)(clock() - startTime) / CLOCKS_PER_SEC;
 
-        printf("Move %d -> (%d, %d) Score: %d\n", i, moves[i].toX, moves[i].toY, score);
+        if (depth > 1 && timeElapsedSoFar > (timeLimit / 4.0)) {
+            printf("Time safety break at depth %d. Time: %.4fs\n", depth, timeElapsedSoFar);
+            break;
+        }
 
-        if (score > bestMove.moveValue) {
-            bestMove = moves[i];
-            bestMove.moveValue = score;
+        int moveCount = 0;
+        struct Move *moves = generateAllLegalMoves(gameState, &moveCount, gameState->currentPlayer);
+
+        if (moveCount == 0) {
+            if (depth == 1) {
+                printf("No moves available!\n");
+                exit(1);
+            }
+            free(moves);
+            break;
+        }
+
+        struct Move currentBestMove = moves[0];
+        int bestVal = INT_MIN;
+
+        for (int i = 0; i < moveCount; i++) {
+            makeMove(gameState, &moves[i]);
+
+            int val = alphaBeta(gameState, depth - 1, INT_MIN, INT_MAX, false);
+
+            unmakeMove(gameState, &moves[i]);
+
+            if (val > bestVal) {
+                bestVal = val;
+                currentBestMove = moves[i];
+                currentBestMove.moveValue = val;
+            }
+        }
+
+        free(moves);
+        bestMoveGlobal = currentBestMove;
+        moveFound = true;
+
+        double finishTime = (double)(clock() - startTime) / CLOCKS_PER_SEC;
+
+        if (finishTime > timeLimit) {
+            break;
         }
     }
 
-    free(moves);
-    return bestMove;
+    if (!moveFound) {
+        printf("Critical Error: No move found even at depth 1.\n");
+        exit(1);
+    }
+
+    return bestMoveGlobal;
 }

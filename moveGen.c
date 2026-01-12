@@ -113,11 +113,11 @@ struct Move* generateAllLegalMoves(struct GameState *gs, int *count, int playerI
     *count = 0;
     int actualPenguinCount = gs->numOfPenguinsPerPlayer;
 
-    printf("DEBUG: PlayerID: %d, PenguinCount: %d\n", playerId, actualPenguinCount);
+    //printf("DEBUG: PlayerID: %d, PenguinCount: %d\n", playerId, actualPenguinCount);
 
     for (int j = 0; j < actualPenguinCount; j++) {
 
-        printf("DEBUG: Checking Penguin %d at (%d, %d)\n", j, gs->Players[playerId].penguins[j].x, gs->Players[playerId].penguins[j].y);
+        //printf("DEBUG: Checking Penguin %d at (%d, %d)\n", j, gs->Players[playerId].penguins[j].x, gs->Players[playerId].penguins[j].y);
 
         int startX = gs->Players[playerId].penguins[j].x;
         int startY = gs->Players[playerId].penguins[j].y;
