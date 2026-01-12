@@ -115,12 +115,16 @@ int scorePlacement(struct GameState *game_state, int x, int y, struct Node *bina
     }
 
     if (x < 0 || y < 0 || x >= game_state->xBoardSize || y >= game_state->yBoardSize)
-        return -depth;
+        return -9 * (1 - 1 / depth);
 
     int amountOfFish = game_state->Board[x][y].amountOfFish;
 
+    if (game_state->Board[x][y].idPlayer != -1) {
+        return -30 * (1 - 1 / depth);
+    }
+
     if (amountOfFish == 0)
-        return -depth;
+        return -15 * (1 - 1 / depth);
 
     struct Field *value = &game_state->Board[x][y];
     if (searchNode(binaryTree, value) == value)
@@ -131,7 +135,7 @@ int scorePlacement(struct GameState *game_state, int x, int y, struct Node *bina
     return scorePlacement(game_state, x - 1, y, binaryTree, depth - 1) +
            scorePlacement(game_state, x + 1, y, binaryTree, depth - 1) +
            scorePlacement(game_state, x, y - 1, binaryTree, depth - 1) +
-           scorePlacement(game_state, x, y + 1, binaryTree, depth - 1) + amountOfFish;
+           scorePlacement(game_state, x, y + 1, binaryTree, depth - 1) + amountOfFish * (1 - 1 / depth) * 2;
 }
 void *findBestMoveWorker(void *arg) {
     struct ThreadData *data = (struct ThreadData *) arg;
