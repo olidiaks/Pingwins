@@ -82,7 +82,7 @@ void loadBoard(FILE *givenFile, struct GameState *gameState) {
     char line[8192];
     int counter = 0;
     int rows = 0, cols = 0;
-    const char *delimiters = " \r\n"; // Split by space, carriage return, or newline
+    const char *delimiters = " \r\n";
 
     while (fgets(line, sizeof(line), givenFile)) {
         if (counter == 0) {
@@ -99,11 +99,9 @@ void loadBoard(FILE *givenFile, struct GameState *gameState) {
                         gameState->Board[r][c].idPlayer = -1;
                     }
                 }
-
             }
         }
-
-        else if (counter <= rows) {
+        else {
             char *token = strtok(line, delimiters);
             int colIndex = 0;
 
@@ -115,6 +113,12 @@ void loadBoard(FILE *givenFile, struct GameState *gameState) {
                 gameState->Board[counter - 1][colIndex].idPenguin = -1;
                 colIndex++;
                 token = strtok(NULL, delimiters);
+            }
+
+            // KLUCZOWA ZMIANA: Jeśli wczytaliśmy ostatni wiersz, przerywamy pętlę.
+            // Dzięki temu wskaźnik pliku zostaje idealnie przed listą graczy.
+            if (counter == rows) {
+                break;
             }
         }
         counter++;
@@ -132,10 +136,17 @@ void loadBoard(FILE *givenFile, struct GameState *gameState) {
 
 
 void loadPlayers(struct GameState *game_state, FILE *input_file) {
-    char buffer[256];
-    bool isTeamNameOnList = false;
-    int linesToSkip = 0;
-    int n = 0;
+    long position = ftell(input_file);
+    if (position == 0) {
+        int r, c;
+        if (fscanf(input_file, "%d %d", &r, &c) == 2) {
+            char skip[4096];
+            fgets(skip, sizeof(skip), input_file);
+            for (int i = 0; i < r; i++) {
+                fgets(skip, sizeof(skip), input_file);
+            }
+        }
+    }
 
     game_state->Players = calloc(9, sizeof(struct Player));
     if (game_state->Players == NULL) {
@@ -143,36 +154,27 @@ void loadPlayers(struct GameState *game_state, FILE *input_file) {
         exit(3);
     }
 
-    if (fscanf(input_file, "%d %d", &linesToSkip, &n) != 2) {
-        fprintf(stderr, "Error: Could not read header.\n");
-        exit(2);
-    }
-
-    fgetc(input_file);
-
-    for (int i = 0; i < linesToSkip; i++) {
-        if (fgets(buffer, sizeof(buffer), input_file) != NULL) {
-            printf("%s", buffer);
-        }
-    }
-
     game_state->numOfPlayers = 0;
     int occupiedIDs[9] = {0};
+    bool isTeamNameOnList = false;
 
     while (1) {
         char *name = NULL;
         int id, score;
 
-        int fscanfStatus = fscanf(input_file, "%ms %d %d", &name, &id, &score);
+        int fscanfStatus = fscanf(input_file, " %ms %d %d", &name, &id, &score);
 
-        if (fscanfStatus == EOF)
+        if (fscanfStatus == EOF) {
+            if (name) free(name);
             break;
+        }
 
         if (fscanfStatus != 3) {
-            printf("Error: Invalid player format.\n");
-            free(name);
-            exit(2);
+            if (name) free(name);
+            break;
         }
+
+        printf("New scan: Name: %s, Id: %d, Score %d\n", name, id, score);
 
         if (id < 1 || id > 9) {
             printf("Error: Player ID %d out of bounds.\n", id);
@@ -186,10 +188,8 @@ void loadPlayers(struct GameState *game_state, FILE *input_file) {
         game_state->Players[idx].currentPenguin = 0;
 
         occupiedIDs[idx] = 1;
-        printf("Incrementing numPlrs: %d, -> %d\n", game_state->numOfPlayers, game_state->numOfPlayers + 1);
         game_state->numOfPlayers++;
 
-        printf("Comparing two strings: %s, %s\n", name, game_state->teamName);
         if (strcmp(name, game_state->teamName) == 0) {
             game_state->currentPlayer = idx;
             isTeamNameOnList = true;
@@ -207,7 +207,7 @@ void loadPlayers(struct GameState *game_state, FILE *input_file) {
         }
 
         if (availIdx == -1) {
-            printf("All id's are oqupied so there is not place for us. Too many players\n");
+            printf("All id's are occupied so there is not place for us. Too many players\n");
             exit(2);
         }
 

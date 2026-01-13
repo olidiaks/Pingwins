@@ -4,8 +4,16 @@
 
 #include "moveGen.h"
 
-#define WEIGHT_FISH 1000
-#define WEIGHT_MOBILITY 10
+#define WEIGHT_FISH_EARLY 1000
+#define WEIGHT_MOBILITY_EARLY 10
+
+#define WEIGHT_FISH_LATE 200
+#define WEIGHT_MOBILITY_LATE 800
+
+#define SURVIVAL_THRESHOLD 8 // move count before panic
+
+#define WEIGHT_FISH_OPPONENT = 1000;
+#define WEIGHT_MOBILITY_OPPONENT = 10;
 
 int isTileFree(struct GameState *gs, int x, int y) {
     if (x < 0 || x >= gs->xBoardSize || y < 0 || y >= gs->yBoardSize)
@@ -51,7 +59,6 @@ int evaluateBoard(struct GameState *gs) {
 
     int ownFish = gs->Players[gs->currentPlayer].currentScore;
     int ownPossibleMoves = 0;
-
     int biggestOpponentScore = 0;
 
     for (int i = 0; i < gs->numOfPlayers; i++ ) {
@@ -80,13 +87,24 @@ int evaluateBoard(struct GameState *gs) {
             opponentMoves += countPossibleMoves(gs, i, penguinIndex, penguinPositionX, penguinPositionY);
         }
 
-        int opponentScore = (opponentFish * WEIGHT_FISH) + (opponentMoves * WEIGHT_MOBILITY);
+        int opponentScore = (opponentFish * WEIGHT_FISH_OPPONENT) + (opponentMoves * WEIGHT_MOBILITY_OPPONENT);
         if (opponentScore > biggestOpponentScore)
             biggestOpponentScore = opponentScore;
         //mostOpponentPossibleMoves = opponentMoves > mostOpponentPossibleMoves && opponentMoves || mostOpponentPossibleMoves;
     }
 
-    int ownScore = (ownFish * WEIGHT_FISH) + (ownPossibleMoves * WEIGHT_MOBILITY);
+    int currentFishWeight;
+    int currentMobilityWeight;
+
+    if (ownPossibleMoves < SURVIVAL_THRESHOLD) {
+        currentFishWeight = WEIGHT_FISH_LATE;
+        currentMobilityWeight = WEIGHT_MOBILITY_LATE;
+    } else {
+        currentFishWeight = WEIGHT_FISH_EARLY;
+        currentMobilityWeight = WEIGHT_MOBILITY_EARLY;
+    }
+
+    int ownScore = (ownFish * currentFishWeight) + (ownPossibleMoves * currentMobilityWeight);
     return ownScore - biggestOpponentScore;
 };
 

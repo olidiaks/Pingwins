@@ -26,8 +26,7 @@ void countPenguins(struct GameState *gameState, int numOfPengiuns) {
     }
 }
 
-void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[],
-                         char num_of_penguins[]) {
+void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[], char num_of_penguins[]) {
     char c = num_of_penguins[9];
     int num_of_penguins_int = atoi(&c);
 
@@ -111,8 +110,7 @@ void placePenguinAutomatically(struct GameState *gameState) {
     }
 }
 
-int scorePlacement(struct GameState *game_state, int x, int y, struct Node *binaryTree, int depth, int xStart,
-                   int yStart) {
+int scorePlacement(struct GameState *game_state, int x, int y, struct Node *binaryTree, int depth, int xStart, int yStart) {
     if (depth == 0) {
         return 0;
     }
