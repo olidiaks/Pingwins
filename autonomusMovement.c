@@ -66,16 +66,17 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     printf("Pointer to penguins: %p\n", gameState->Players[gameState->currentPlayer].penguins);
 
     struct Move bestMove = calculateBestMove(gameState,6);
-    printf("Best move: fromX %d, fromY: %d, toX: %d, toY: %d, as %d, penguin id %d\n", bestMove.fromX, bestMove.fromY, bestMove.toX, bestMove.toY, bestMove.playerId, bestMove.penguinIdx);
+    printf("Best move: fromX %d, fromY: %d, toX: %d, toY: %d, player id %d, penguin id %d\n", bestMove.fromX, bestMove.fromY, bestMove.toX, bestMove.toY, bestMove.playerId, bestMove.penguinIdx);
+    gameState->Players[gameState->currentPlayer].currentPenguin = bestMove.penguinIdx;
+    printf("x\n");
+    gameState->currentPlayer = bestMove.playerId;
+    printf("x\n");
+    gameState->Players[gameState->currentPlayer].x= bestMove.toX;
+    printf("x\n");
+    gameState->Players[gameState->currentPlayer].y= bestMove.toY;
+    printf("x\n");
+    //makeMove(gameState, &bestMove);
 
-    //gameState->Players[gameState->currentPlayer].currentPenguin = bestMove.penguinIdx;
-    //printf("x\n");
-    //gameState->Players[gameState->currentPlayer].x= bestMove.toX;
-    //printf("x\n");
-    //gameState->Players[gameState->currentPlayer].y= bestMove.toY;
-    //printf("x\n");
-    //movePenguin(gameState);
-    makeMove(gameState, &bestMove);
 
     showBoard(gameState);
 
@@ -85,138 +86,99 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
     fclose(outputFile);
 }
 
-void makeMove(struct GameState *gs, struct Move *move) {
+struct Move calculateBestMove(struct GameState *gameState, int depth) {
+    struct Move bestMove;
 
-    gs->Board[move->fromX][move->fromY].idPlayer = -1;
-    gs->Board[move->fromX][move->fromY].idPenguin = -1;
+    bestMove.fromX = gameState->Players[gameState->currentPlayer].penguins[gameState->Players[gameState->currentPlayer].currentPenguin].x;
+    bestMove.fromY = gameState->Players[gameState->currentPlayer].penguins[gameState->Players[gameState->currentPlayer].currentPenguin].y;
+    bestMove.playerId = gameState->currentPlayer;
+    bestMove.moveValue = 0;
+    bestMove.penguinIdx = 0;
 
-    gs->Board[move->toX][move->toY].idPlayer = move->playerId;
-    gs->Board[move->toX][move->toY].idPenguin = move->penguinIdx;
+    printf("Best move: fromX %d, fromY: %d, toX: %d, toY: %d, player id %d, penguin id %d\n", bestMove.fromX, bestMove.fromY, bestMove.toX, bestMove.toY, bestMove.playerId, bestMove.penguinIdx);
 
-    gs->Players[move->playerId].penguins[move->penguinIdx].x = move->toX;
-    gs->Players[move->playerId].penguins[move->penguinIdx].y = move->toY;
+    int curPlayer = gameState->currentPlayer;
+    int curPenguin = gameState->Players[curPlayer].currentPenguin;
+    int x = bestMove.fromX;
+    int y = bestMove.fromY;
 
-    gs->Players[move->playerId].currentScore += move->capturedFish;
-    gs->Board[move->toX][move->toY].amountOfFish = 0;
+    printf("%d %d \n",x,y);
 
-    gs->currentPlayer = (gs->currentPlayer + 1) % gs->numOfPlayers;
-}
+    int possibleMovesAmount = countPossibleMoves(gameState, curPlayer, curPenguin,x,y);
+    printf("%d\n",possibleMovesAmount);
 
-void unmakeMove(struct GameState *gs, struct Move *move) {
-
-    gs->currentPlayer = (gs->currentPlayer - 1 + gs->numOfPlayers) % gs->numOfPlayers;
-
-    gs->Board[move->toX][move->toY].amountOfFish = move->capturedFish;
-    gs->Players[move->playerId].currentScore -= move->capturedFish;
-
-    gs->Players[move->playerId].penguins[move->penguinIdx].x = move->fromX;
-    gs->Players[move->playerId].penguins[move->penguinIdx].y = move->fromY;
-
-    gs->Board[move->toX][move->toY].idPlayer = -1;
-    gs->Board[move->toX][move->toY].idPenguin = -1;
-
-    gs->Board[move->fromX][move->fromY].idPlayer = move->playerId;
-    gs->Board[move->fromX][move->fromY].idPenguin = move->penguinIdx;
-}
-
-int alphaBeta(struct GameState *gs, int depth, int alpha, int beta, bool isMax) {
-    if (depth == 0) return evaluateBoard(gs);
-
-    int moveCount = 0;
-    struct Move *moves = generateAllLegalMoves(gs, &moveCount, gs->currentPlayer);
-
-    if (moveCount == 0) {
-        free(moves);
-        return evaluateBoard(gs);
-    }
-
-    int bestVal = isMax ? INT_MIN : INT_MAX;
-
-    for (int i = 0; i < moveCount; i++) {
-        makeMove(gs, &moves[i]);
-
-        int val = alphaBeta(gs, depth - 1, alpha, beta, !isMax);
-
-        unmakeMove(gs, &moves[i]);
-
-        if (isMax) {
-            if (val > bestVal) bestVal = val;
-            if (val > alpha) alpha = val;
-        } else {
-            if (val < bestVal) bestVal = val;
-            if (val < beta) beta = val;
+    for (int i = 0;i < possibleMovesAmount;i++) { //all possible moves
+        printf("%d \n",i);
+        struct GameState *gameStateCopy = deepCloneGameState(gameState);
+        printf("Game State has been copied. \n");
+        struct Move *allMoves = generateAllLegalMoves(gameStateCopy,0,curPlayer);
+        gameStateCopy->Players[curPlayer].x = allMoves[i].toX;
+        gameStateCopy->Players[curPlayer].x = allMoves[i].toY;
+        movePenguin(gameStateCopy);
+        int score = evaluateBoard(gameStateCopy);
+        alphaBeta(gameStateCopy,depth,INT_MAX,INT_MIN,false);
+        if (score > bestMove.moveValue) {
+            bestMove.moveValue = score;
+            //bestMove.penguinIdx = ;
         }
-
-        if (beta <= alpha) break; // Pruning
+        freeGameState(gameStateCopy);
     }
+    return bestMove;
 
-    free(moves);
-    return bestVal;
 }
 
-struct Move calculateBestMove(struct GameState *gameState, int maxDepth) {
-
-    double timeLimit = 2.5;
-
-    clock_t startTime = clock();
-    struct Move bestMoveGlobal;
-    bestMoveGlobal.moveValue = INT_MIN;
-
-    bool moveFound = false;
-
-    for (int depth = 1; depth <= 100; depth++) {
-
-        double timeElapsedSoFar = (double)(clock() - startTime) / CLOCKS_PER_SEC;
-
-        if (depth > 1 && timeElapsedSoFar > (timeLimit / 4.0)) {
-            printf("Time safety break at depth %d. Time: %.4fs\n", depth, timeElapsedSoFar);
-            break;
-        }
-
-        int moveCount = 0;
-        struct Move *moves = generateAllLegalMoves(gameState, &moveCount, gameState->currentPlayer);
-
-        if (moveCount == 0) {
-            if (depth == 1) {
-                printf("No moves available!\n");
-                exit(1);
+int alphaBeta(struct GameState *gameState, int depth, int alpha, int beta, bool isMax) {
+    float maxEval;
+    float minEval;
+    int curPlayer = gameState->currentPlayer;
+    int curPenguin = gameState->Players[curPlayer].currentPenguin;
+    int x = gameState->Players[curPlayer].x;
+    int y = gameState->Players[curPlayer].y;
+    if (depth == 0 || isAnyMoveForCurrentPenguinAvailable(gameState)) {
+        return evaluateBoard(gameState);
+    }
+    else {
+        //generateAllLegalMoves();
+        if (isMax) { //opponent turn
+            isMax = true;
+            maxEval = INT_MIN;
+            for (int i = 0;i < countPossibleMoves(gameState, curPlayer, curPenguin,x,y);i++) {
+                struct GameState *gameStateCopy = deepCloneGameState(gameState);
+                movePenguin(gameStateCopy);
+                alphaBeta(gameStateCopy, depth -1, alpha, beta, false);
+                if (maxEval > evaluateBoard(gameStateCopy)) {
+                    maxEval = evaluateBoard(gameStateCopy);
+                }
+                freeGameState(gameStateCopy);
+                if (alpha > maxEval) {
+                    alpha = maxEval;
+                }
+                if (beta <= alpha) {
+                    break;
+                }
             }
-            free(moves);
-            break;
+            return maxEval;
         }
-
-        struct Move currentBestMove = moves[0];
-        int bestVal = INT_MIN;
-
-        for (int i = 0; i < moveCount; i++) {
-            makeMove(gameState, &moves[i]);
-
-            int val = alphaBeta(gameState, depth - 1, INT_MIN, INT_MAX, false);
-
-            unmakeMove(gameState, &moves[i]);
-
-            if (val > bestVal) {
-                bestVal = val;
-                currentBestMove = moves[i];
-                currentBestMove.moveValue = val;
+        else {
+            //our turn
+            isMax = false;
+            minEval = INT_MAX;
+            for (int i = 0;i < countPossibleMoves(gameState, curPlayer, curPenguin,x,y);i++) {
+                struct GameState *gameStateCopy = deepCloneGameState(gameState);
+                movePenguin(gameStateCopy);
+                alphaBeta(gameState, depth -1, alpha, beta, true);
+                if (minEval < evaluateBoard(gameStateCopy)) {
+                    minEval = evaluateBoard(gameStateCopy);
+                }
+                freeGameState(gameStateCopy);
+                if (beta < minEval) {
+                    beta = minEval;
+                }
+                if (beta <= alpha) {
+                    break;
+                }
+                return minEval;
             }
         }
-
-        free(moves);
-        bestMoveGlobal = currentBestMove;
-        moveFound = true;
-
-        double finishTime = (double)(clock() - startTime) / CLOCKS_PER_SEC;
-
-        if (finishTime > timeLimit) {
-            break;
-        }
     }
-
-    if (!moveFound) {
-        printf("Critical Error: No move found even at depth 1.\n");
-        exit(1);
-    }
-
-    return bestMoveGlobal;
 }

@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 
     srand(time(&tt));
 
-    gameState.teamName = "cheeto";
+    gameState.teamName = "Pingwiniarze";
 
     switch (argc) {
         case 1: interactiveMode(&gameState);
