@@ -164,7 +164,7 @@ struct Move calculateBestMove(struct GameState *gameState, int maxDepth) {
 
     bool moveFound = false;
 
-    for (int depth = 1; depth <= 100; depth++) {
+    for (int depth = 1; depth <= 1000; depth++) {
 
         double timeElapsedSoFar = (double)(clock() - startTime) / CLOCKS_PER_SEC;
 
@@ -209,8 +209,11 @@ struct Move calculateBestMove(struct GameState *gameState, int maxDepth) {
         double finishTime = (double)(clock() - startTime) / CLOCKS_PER_SEC;
 
         if (finishTime > timeLimit) {
+            printf("Exiting scan at depth: %d\n", depth);
             break;
         }
+
+        //printf("Scan at depth %d\n", depth);
     }
 
     if (!moveFound) {
