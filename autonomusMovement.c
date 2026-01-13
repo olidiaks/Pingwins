@@ -109,19 +109,22 @@ struct Move calculateBestMove(struct GameState *gameState, int depth) {
 
     for (int i = 0;i < possibleMovesAmount;i++) { //all possible moves
         printf("%d \n",i);
-        struct GameState *gameStateCopy = deepCloneGameState(gameState);
+        struct GameState gameStateCopy = deepCloneGameState(gameState);
         printf("Game State has been copied. \n");
-        struct Move *allMoves = generateAllLegalMoves(gameStateCopy,0,curPlayer);
-        gameStateCopy->Players[curPlayer].x = allMoves[i].toX;
-        gameStateCopy->Players[curPlayer].x = allMoves[i].toY;
-        movePenguin(gameStateCopy);
-        int score = evaluateBoard(gameStateCopy);
-        alphaBeta(gameStateCopy,depth,INT_MAX,INT_MIN,false);
+        int *num = 0;
+        //showBoard(&gameStateCopy);
+        //printGameInfo(&gameStateCopy);
+        struct Move *allMoves = generateAllLegalMoves(&gameStateCopy,num,curPlayer);
+        gameStateCopy.Players[curPlayer].x = allMoves[i].toX;
+        gameStateCopy.Players[curPlayer].x = allMoves[i].toY;
+        movePenguin(&gameStateCopy);
+        int score = evaluateBoard(&gameStateCopy);
+        alphaBeta(&gameStateCopy,depth,INT_MAX,INT_MIN,false);
         if (score > bestMove.moveValue) {
             bestMove.moveValue = score;
             //bestMove.penguinIdx = ;
         }
-        freeGameState(gameStateCopy);
+        freeGameState(&gameStateCopy);
     }
     return bestMove;
 
@@ -143,13 +146,13 @@ int alphaBeta(struct GameState *gameState, int depth, int alpha, int beta, bool 
             isMax = true;
             maxEval = INT_MIN;
             for (int i = 0;i < countPossibleMoves(gameState, curPlayer, curPenguin,x,y);i++) {
-                struct GameState *gameStateCopy = deepCloneGameState(gameState);
-                movePenguin(gameStateCopy);
-                alphaBeta(gameStateCopy, depth -1, alpha, beta, false);
-                if (maxEval > evaluateBoard(gameStateCopy)) {
-                    maxEval = evaluateBoard(gameStateCopy);
+                struct GameState gameStateCopy = deepCloneGameState(gameState);
+                movePenguin(&gameStateCopy);
+                alphaBeta(&gameStateCopy, depth -1, alpha, beta, false);
+                if (maxEval > evaluateBoard(&gameStateCopy)) {
+                    maxEval = evaluateBoard(&gameStateCopy);
                 }
-                freeGameState(gameStateCopy);
+                freeGameState(&gameStateCopy);
                 if (alpha > maxEval) {
                     alpha = maxEval;
                 }
@@ -164,13 +167,13 @@ int alphaBeta(struct GameState *gameState, int depth, int alpha, int beta, bool 
             isMax = false;
             minEval = INT_MAX;
             for (int i = 0;i < countPossibleMoves(gameState, curPlayer, curPenguin,x,y);i++) {
-                struct GameState *gameStateCopy = deepCloneGameState(gameState);
-                movePenguin(gameStateCopy);
+                struct GameState gameStateCopy = deepCloneGameState(gameState);
+                movePenguin(&gameStateCopy);
                 alphaBeta(gameState, depth -1, alpha, beta, true);
-                if (minEval < evaluateBoard(gameStateCopy)) {
-                    minEval = evaluateBoard(gameStateCopy);
+                if (minEval < evaluateBoard(&gameStateCopy)) {
+                    minEval = evaluateBoard(&gameStateCopy);
                 }
-                freeGameState(gameStateCopy);
+                freeGameState(&gameStateCopy);
                 if (beta < minEval) {
                     beta = minEval;
                 }

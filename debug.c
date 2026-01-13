@@ -10,8 +10,8 @@ int snapshotCount = 0;
 
 int generateSnapshot(struct GameState *gs) {
 
-    struct GameState *cloned = deepCloneGameState(gs);
-    snapshotGlobal[snapshotCount] = *cloned;
+    struct GameState cloned = deepCloneGameState(gs);
+    snapshotGlobal[snapshotCount] = cloned;
     snapshotCount++;
 
     return snapshotCount - 1;

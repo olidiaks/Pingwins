@@ -139,7 +139,7 @@ void askInitQuestions();
  * @param gameState A pointer to the GameState structure to be cloned.
  * @return A pointer to the newly created deep copy of the specified GameState.
  */
-struct GameState *deepCloneGameState(struct GameState *gameState);
+struct GameState deepCloneGameState(struct GameState *gameState);
 
 /**
  * Frees all allocated memory associated with the given GameState.
