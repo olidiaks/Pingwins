@@ -64,21 +64,26 @@ struct Penguin {
 };
 
 /**
- * Represents the overall state of the game at any given moment.
+ * Represents the state of the game at any given point in time.
  *
- * This structure contains all the critical information and parameters required
- * to manage and track the progress of the game, including players, board configuration,
- * and game-specific settings.
+ * This structure contains all the critical information required to represent
+ * the current status of the game, including the board configuration, players,
+ * and gameplay parameters.
  *
  * Members:
- * - teamName: A pointer to a null-terminated string representing the name of the current team.
- * - currentPlayer: An integer representing the index of the player who is currently taking their turn.
- * - Board: A 2D dynamic array of Field structures representing the game board.
- * - Players: A dynamic array of Player structures representing all players participating in the game.
- * - numOfPlayers: The number of players currently playing the game.
- * - xBoardSize: The number of columns on the game board.
- * - yBoardSize: The number of rows on the game board.
- * - numOfPenguinsPerPlayer: The number of penguins allocated for each player.
+ * @var teamName: A pointer to a character array representing the name of the team
+ * @var  controlling this instance of the game.
+ * @var currentPlayer: An integer representing the index of the player who is
+ *      currently taking their turn.
+ * @var Board: A pointer to a 2D array of Field structures representing the game
+ *   board, where each field has its own attributes and state.
+ * @var Players: A pointer to an array of Player structures containing information
+ *   about all players participating in the game.
+ * @var numOfPlayers: An integer indicating the total number of players in the game.
+ * @var xBoardSize: An integer representing the horizontal size of the game board.
+ * @var yBoardSize: An integer representing the vertical size of the game board.
+ * @var numOfPenguinsPerPlayer: An integer specifying the number of penguins
+ *   allocated to each player in the game.
  */
 struct GameState {
     char *teamName;
@@ -107,42 +112,32 @@ struct GameState {
 void init();
 
 /**
- * Prompts the user to input the initial game settings, including the number
- * of players and the number of penguins per player.
+ * Initializes the game settings by prompting the user for input.
  *
- * This function collects critical information to initialize the game state.
- * The user is repeatedly asked valid inputs for the number of players
- * (between 2 and 9) and the number of penguins per player (between 1 and 9)
- * until acceptable values are entered.
+ * This function interacts with the user to gather essential game configuration details,
+ * including the number of players and the number of penguins per player. Input is validated
+ * to ensure it falls within the permissible range:
+ * - Number of players: between 2 and 9.
+ * - Number of penguins per player: between 1 and 9.
  *
- * The collected values are stored in the global gameState structure:
- * - numOfPlayers: The total number of players in the game.
- * - numOfPenguinsPerPlayer: The number of penguins each player controls.
+ * Updates:
+ * - `gameState.numOfPlayers`: Stores the validated number of players.
+ * - `gameState.numOfPenguinsPerPlayer`: Stores the validated number of penguins per player.
+ *
+ * Ensures that the game initialization starts with correct and user-validated parameters.
  */
 void askInitQuestions();
 
 /**
  * Creates a deep copy of the given game state.
  *
- * This function duplicates the entire structure of the game state, including all nested fields,
- * players, penguins, and the game board. It ensures that changes made to the cloned game state
- * do not affect the original game state and vice versa.
+ * This function performs a deep clone of the provided GameState structure,
+ * including all nested objects such as the game board, players, and penguins.
+ * The resulting cloned structure is independent of the original game state,
+ * meaning changes to the clone will not affect the original.
  *
- * Parameters:
- * - gameState: A pointer to the `GameState` structure to be cloned. The input must be a valid
- *              and fully initialized `GameState` instance.
- *
- * Returns:
- * - A pointer to a new `GameState` structure that is a complete deep copy of the input game state.
- *   Memory for the new structure and its associated sub-structures is dynamically allocated.
- *   The caller is responsible for freeing this memory when it is no longer needed.
- *
- * Notes:
- * - The function dynamically allocates memory for players, the game board, and penguins.
- *   Ensure that proper memory management is done to deallocate the resources when no longer
- *   in use to prevent memory leaks.
- * - The structure returned by this function is independent of the original, and modifications
- *   to one will not affect the other.
+ * @param gameState A pointer to the GameState structure to be cloned.
+ * @return A pointer to the newly created deep copy of the specified GameState.
  */
 struct GameState *deepCloneGameState(struct GameState *gameState);
 

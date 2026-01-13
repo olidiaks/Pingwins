@@ -82,7 +82,7 @@ void loadBoard(FILE *givenFile, struct GameState *gameState) {
     char line[8192];
     int counter = 0;
     int rows = 0, cols = 0;
-    const char *delimiters = " \r\n"; // Split by space, carriage return, or newline
+    const char *delimiters = " \r\n";
 
     while (fgets(line, sizeof(line), givenFile)) {
         if (counter == 0) {
@@ -92,10 +92,16 @@ void loadBoard(FILE *givenFile, struct GameState *gameState) {
 
                 generateVoidBoard(gameState);
                 printf("Map Dimensions found: %d rows, %d cols\n", rows, cols);
+
+                for (int r = 0; r < rows; r++) {
+                    for (int c = 0; c < cols; c++) {
+                        gameState->Board[r][c].idPenguin = -1;
+                        gameState->Board[r][c].idPlayer = -1;
+                    }
+                }
             }
         }
-
-        else if (counter <= rows) {
+        else {
             char *token = strtok(line, delimiters);
             int colIndex = 0;
 
@@ -104,8 +110,15 @@ void loadBoard(FILE *givenFile, struct GameState *gameState) {
                 gameState->Board[counter - 1][colIndex].amountOfFish = amountOfFish;
                 int idPlayer = atoi(token) % 10;
                 gameState->Board[counter - 1][colIndex].idPlayer = idPlayer - 1;
+                gameState->Board[counter - 1][colIndex].idPenguin = -1;
                 colIndex++;
                 token = strtok(NULL, delimiters);
+            }
+
+            // KLUCZOWA ZMIANA: Jeśli wczytaliśmy ostatni wiersz, przerywamy pętlę.
+            // Dzięki temu wskaźnik pliku zostaje idealnie przed listą graczy.
+            if (counter == rows) {
+                break;
             }
         }
         counter++;
@@ -118,14 +131,22 @@ void loadBoard(FILE *givenFile, struct GameState *gameState) {
         }
         printf("\n");
     }
+    printf("\n");
 }
 
 
 void loadPlayers(struct GameState *game_state, FILE *input_file) {
-    char buffer[256];
-    bool isTeamNameOnList = false;
-    int linesToSkip = 0;
-    int n = 0;
+    long position = ftell(input_file);
+    if (position == 0) {
+        int r, c;
+        if (fscanf(input_file, "%d %d", &r, &c) == 2) {
+            char skip[4096];
+            fgets(skip, sizeof(skip), input_file);
+            for (int i = 0; i < r; i++) {
+                fgets(skip, sizeof(skip), input_file);
+            }
+        }
+    }
 
     game_state->Players = calloc(9, sizeof(struct Player));
     if (game_state->Players == NULL) {
@@ -133,43 +154,33 @@ void loadPlayers(struct GameState *game_state, FILE *input_file) {
         exit(3);
     }
 
-    if (fscanf(input_file, "%d %d", &linesToSkip, &n) != 2) {
-        fprintf(stderr, "Error: Could not read header.\n");
-        exit(2);
-    }
-
-    fgetc(input_file);
-
-    for (int i = 0; i < linesToSkip; i++) {
-        if (fgets(buffer, sizeof(buffer), input_file) != NULL) {
-            printf("%s", buffer);
-        }
-    }
-
     game_state->numOfPlayers = 0;
     int occupiedIDs[9] = {0};
+    bool isTeamNameOnList = false;
 
     while (1) {
         char *name = NULL;
         int id, score;
 
-        int fscanfStatus = fscanf(input_file, "%ms %d %d", &name, &id, &score);
+        int fscanfStatus = fscanf(input_file, " %ms %d %d", &name, &id, &score);
 
-        if (fscanfStatus == EOF)
+        if (fscanfStatus == EOF) {
+            if (name) free(name);
             break;
+        }
 
         if (fscanfStatus != 3) {
-            printf("Error: Invalid player format.\n");
-            free(name);
-            exit(2);
+            if (name) free(name);
+            break;
         }
+
+        printf("New scan: Name: %s, Id: %d, Score %d\n", name, id, score);
 
         if (id < 1 || id > 9) {
             printf("Error: Player ID %d out of bounds.\n", id);
             free(name);
             exit(2);
         }
-
 
         int idx = id - 1;
         game_state->Players[idx].name = name;
@@ -196,7 +207,7 @@ void loadPlayers(struct GameState *game_state, FILE *input_file) {
         }
 
         if (availIdx == -1) {
-            printf("All id's are oqupied so there is not place for us. Too many players\n");
+            printf("All id's are occupied so there is not place for us. Too many players\n");
             exit(2);
         }
 
@@ -214,8 +225,8 @@ void validatePenguinCountConsistency(struct GameState *game_state) {
     int *currentPenguin = &game_state->Players[0].currentPenguin;
     int numOfPenguins = *currentPenguin;
     *(currentPenguin) = 0;
-    for (int i = 1; i < game_state->numOfPlayers; ++i) {
-        int *currentPenguin = &game_state->Players[i].currentPenguin;
+    for (int i = 1; i < game_state->numOfPlayers; i++) {
+        currentPenguin = &game_state->Players[i].currentPenguin;
         if (numOfPenguins != *currentPenguin) {
             printf("Number of penguins for each player must be the same.\n");
             exit(2);
@@ -231,16 +242,15 @@ void loadPenguins(struct GameState *game_state) {
             int id_player = game_state->Board[x][y].idPlayer;
             if (id_player != -1) {
                 int *current_penguin = &game_state->Players[id_player].currentPenguin;
-                struct Penguin *penguin = realloc(game_state->Players[id_player].penguins,
-                                                  sizeof(struct Penguin) * (*current_penguin + 1));
-                if (penguin == NULL) {
+                struct Penguin *penguinsArray = realloc(game_state->Players[id_player].penguins, sizeof(struct Penguin) * (*current_penguin + 1));
+                if (penguinsArray == NULL) {
                     fprintf(stderr, "Not enough memory to load penguins.\n");
                     exit(3);
                 }
+                game_state->Players[id_player].penguins = penguinsArray;
                 game_state->Board[x][y].idPenguin = *current_penguin;
-                penguin->x = x;
-                penguin->y = y;
-                game_state->Players[id_player].penguins = penguin;
+                penguinsArray[*current_penguin].x = x;
+                penguinsArray[*current_penguin].y = y;
                 (*current_penguin)++;
             }
         }

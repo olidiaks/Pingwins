@@ -7,6 +7,8 @@
 
 #include "autonomousMode.h"
 #include  "GameState.h"
+#include "moveGen.h"
+#include <time.h>
 
 /**
  * Executes a player's move on the game board and updates the game state.
@@ -64,10 +66,34 @@ void autonomousMovement(struct GameState *gameState, char inputFilePath[], char 
  */
 void movePenguinAutomatically(struct GameState *gameState);
 
-//needs comment
-struct Move calculateBestMove(struct GameState *gameState, int depth);
+void makeMove(struct GameState *gs, struct Move *move);
 
-//needs comment
-int alphaBeta(struct GameState *gameState, int depth, int alpha, int beta, bool isMax);
+void unmakeMove(struct GameState *gs, struct Move *move);
+
+/**
+ * Performs the Alpha-Beta pruning algorithm to evaluate the optimal value for the current game state.
+ *
+ * This function implements the Alpha-Beta pruning, an optimization of the minimax algorithm,
+ * to determine the best possible move or state evaluation for the current player.
+ * It explores the game tree, considering a specified search depth, and prunes branches
+ * that are not worth exploring, thus improving performance. The function alternates
+ * between maximizing and minimizing players' turns based on the `isMax` flag.
+ *
+ * @param gameState A pointer to the GameState structure representing the current state
+ *                  of the game, including the board, players, and active player's data.
+ * @param depth     The remaining depth for the recursive search; this determines how deeply
+ *                  the algorithm will evaluate the game tree.
+ * @param alpha     The best value that the maximizing player can guarantee; used to prune
+ *                  branches that cannot improve the maximizing player’s outcome.
+ * @param beta      The best value that the minimizing player can guarantee; used to prune
+ *                  branches that cannot improve the minimizing player’s outcome.
+ * @param isMax     A boolean value indicating whether the current search level corresponds
+ *                  to the maximizing player (true) or the minimizing player (false).
+ * @return          The evaluation score of the board for the optimal move within the
+ *                  specified depth and conditions.
+ */
+int alphaBeta(struct GameState *gs, int depth, int alpha, int beta, bool isMax);
+
+struct Move calculateBestMove(struct GameState *gameState, int depth);
 
 #endif // PROJECT_AUTONOMUSMOVEMENT_H

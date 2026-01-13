@@ -35,3 +35,5 @@ add_executable(project
         moveGen.h
         binnaryTree.c
         binnaryTree.h)
+
+target_link_libraries(project m)

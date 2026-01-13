@@ -58,10 +58,13 @@ void placePenguinAutomatically(struct GameState *gameState);
  * @param y The y-coordinate of the position to evaluate for the penguin placement.
  * @param binaryTree Pointer to a binary tree structure used to store visited positions.
  * @param depth The maximum depth to search for additional moves from the given position.
+ * @param xStart
+ * @param yStart
  * @return The total score for placing a penguin at the specified position based on
  *         the number of accessible fish within the given depth.
  */
-int scorePlacement(struct GameState *game_state, int x, int y, struct Node *binaryTree, int depth);
+int scorePlacement(struct GameState *game_state, int x, int y, struct Node *binaryTree, int depth, int xStart,
+                   int yStart);
 
 /**
  * @struct ThreadData

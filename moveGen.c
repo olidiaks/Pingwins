@@ -4,10 +4,21 @@
 
 #include "moveGen.h"
 
-#define WEIGHT_FISH 1000
-#define WEIGHT_MOBILITY 10
+#define WEIGHT_FISH_EARLY 1000
+#define WEIGHT_MOBILITY_EARLY 10
+
+#define WEIGHT_FISH_LATE 200
+#define WEIGHT_MOBILITY_LATE 800
+
+#define SURVIVAL_THRESHOLD 8 // move count before panic
+
+#define WEIGHT_FISH_OPPONENT = 1000;
+#define WEIGHT_MOBILITY_OPPONENT = 10;
 
 int isTileFree(struct GameState *gs, int x, int y) {
+    if (x < 0 || x >= gs->xBoardSize || y < 0 || y >= gs->yBoardSize)
+        return 0;
+
     return (gs->Board[x][y].amountOfFish > 0 && gs->Board[x][y].idPenguin == -1);
 }
 
@@ -46,12 +57,9 @@ int countPossibleMoves(struct GameState *gs, int playerId, int penguinIndex, int
 
 int evaluateBoard(struct GameState *gs) {
 
-    int ownFish = gs->Players->currentScore;
+    int ownFish = gs->Players[gs->currentPlayer].currentScore;
     int ownPossibleMoves = 0;
-
     int biggestOpponentScore = 0;
-    //int mostOpponentFish = INT_MIN;
-    //int mostOpponentPossibleMoves = INT_MIN;
 
     for (int i = 0; i < gs->numOfPlayers; i++ ) {
         if (i == gs->currentPlayer) {
@@ -61,6 +69,8 @@ int evaluateBoard(struct GameState *gs) {
                 int penguinPositionX = gs->Players[i].penguins[penguinIndex].x;
                 int penguinPositionY = gs->Players[i].penguins[penguinIndex].y;
 
+                if (penguinPositionX == -1) continue;
+
                 ownPossibleMoves += countPossibleMoves(gs, i, penguinIndex, penguinPositionX, penguinPositionY);
             }
 
@@ -68,8 +78,6 @@ int evaluateBoard(struct GameState *gs) {
         }
 
         int opponentFish = gs->Players[i].currentScore;
-        //mostOpponentFish = opponentFish > mostOpponentFish && opponentFish || mostOpponentFish;
-
         int opponentMoves = 0;
         for (int penguinIndex = 0; penguinIndex < gs->numOfPenguinsPerPlayer; penguinIndex++) {
 
@@ -79,13 +87,24 @@ int evaluateBoard(struct GameState *gs) {
             opponentMoves += countPossibleMoves(gs, i, penguinIndex, penguinPositionX, penguinPositionY);
         }
 
-        int opponentScore = (opponentFish * WEIGHT_FISH) + (opponentMoves * WEIGHT_MOBILITY);
+        int opponentScore = (opponentFish * WEIGHT_FISH_OPPONENT) + (opponentMoves * WEIGHT_MOBILITY_OPPONENT);
         if (opponentScore > biggestOpponentScore)
             biggestOpponentScore = opponentScore;
         //mostOpponentPossibleMoves = opponentMoves > mostOpponentPossibleMoves && opponentMoves || mostOpponentPossibleMoves;
     }
 
-    int ownScore = (ownFish * WEIGHT_FISH) + (ownPossibleMoves * WEIGHT_MOBILITY);
+    int currentFishWeight;
+    int currentMobilityWeight;
+
+    if (ownPossibleMoves < SURVIVAL_THRESHOLD) {
+        currentFishWeight = WEIGHT_FISH_LATE;
+        currentMobilityWeight = WEIGHT_MOBILITY_LATE;
+    } else {
+        currentFishWeight = WEIGHT_FISH_EARLY;
+        currentMobilityWeight = WEIGHT_MOBILITY_EARLY;
+    }
+
+    int ownScore = (ownFish * currentFishWeight) + (ownPossibleMoves * currentMobilityWeight);
     return ownScore - biggestOpponentScore;
 };
 
@@ -102,6 +121,7 @@ struct Move registerMove(struct GameState *gs, int plrId, int penguinIndex, int 
     move.moveValue = 0;
     move.penguinIdx = penguinIndex;
     move.playerId = plrId;
+    move.capturedFish = gs->Board[x][y].amountOfFish;
 
     return move;
 }
@@ -109,8 +129,14 @@ struct Move registerMove(struct GameState *gs, int plrId, int penguinIndex, int 
 struct Move* generateAllLegalMoves(struct GameState *gs, int *count, int playerId) {
 
     *count = 0;
+    int actualPenguinCount = gs->numOfPenguinsPerPlayer;
 
-    for (int j = 0; j < gs->numOfPenguinsPerPlayer; j++) {
+    //printf("DEBUG: PlayerID: %d, PenguinCount: %d\n", playerId, actualPenguinCount);
+
+    for (int j = 0; j < actualPenguinCount; j++) {
+
+        //printf("DEBUG: Checking Penguin %d at (%d, %d)\n", j, gs->Players[playerId].penguins[j].x, gs->Players[playerId].penguins[j].y);
+
         int startX = gs->Players[playerId].penguins[j].x;
         int startY = gs->Players[playerId].penguins[j].y;
 
@@ -120,7 +146,6 @@ struct Move* generateAllLegalMoves(struct GameState *gs, int *count, int playerI
         int dy[] = {-1, 1, 0, 0};
 
         for (int d = 0; d < 4; d++) {
-
             for (int step = 1; ; step++) {
                 int newX = startX + (dx[d] * step);
                 int newY = startY + (dy[d] * step);
@@ -142,7 +167,7 @@ struct Move* generateAllLegalMoves(struct GameState *gs, int *count, int playerI
 
     int moveIdx = 0;
 
-    for (int j = 0; j < gs->numOfPenguinsPerPlayer; j++) {
+    for (int j = 0; j < actualPenguinCount; j++) {
         int startX = gs->Players[playerId].penguins[j].x;
         int startY = gs->Players[playerId].penguins[j].y;
 
@@ -157,8 +182,7 @@ struct Move* generateAllLegalMoves(struct GameState *gs, int *count, int playerI
                 int newY = startY + (dy[d] * step);
 
                 if (isTileFree(gs, newX, newY)) {
-
-                    moveTable[j] = registerMove(gs, playerId, j, newX, newY);
+                    moveTable[moveIdx] = registerMove(gs, playerId, j, newX, newY);
                     moveIdx++;
                 } else {
                     break;
@@ -168,4 +192,4 @@ struct Move* generateAllLegalMoves(struct GameState *gs, int *count, int playerI
     }
 
     return moveTable;
-};
+}

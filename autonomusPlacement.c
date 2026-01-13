@@ -4,6 +4,8 @@
 
 #include "autonomusPlacement.h"
 
+#include <math.h>
+
 #include "autonomusMovement.h"
 #include "placementInteractive.h"
 
@@ -24,8 +26,7 @@ void countPenguins(struct GameState *gameState, int numOfPengiuns) {
     }
 }
 
-void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[],
-                         char num_of_penguins[]) {
+void autonomousPlacement(struct GameState *gameState, char inputFilePath[], char outputFilePath[], char nameOfUs[], char num_of_penguins[]) {
     char c = num_of_penguins[9];
     int num_of_penguins_int = atoi(&c);
 
@@ -109,18 +110,25 @@ void placePenguinAutomatically(struct GameState *gameState) {
     }
 }
 
-int scorePlacement(struct GameState *game_state, int x, int y, struct Node *binaryTree, int depth) {
+int scorePlacement(struct GameState *game_state, int x, int y, struct Node *binaryTree, int depth, int xStart, int yStart) {
     if (depth == 0) {
         return 0;
     }
 
+    float distance = -(1 - 1 / sqrtf(powf(x - xStart, 2) + powf(y - yStart, 2))) * 70;
+    printf("Distance: %f\n", distance);
+
     if (x < 0 || y < 0 || x >= game_state->xBoardSize || y >= game_state->yBoardSize)
-        return -depth;
+        return -distance;
 
     int amountOfFish = game_state->Board[x][y].amountOfFish;
 
+    if (game_state->Board[x][y].idPlayer != -1) {
+        return -distance * 2;
+    }
+
     if (amountOfFish == 0)
-        return -depth;
+        return -distance;
 
     struct Field *value = &game_state->Board[x][y];
     if (searchNode(binaryTree, value) == value)
@@ -128,10 +136,11 @@ int scorePlacement(struct GameState *game_state, int x, int y, struct Node *bina
 
     insertNode(binaryTree, value);
 
-    return scorePlacement(game_state, x - 1, y, binaryTree, depth - 1) +
-           scorePlacement(game_state, x + 1, y, binaryTree, depth - 1) +
-           scorePlacement(game_state, x, y - 1, binaryTree, depth - 1) +
-           scorePlacement(game_state, x, y + 1, binaryTree, depth - 1) + amountOfFish;
+    return scorePlacement(game_state, x - 1, y, binaryTree, depth - 1, xStart, yStart) +
+           scorePlacement(game_state, x + 1, y, binaryTree, depth - 1, xStart, yStart) +
+           scorePlacement(game_state, x, y - 1, binaryTree, depth - 1, xStart, yStart) +
+           scorePlacement(game_state, x, y + 1, binaryTree, depth - 1, xStart, yStart) +
+           amountOfFish * (1 - 1 / depth) * 2;
 }
 void *findBestMoveWorker(void *arg) {
     struct ThreadData *data = (struct ThreadData *) arg;
@@ -143,7 +152,7 @@ void *findBestMoveWorker(void *arg) {
         for (int y = 0; y < data->gameState->yBoardSize; ++y) {
             if (data->gameState->Board[x][y].amountOfFish == 1) {
                 struct Node *binaryTreeForMoves = insertNode(NULL, 0);
-                int score = scorePlacement(data->gameState, x, y, binaryTreeForMoves, 70);
+                int score = scorePlacement(data->gameState, x, y, binaryTreeForMoves, 200, x, y);
                 freeTree(binaryTreeForMoves);
                 if (score > data->bestScore) {
                     data->bestScore = score;

@@ -44,11 +44,17 @@ bool canPlayerPlacePenguin(struct GameState *gameState);
 
 
 /**
- * @brief Checks if all penguins have been placed during the placement phase.
+ * @brief Checks if all penguins have been placed on the board for all players.
  *
- * This function returns true if every penguin has been placed, and false otherwise.
+ * This function iterates through the list of players and verifies whether
+ * each player has successfully placed the required number of penguins on
+ * the board. Placement is considered complete if the value of the currentPenguin
+ * field for a player matches the numOfPenguinsPerPlayer value specified in the game state.
  *
- * @return true if all penguins are placed, false otherwise.
+ * @param gameState A pointer to the GameState structure containing the details
+ *                  of the current game state, including the players, board, and
+ *                  game parameters such as the required number of penguins per player.
+ * @return true if all players have placed all their penguins, false otherwise.
  */
 bool isEveryPenguinsPlaced(struct GameState *gameState);
 
