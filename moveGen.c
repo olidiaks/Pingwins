@@ -12,8 +12,8 @@
 
 #define SURVIVAL_THRESHOLD 8 // move count before panic
 
-#define WEIGHT_FISH_OPPONENT = 1000;
-#define WEIGHT_MOBILITY_OPPONENT = 10;
+#define WEIGHT_FISH_OPPONENT 1000
+#define WEIGHT_MOBILITY_OPPONENT 10
 
 int isTileFree(struct GameState *gs, int x, int y) {
     if (x < 0 || x >= gs->xBoardSize || y < 0 || y >= gs->yBoardSize)
