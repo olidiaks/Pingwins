@@ -34,7 +34,6 @@ add_executable(project
         debug.h
         moveGen.h
         binnaryTree.c
-        binnaryTree.h
-        GameState.c)
+        binnaryTree.h)
 
 target_link_libraries(project m)

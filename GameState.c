@@ -4,8 +4,6 @@
 
 #include "GameState.h"
 
-#include "consoleVisualization.h"
-
 
 struct GameState gameState;
 
@@ -54,7 +52,7 @@ void freeGameState(struct GameState *gameState) {
     free(&gameState->Players);
 }
 
-struct GameState deepCloneGameState (struct GameState *gameState) {
+struct GameState *deepCloneGameState(struct GameState *gameState) {
     struct GameState copyOfGameState;
     copyOfGameState.teamName = gameState->teamName;
     copyOfGameState.currentPlayer = gameState->currentPlayer;
@@ -63,12 +61,10 @@ struct GameState deepCloneGameState (struct GameState *gameState) {
     copyOfGameState.xBoardSize = gameState->xBoardSize;
     copyOfGameState.yBoardSize = gameState->yBoardSize;
     copyOfGameState.Board = malloc(gameState->xBoardSize * sizeof(struct Field *));
-
     for (int x = 0; x < gameState->xBoardSize; x++) {
         copyOfGameState.Board[x] = malloc(gameState->yBoardSize * sizeof(struct Field));
-
         for (int y = 0; y < gameState->yBoardSize; y++) {
-            struct Field *copyTile = &copyOfGameState.Board[x][y];
+            struct Field *copyTile = &gameState->Board[x][y];
             struct Field *oldTile = &gameState->Board[x][y];
             copyTile->amountOfFish = oldTile->amountOfFish;
             copyTile->idPlayer = oldTile->idPlayer;
@@ -92,6 +88,6 @@ struct GameState deepCloneGameState (struct GameState *gameState) {
             copyPenguin->y = oldPenguin->y;
         }
     }
-    //showBoard(&copyOfGameState);
-    return copyOfGameState;
+
+    return &copyOfGameState;
 }

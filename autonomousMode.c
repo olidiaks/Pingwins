@@ -234,7 +234,6 @@ void validatePenguinCountConsistency(struct GameState *game_state) {
         *currentPenguin = 0;
     }
     game_state->numOfPenguinsPerPlayer = numOfPenguins;
-    printf("The number of penguins per player : %d \n",game_state->numOfPenguinsPerPlayer);
 }
 
 void loadPenguins(struct GameState *game_state) {
