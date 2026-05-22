@@ -22,7 +22,7 @@ void movementPhaseInteractiveMode(struct GameState *gameState) {
             players_failed_to_move_in_row = 0;
         }
         else {
-            printf("Player %d cannot move any penguin.", gameState->currentPlayer);
+            printf("Player %d cannot move any penguin.\n", gameState->currentPlayer + 1);
             players_failed_to_move_in_row++;
         }
         changeCurrentPlayer(gameState);
