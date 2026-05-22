@@ -5,7 +5,7 @@
 
 
 void showBoard(struct GameState *gameState) {
-    printf("Displaying the board.\n\n");
+    printf("\n--------- Next Turn ---------\n\n");
 
     char horChr, vertChr;
     unsigned short int horMul, vertMul;
