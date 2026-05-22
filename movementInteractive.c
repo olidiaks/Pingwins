@@ -62,7 +62,7 @@ long int safe_number_read() {
     long int id = strtol(buffer_inp, &buffer_conv, 10);
 
     if (buffer_conv == buffer_inp) {
-        printf("Incorrect input is given.\nGave number once again.\n");
+        printf("You did not provided an number.\nGave number once again.\n");
         free(buffer_inp);
         buffer_inp = NULL;
         buffer_conv = NULL;
