@@ -20,12 +20,16 @@ void interactiveMode(struct GameState *gameState) {
 }
 
 void show_winner_announcement(struct GameState *gameState) {
+    printf("- - - - - - - - - - Announcing winner!!! - - - - - - - - - -\n\n");
+
     bool isTie = false;
     int winningPlayer = 0;
     int winningFish = 0;
     for (int i = 0; i < gameState->numOfPlayers; i++) {
-        if (gameState->Players[i].currentScore > winningFish) {
-            winningFish = gameState->Players[i].currentScore;
+        int current_score = gameState->Players[i].currentScore;
+        if (current_score > winningFish) {
+            winningFish = current_score;
+            printf("Player %d has %d", i + 1, current_score);
             isTie = false;
         }
         else {
