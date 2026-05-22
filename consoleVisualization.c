@@ -5,7 +5,7 @@
 
 
 void showBoard(struct GameState *gameState) {
-    printf("\n--------- Next Turn ---------\n\n");
+    printf("\n--------- Next Turn ---------\n\n Player is marked by capittal letter P\n While penguin by small letter p\n");
 
     char horChr, vertChr;
     unsigned short int horMul, vertMul;
