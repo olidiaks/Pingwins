@@ -62,14 +62,14 @@ long int safe_number_read() {
     long int id = strtol(buffer_inp, &buffer_conv, 10);
 
     if (buffer_conv == buffer_inp) {
-        printf("Incorrect input is given.\n");
+        printf("Incorrect input is given.\nGave number once again.\n");
         free(buffer_inp);
         buffer_inp = NULL;
         buffer_conv = NULL;
         goto safe_read;
     }
     if (errno == ERANGE && (id == LONG_MAX || id == LONG_MIN)) {
-        printf("Number given in is incorrect number.\n");
+        printf("Number given in is incorrect number.\nGave number once again.\n");
         free(buffer_inp);
         buffer_inp = NULL;
         buffer_conv = NULL;
@@ -77,7 +77,7 @@ long int safe_number_read() {
     }
 
     if (!(*buffer_conv == '\n' || *buffer_conv == '\0')) {
-        printf("You provided number and somthing after that.\nGave number of penguin once again.\n");
+        printf("You provided number and somthing after that.\nGave number once again.\n");
         free(buffer_inp);
         buffer_inp = NULL;
         buffer_conv = NULL;
