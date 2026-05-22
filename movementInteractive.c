@@ -34,12 +34,14 @@ bool isThereAnyPenguinMoveAvailable(struct GameState *gameState) {
 }
 
 bool isPlayerAbleToMoveAnyPenguin(struct GameState *gameState) {
+    bool isMovementPossible = false;
     for (int i = 0; i < gameState->numOfPenguinsPerPlayer; ++i) {
         int x = gameState->Players[gameState->currentPlayer].penguins[i].x;
         int y = gameState->Players[gameState->currentPlayer].penguins[i].y;
 
-        return checkAdjacentFishAvailability(gameState, x, y);
+         if (checkAdjacentFishAvailability(gameState, x, y)) return true;
     }
+    return  false;
 }
 
 void movePenguin(struct GameState *gameState) {
