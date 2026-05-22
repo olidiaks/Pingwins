@@ -4,13 +4,17 @@
 
 #include "boardGeneration.h"
 
+#include "movementInteractive.h"
+
 
 void readBoardDimensions(struct GameState *gameState) {
     printf("Input dimensions of the board of which you want to play (number of rows then number of columns): \n");
-    while (scanf("%d %d", &gameState->xBoardSize, &gameState->yBoardSize) != 2 || !
-           isBoardDimensionsValid(gameState)) {
+    gameState->xBoardSize = (int)safe_number_read();
+    gameState->yBoardSize = (int)safe_number_read();
+    while (!isBoardDimensionsValid(gameState)) {
         printf("You need to give real numbers!\n");
-        while (getchar() != '\n');
+        gameState->xBoardSize = (int)safe_number_read();
+        gameState->yBoardSize = (int)safe_number_read();
     };
 }
 
