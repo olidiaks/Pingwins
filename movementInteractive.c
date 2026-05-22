@@ -51,11 +51,12 @@ void movePenguin(struct GameState *gameState) {
 }
 
 long int safe_number_read() {
-safe_read:
+
     char *buffer_inp = NULL;
     char *buffer_conv = NULL;
     size_t len = 0;
 
+    safe_read:
     getline(&buffer_inp, &len, stdin);
     errno = 0;
     long int id = strtol(buffer_inp, &buffer_conv, 10);
@@ -66,7 +67,6 @@ safe_read:
         buffer_inp = NULL;
         buffer_conv = NULL;
         goto safe_read;
-        ;
     }
     if (errno == ERANGE && (id == LONG_MAX || id == LONG_MIN)) {
         printf("Number given in is incorrect number.\n");
@@ -74,7 +74,6 @@ safe_read:
         buffer_inp = NULL;
         buffer_conv = NULL;
         goto safe_read;
-        ;
     }
 
     if (!(*buffer_conv == '\n' || *buffer_conv == '\0')) {
@@ -83,7 +82,6 @@ safe_read:
         buffer_inp = NULL;
         buffer_conv = NULL;
         goto safe_read;
-        ;
     }
     free(buffer_inp);
     return id;
