@@ -23,7 +23,7 @@ void init() {
         gameState.Players[i].y = -1;
         gameState.Players[i].penguins = malloc(gameState.numOfPenguinsPerPlayer * sizeof(struct Penguin));
         if (gameState.Players[i].penguins == NULL) {
-            printf("The field provided is too big. You do not have enough memory.\n");
+            printf("Amount of needed memory for Players and Penguins is not sufficient\n");
             exit(4);
         }
     }
