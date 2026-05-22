@@ -4,10 +4,10 @@
 
 #include "placementInteractive.h"
 
-
 void placementInteractiveMode(struct GameState *gameState) {
     printf("- - - - - - - - - - \nCommencing placement phase. \n- - - - - - - - - -\n");
     readBoardDimensions(gameState);
+    isBoardBigEnough(gameState);
     generateBoard(gameState);
     while (canPlayerPlacePenguin(gameState) && !isEveryPenguinsPlaced(gameState))
     {
@@ -61,4 +61,11 @@ void placePenguin(struct GameState* gameState)
 {
     printf("Player %d 's penguin has been placed.\n", gameState->currentPlayer + 1);
     changePenguinPosition(gameState);
+}
+
+void isBoardBigEnough(struct GameState *gameState) {
+    if (gameState->numOfPlayers * gameState->numOfPenguinsPerPlayer > gameState->xBoardSize * gameState->yBoardSize) {
+        printf("Dimensions of filed provided are not big enough to place all penguins");
+        exit(7);
+    };
 }

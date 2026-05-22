@@ -85,4 +85,18 @@ bool isPlacementValid(struct GameState *gameState);
  */
 void placePenguin(struct GameState *gameState);
 
+/**
+ * @brief Checks if the board size is sufficient to place all penguins for all players.
+ *
+ * This function evaluates whether the board's dimensions are adequate to accommodate
+ * all the penguins for all players. It calculates the required number of tiles based
+ * on the number of players and penguins per player and compares it to the total number
+ * of tiles on the board. If the board is too small, an error message is displayed, and
+ * the program exits with an error code.
+ *
+ * @param gameState A pointer to the GameState structure containing information about
+ *                  the board size, number of players, and penguins per player.
+ */
+void isBoardBigEnough(struct GameState *gameState);
+
 #endif //PROJECT_PLACEMENT_H

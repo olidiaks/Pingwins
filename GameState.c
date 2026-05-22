@@ -10,10 +10,6 @@ struct GameState gameState;
 void init() {
     gameState.teamName = "Pingwiniarze";
     askInitQuestions();
-    if (gameState.numOfPlayers * gameState.numOfPenguinsPerPlayer > gameState.xBoardSize * gameState.yBoardSize) {
-        printf("Dimensions of filed provided are not big enough to place all penguins");
-        exit(7);
-    };
     gameState.currentPlayer = 0;
     gameState.Players = malloc(gameState.numOfPlayers * sizeof(struct Player));
     for (int i = 0; i < gameState.numOfPlayers; i++) {
