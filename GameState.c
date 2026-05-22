@@ -4,6 +4,8 @@
 
 #include "GameState.h"
 
+#include "movementInteractive.h"
+
 
 struct GameState gameState;
 
@@ -27,17 +29,21 @@ void init() {
 
 void askInitQuestions() {
     printf("How many players are there?: (from 2 to 9)\n");
-    int numOfPlayers;
-    while (!scanf("%d", &numOfPlayers) || numOfPlayers < 2 || numOfPlayers > 9) {
+    long int numOfPlayers = safe_number_read();
+    while (numOfPlayers < 2 || numOfPlayers > 9) {
         printf("Please enter a number between 2 and 9.\n");
+        numOfPlayers = safe_number_read();
     }
-    gameState.numOfPlayers = numOfPlayers;
+    gameState.numOfPlayers = (int)numOfPlayers;
 
+    long int numOfPenguinsPerPlayer = safe_number_read();
     printf("How many penguins should each player have?: (from 1 to 9)\n");
-    while (!scanf("%d", &gameState.numOfPenguinsPerPlayer) || gameState.numOfPenguinsPerPlayer < 1 ||
-           gameState.numOfPenguinsPerPlayer > 9) {
+    while (numOfPenguinsPerPlayer < 1 ||
+           numOfPenguinsPerPlayer > 9) {
         printf("Please enter a number between 1 and 9.\n");
+        numOfPenguinsPerPlayer = safe_number_read();
     }
+    gameState.numOfPenguinsPerPlayer = (int)numOfPenguinsPerPlayer;
 }
 
 void freeGameState(struct GameState *gameState) {
