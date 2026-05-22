@@ -7,7 +7,7 @@
 void placementInteractiveMode(struct GameState *gameState) {
     readBoardDimensions(gameState);
     isBoardBigEnough(gameState);
-    printf("- - - - - - - - - - \nCommencing placement phase. \n- - - - - - - - - -\n");
+    printf("- - - - - - - - - - Commencing placement phase. - - - - - - - - - -\n\n");
     generateBoard(gameState);
     while (canPlayerPlacePenguin(gameState) && !isEveryPenguinsPlaced(gameState))
     {
