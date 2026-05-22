@@ -69,9 +69,9 @@ read_id:
 bool checkAdjacentFishAvailability(struct GameState *gameState, int x, int y) {
     return (0 < x && gameState->Board[x - 1][y].amountOfFish) || // check if one to the left has any fish
            (0 < y && gameState->Board[x][y - 1].amountOfFish) || // check if one to the top has any fish
-           (x < gameState->xBoardSize && gameState->Board[x + 1][y].amountOfFish) ||
+           (x < (gameState->xBoardSize - 1) && gameState->Board[x + 1][y].amountOfFish) ||
            // check if one to the bottom has any fish
-           (y < gameState->yBoardSize && gameState->Board[x][y + 1].amountOfFish);
+           (y < (gameState->yBoardSize - 1) && gameState->Board[x][y + 1].amountOfFish);
     // check if one to the right has any fish
 }
 
