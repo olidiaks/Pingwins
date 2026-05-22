@@ -6,7 +6,7 @@
 
 void movementPhaseInteractiveMode(struct GameState *gameState) {
     while (isThereAnyPenguinMoveAvailable(gameState)) {
-        while (isPlayerAbleToMoveAnyPenguin(gameState)) {
+        if (isPlayerAbleToMoveAnyPenguin(gameState)) {
             showBoard(gameState);
             printGameInfoMovement(gameState);
             askWhichPenguinMove(gameState);
@@ -17,8 +17,8 @@ void movementPhaseInteractiveMode(struct GameState *gameState) {
             }
             movePenguin(gameState);
             collectFish(gameState);
-            changeCurrentPlayer(gameState);
         }
+        changeCurrentPlayer(gameState);
     }
 }
 
