@@ -19,6 +19,9 @@ void movementPhaseInteractiveMode(struct GameState *gameState) {
             movePenguin(gameState);
             collectFish(gameState);
         }
+        else {
+            printf("Player %d cannot move any penguin.", gameState->currentPlayer);
+        }
         changeCurrentPlayer(gameState);
     }
 }
