@@ -6,7 +6,8 @@
 
 void movementPhaseInteractiveMode(struct GameState *gameState) {
     printf("- - - - - - - - - - \nCommencing movement phase. \n- - - - - - - - - -\n");
-    while (isThereAnyPenguinMoveAvailable(gameState)) {
+    int players_failed_to_move_in_row = 0;
+    while (players_failed_to_move_in_row < gameState->numOfPlayers) {
         if (isPlayerAbleToMoveAnyPenguin(gameState)) {
             showBoard(gameState);
             printGameInfoMovement(gameState);
@@ -18,22 +19,13 @@ void movementPhaseInteractiveMode(struct GameState *gameState) {
             }
             movePenguin(gameState);
             collectFish(gameState);
+            players_failed_to_move_in_row = 0;
         }
         else {
             printf("Player %d cannot move any penguin.", gameState->currentPlayer);
+            players_failed_to_move_in_row++;
         }
         changeCurrentPlayer(gameState);
-    }
-}
-
-bool isThereAnyPenguinMoveAvailable(struct GameState *gameState) {
-    for (int i = 0; i < gameState->numOfPlayers; i++) {
-        for (int j = 0; j < gameState->numOfPenguinsPerPlayer; j++) {
-            int x = gameState->Players[i].penguins[j].x;
-            int y = gameState->Players[i].penguins[j].y;
-
-            return checkAdjacentFishAvailability(gameState, x, y);
-        }
     }
 }
 
