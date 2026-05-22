@@ -50,13 +50,12 @@ void movePenguin(struct GameState *gameState) {
     printf("Player %d's %d penguin has been moved.\n", currentPlayer + 1, currentPenguin + 1);
 }
 
-void askWhichPenguinMove(struct GameState *gameState) {
-    printf("Which penguin (from 1 to %d) do you want to move?\n", gameState->numOfPenguinsPerPlayer);
-    while ((getchar()) != '\n');
+long int safe_number_read() {
+safe_read:
     char *buffer_inp = NULL;
     char *buffer_conv = NULL;
     size_t len = 0;
-read_id:
+
     getline(&buffer_inp, &len, stdin);
     errno = 0;
     long int id = strtol(buffer_inp, &buffer_conv, 10);
@@ -66,14 +65,16 @@ read_id:
         free(buffer_inp);
         buffer_inp = NULL;
         buffer_conv = NULL;
-        goto read_id;
+        goto safe_read;
+        ;
     }
     if (errno == ERANGE && (id == LONG_MAX || id == LONG_MIN)) {
         printf("Number given in is incorrect number.\n");
         free(buffer_inp);
         buffer_inp = NULL;
         buffer_conv = NULL;
-        goto read_id;
+        goto safe_read;
+        ;
     }
 
     if (!(*buffer_conv == '\n' || *buffer_conv == '\0')) {
@@ -81,26 +82,29 @@ read_id:
         free(buffer_inp);
         buffer_inp = NULL;
         buffer_conv = NULL;
-        goto read_id;
+        goto safe_read;
+        ;
     }
+    free(buffer_inp);
+    return id;
+}
+void askWhichPenguinMove(struct GameState *gameState) {
+    printf("Which penguin (from 1 to %d) do you want to move?\n", gameState->numOfPenguinsPerPlayer);
+    while ((getchar()) != '\n');
+    long int id = 0;
 
+    read_id:
+    id = safe_number_read();
     id--;
     if (0 > id || id >= gameState->numOfPenguinsPerPlayer) {
         printf("The number of penguin provided is incorrect. Please try again. \n");
-        free(buffer_inp);
-        buffer_inp = NULL;
-        buffer_conv = NULL;
         goto read_id;
     }
     if (!isAnyMoveForCurrentPenguinAvailable(gameState)) {
         printf("There is no move available for the penguin you chosen. Try different one. \n");
-        free(buffer_inp);
-        buffer_inp = NULL;
-        buffer_conv = NULL;
         goto read_id;
     }
     gameState->Players[gameState->currentPlayer].currentPenguin = (int)id;
-    free(buffer_inp);
 }
 
 bool checkAdjacentFishAvailability(struct GameState *gameState, int x, int y) {

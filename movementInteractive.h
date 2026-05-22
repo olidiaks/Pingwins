@@ -147,4 +147,21 @@ bool isAnyMoveForCurrentPenguinAvailable(struct GameState *gameState);
  */
 void removePenguinFromCurrentLocation(struct GameState *gameState);
 
+/**
+ * Reads a valid integer input from the user in a safe and robust manner.
+ *
+ * This function repeatedly prompts the user for input until a valid integer is read.
+ * It handles several error scenarios including:
+ * - Non-numeric input.
+ * - Overflow or underflow of the integer range.
+ * - Presence of extraneous characters after the numeric input.
+ *
+ * Upon detecting any of these issues, the function provides an appropriate error message
+ * and prompts the user to input the number again. Memory used for input handling is
+ * safely freed after processing.
+ *
+ * @return A long integer representing the valid input provided by the user.
+ */
+long int safe_number_read();
+
 #endif //PROJECT_MOVEMENT_H
