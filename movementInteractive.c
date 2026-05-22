@@ -64,39 +64,43 @@ read_id:
     if (buffer_conv == buffer_inp) {
         printf("Incorrect input is given.\n");
         free(buffer_inp);
-        free(buffer_conv);
         buffer_inp = NULL;
         buffer_conv = NULL;
-        len = 0;
         goto read_id;
     }
     if (errno == ERANGE && (id == LONG_MAX || id == LONG_MIN)) {
         printf("Number given in is incorrect number.\n");
         free(buffer_inp);
-        free(buffer_conv);
-        len = 0;
+        buffer_inp = NULL;
+        buffer_conv = NULL;
         goto read_id;
     }
 
     if (!(*buffer_conv == '\n' || *buffer_conv == '\0')) {
         printf("You provided number and somthing after that.\nGave number of penguin once again.\n");
         free(buffer_inp);
-        free(buffer_conv);
-        len = 0;
+        buffer_inp = NULL;
+        buffer_conv = NULL;
         goto read_id;
     }
 
     id--;
     if (0 > id || id >= gameState->numOfPenguinsPerPlayer) {
         printf("The number of penguin provided is incorrect. Please try again. \n");
+        free(buffer_inp);
+        buffer_inp = NULL;
+        buffer_conv = NULL;
         goto read_id;
     }
     if (!isAnyMoveForCurrentPenguinAvailable(gameState)) {
         printf("There is no move available for the penguin you chosen. Try different one. \n");
+        free(buffer_inp);
+        buffer_inp = NULL;
+        buffer_conv = NULL;
         goto read_id;
     }
     gameState->Players[gameState->currentPlayer].currentPenguin = (int)id;
-    while ((getchar()) != '\n');
+    free(buffer_inp);
 }
 
 bool checkAdjacentFishAvailability(struct GameState *gameState, int x, int y) {
