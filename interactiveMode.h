@@ -26,4 +26,15 @@
  */
 void interactiveMode(struct GameState *gameState);
 
+/**
+ * Announces the winner of the game based on the current scores of the players.
+ *
+ * This function compares the scores of the players stored in the game state
+ * and announces the winner. If the scores are equal, it declares the game as a tie.
+ *
+ * @param gameState Pointer to the GameState structure that contains information
+ *        about the current game, including player scores and other game details.
+ */
+void show_winner_announcement(struct GameState *gameState);
+
 #endif //PROJECT_INTERACTIVE_MODE_H

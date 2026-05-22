@@ -12,15 +12,29 @@ void interactiveMode(struct GameState *gameState) {
         movementPhaseInteractiveMode(gameState);
         showBoard(gameState);
         printf("No players can make any further moves.\n");
-        if (gameState->Players[0].currentScore > gameState->Players[1].currentScore) {
-            printf("Congratulations, Player 1! You have won.\n");
-        } else if (gameState->Players[0].currentScore < gameState->Players[1].currentScore) {
-            printf("Congratulations, Player 2! You have won.\n");
-        } else {
-            printf("Unfortunately or not, it's a tie!\n");
-        }
+        show_winner_announcement(gameState);
     } else {
         printf("Not all penguins were placed.\n");
         exit(1);
+    }
+}
+
+void show_winner_announcement(struct GameState *gameState) {
+    bool isTie = false;
+    int winningPlayer = 0;
+    int winningFish = 0;
+    for (int i = 0; i < gameState->numOfPlayers; i++) {
+        if (gameState->Players[i].currentScore > winningFish) {
+            winningFish = gameState->Players[i].currentScore;
+            isTie = false;
+        }
+        else {
+            isTie = true;
+        }
+    }
+    if (isTie) {
+        printf("Unfortunately or not, it's a tie!\n");
+    } else {
+printf("Player %d won with %d fish!\n", winningPlayer + 1, winningFish);
     }
 }
