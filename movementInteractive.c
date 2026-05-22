@@ -5,6 +5,7 @@
 #include "movementInteractive.h"
 
 void movementPhaseInteractiveMode(struct GameState *gameState) {
+    printf("- - - - - - - - - - \nCommencing movement phase. \n- - - - - - - - - -\n");
     while (isThereAnyPenguinMoveAvailable(gameState)) {
         if (isPlayerAbleToMoveAnyPenguin(gameState)) {
             showBoard(gameState);

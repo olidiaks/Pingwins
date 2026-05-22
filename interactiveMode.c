@@ -9,7 +9,6 @@ void interactiveMode(struct GameState *gameState) {
     init();
     placementInteractiveMode(gameState);
     if (isEveryPenguinsPlaced(gameState)) {
-        printf("- - - - - - - - - - \nCommencing movement phase. \n- - - - - - - - - -\n");
         movementPhaseInteractiveMode(gameState);
         showBoard(gameState);
         printf("No players can make any further moves.\n");
