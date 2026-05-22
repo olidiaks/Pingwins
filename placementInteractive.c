@@ -5,9 +5,9 @@
 #include "placementInteractive.h"
 
 void placementInteractiveMode(struct GameState *gameState) {
-    printf("- - - - - - - - - - \nCommencing placement phase. \n- - - - - - - - - -\n");
     readBoardDimensions(gameState);
     isBoardBigEnough(gameState);
+    printf("- - - - - - - - - - \nCommencing placement phase. \n- - - - - - - - - -\n");
     generateBoard(gameState);
     while (canPlayerPlacePenguin(gameState) && !isEveryPenguinsPlaced(gameState))
     {
