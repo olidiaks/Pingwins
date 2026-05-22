@@ -34,7 +34,6 @@ bool isThereAnyPenguinMoveAvailable(struct GameState *gameState) {
 }
 
 bool isPlayerAbleToMoveAnyPenguin(struct GameState *gameState) {
-    bool isMovementPossible = false;
     for (int i = 0; i < gameState->numOfPenguinsPerPlayer; ++i) {
         int x = gameState->Players[gameState->currentPlayer].penguins[i].x;
         int y = gameState->Players[gameState->currentPlayer].penguins[i].y;
