@@ -84,6 +84,7 @@ struct Penguin {
  * @var yBoardSize: An integer representing the vertical size of the game board.
  * @var numOfPenguinsPerPlayer: An integer specifying the number of penguins
  *   allocated to each player in the game.
+ * @var numbOfTilesWithOneTile: An integer counting how many tiles are with one fish for placement phase. Later integer is not updated.
  */
 struct GameState {
     char *teamName;
@@ -94,6 +95,7 @@ struct GameState {
     int xBoardSize;
     int yBoardSize;
     int numOfPenguinsPerPlayer;
+    int numbOfTilesWithOneFish;
 };
 
 /**
