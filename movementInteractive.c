@@ -98,11 +98,11 @@ void askWhichPenguinMove(struct GameState *gameState) {
         printf("The number of penguin provided is incorrect. Please try again. \n");
         goto read_id;
     }
+    gameState->Players[gameState->currentPlayer].currentPenguin = (int)id;
     if (!isAnyMoveForCurrentPenguinAvailable(gameState)) {
         printf("There is no move available for the penguin you chosen. Try different one. \n");
         goto read_id;
     }
-    gameState->Players[gameState->currentPlayer].currentPenguin = (int)id;
 }
 
 bool checkAdjacentFishAvailability(struct GameState *gameState, int x, int y) {
