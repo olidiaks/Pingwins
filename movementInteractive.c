@@ -4,6 +4,8 @@
 
 #include "movementInteractive.h"
 
+#include <errno.h>
+
 void movementPhaseInteractiveMode(struct GameState *gameState) {
     printf("- - - - - - - - - - \nCommencing movement phase. \n- - - - - - - - - -\n");
     int players_failed_to_move_in_row = 0;
@@ -50,12 +52,41 @@ void movePenguin(struct GameState *gameState) {
 
 void askWhichPenguinMove(struct GameState *gameState) {
     printf("Which penguin (from 1 to %d) do you want to move?\n", gameState->numOfPenguinsPerPlayer);
-    int id;
-
+    while ((getchar()) != '\n');
+    char *buffer_inp = NULL;
+    char *buffer_conv = NULL;
+    size_t len = 0;
 read_id:
-    scanf("%d", &id);
+    getline(&buffer_inp, &len, stdin);
+    errno = 0;
+    long int id = strtol(buffer_inp, &buffer_conv, 10);
+
+    if (buffer_conv == buffer_inp) {
+        printf("Incorrect input is given.\n");
+        free(buffer_inp);
+        free(buffer_conv);
+        buffer_inp = NULL;
+        buffer_conv = NULL;
+        len = 0;
+        goto read_id;
+    }
+    if (errno == ERANGE && (id == LONG_MAX || id == LONG_MIN)) {
+        printf("Number given in is incorrect number.\n");
+        free(buffer_inp);
+        free(buffer_conv);
+        len = 0;
+        goto read_id;
+    }
+
+    if (!(*buffer_conv == '\n' || *buffer_conv == '\0')) {
+        printf("You provided number and somthing after that.\nGave number of penguin once again.\n");
+        free(buffer_inp);
+        free(buffer_conv);
+        len = 0;
+        goto read_id;
+    }
+
     id--;
-    gameState->Players[gameState->currentPlayer].currentPenguin = id;
     if (0 > id || id >= gameState->numOfPenguinsPerPlayer) {
         printf("The number of penguin provided is incorrect. Please try again. \n");
         goto read_id;
@@ -64,6 +95,8 @@ read_id:
         printf("There is no move available for the penguin you chosen. Try different one. \n");
         goto read_id;
     }
+    gameState->Players[gameState->currentPlayer].currentPenguin = (int)id;
+    while ((getchar()) != '\n');
 }
 
 bool checkAdjacentFishAvailability(struct GameState *gameState, int x, int y) {
