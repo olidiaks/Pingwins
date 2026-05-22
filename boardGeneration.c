@@ -10,12 +10,12 @@
 void readBoardDimensions(struct GameState *gameState) {
     printf("Input dimensions of the board of which you want to play:\nNumber of rows.\n");
     gameState->xBoardSize = (int)safe_number_read();
-    printf(" Number of columns.\n");
+    printf("Number of columns.\n");
     gameState->yBoardSize = (int)safe_number_read();
     while (!isBoardDimensionsValid(gameState)) {
         printf("You need to give real numbers!\nNumber of rows.\n");
         gameState->xBoardSize = (int)safe_number_read();
-        printf(" Number of columns.\n");
+        printf("Number of columns.\n");
         gameState->yBoardSize = (int)safe_number_read();
     };
 }
