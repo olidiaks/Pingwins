@@ -32,7 +32,7 @@ void show_winner_announcement(struct GameState *gameState) {
             winningFish = current_score;
             isTie = false;
         }
-        else {
+        else if (current_score == winningFish) {
             isTie = true;
         }
     }
